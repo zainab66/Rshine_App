@@ -2,6 +2,7 @@ import React from 'react';
 
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
 
 import { BrowserRouter, Route} from 'react-router-dom';
 
@@ -19,6 +20,8 @@ function App() {
       </div>
     </header>
     <main>
+      <Route path="/cart/:id?" component={CartScreen}></Route>
+
       <Route path="/product/:id" component={ProductScreen}></Route>
 
       <Route path="/" component={HomeScreen} exact></Route>
