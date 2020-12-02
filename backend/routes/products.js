@@ -1,19 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const data = require('../data');
+const data = require('../data.js');
+const expressAsyncHandler = require('express-async-handler');
+const Product = require('../models/productModel.js');
 
 /* GET products listing. */
-router.get('/', function(req, res) {
-  res.send(data.products);
-});
+router.get('/',
+expressAsyncHandler(async (req, res) => {
+  const products = await Product.find({});
+    res.send(products);
+})
+);
 
-router.get('/:id', function(req, res) {
-  const product = data.products.find(x => x._id === req.params.id);
-  if(product){
+router.get('/seed',
+expressAsyncHandler(async (req, res) => {
+  //await Product.remove({});
+  const createdProducts = await Product.insertMany(data.products);
+  res.send({ createdProducts });
+})
+);
+
+router.get('/:id',
+expressAsyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product) {
     res.send(product);
-  }else {
-    res.status(404).send({message:'Product not Found'});
+  } else {
+    res.status(404).send({ message: 'Product Not Found' });
   }
-});
-
+})
+);
 module.exports = router;

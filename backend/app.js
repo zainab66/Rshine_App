@@ -3,6 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
+const env = require("dotenv");
+env.config()
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -19,9 +22,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//mongodb connection
+mongoose.connect(
+  `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.amlpj.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
+   {
+     useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+    ).then(() => {
+      console.log('Database connected')
+    });
+
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
 
 // catch 404 and forward to error handler

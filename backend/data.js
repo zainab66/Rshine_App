@@ -1,7 +1,23 @@
+const bcrypt = require('bcrypt');
+
 const data = {
+     users: [
+    {
+      name: 'Zainab',
+      email: 'admin@example.com',
+      password: bcrypt.hashSync('1234', 8),
+      isAdmin: true,
+    },
+    {
+      name: 'John',
+      email: 'user@example.com',
+      password: bcrypt.hashSync('1234', 8),
+      isAdmin: false,
+    },
+  ],
+
     products: [
       {
-        _id: '1',
         name: 'Molang Birthday Cake Topper',
         category: 'Shirts',
         image: '/images/p1.jpg',
@@ -13,7 +29,6 @@ const data = {
         description: 'high quality product',
       },
       {
-        _id: '2',
         name: 'POKEMON Birthday Tags',
         category: 'Shirts',
         image: '/images/p2.jpg',
@@ -25,7 +40,6 @@ const data = {
         description: 'high quality product',
       },
       {
-        _id: '3',
         name: 'Lacoste Free Shirt',
         category: 'Shirts',
         image: '/images/p1.jpg',
@@ -37,7 +51,6 @@ const data = {
         description: 'high quality product',
       },
       {
-        _id: '4',
         name: 'Nike Slim Pant',
         category: 'Pants',
         image: '/images/p1.jpg',
@@ -49,7 +62,6 @@ const data = {
         description: 'high quality product',
       },
       {
-        _id: '5',
         name: 'Puma Slim Pant',
         category: 'Pants',
         image: '/images/p1.jpg',
@@ -61,7 +73,6 @@ const data = {
         description: 'high quality product',
       },
       {
-        _id: '6',
         name: 'Adidas Fit Pant',
         category: 'Pants',
         image: '/images/p1.jpg',
