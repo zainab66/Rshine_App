@@ -16,7 +16,7 @@ export default function SigninScreen(props) {
     : '/';
 
     const userSignin = useSelector((state) => state.userSignin);
-    const { userInfo, loading, error } = userSignin;
+  const { userInfo, loading, error } = userSignin;
     const dispatch = useDispatch();
 
     const submitHandler = (e) => {
@@ -71,7 +71,7 @@ export default function SigninScreen(props) {
           <label />
           <div>
             New customer?{' '}
-            <Link to="/register">
+            <Link to={`/register?redirect=${redirect}`}>
               Create your account
             </Link>
           </div>
