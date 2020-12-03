@@ -20,7 +20,7 @@ const data = {
       {
         name: 'Molang Birthday Cake Topper',
         category: 'Shirts',
-        image: '/images/p1.jpg',
+        image: '/images/nnn.jpg',
         price: 12.74,
         countInStock: 10,
         brand: 'Nike',
