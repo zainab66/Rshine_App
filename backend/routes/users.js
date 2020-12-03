@@ -3,7 +3,7 @@ const router = express.Router();
 const data = require('../data.js');
 const User  = require('../models/userModel.js');
 const bcrypt = require('bcrypt');
-const jwtGenerator = require('../utils.js');
+const generateToken = require('../utils.js');
 
 const expressAsyncHandler = require('express-async-handler');
 
@@ -26,7 +26,7 @@ router.post('/signin', expressAsyncHandler(async (req, res) => {
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
-          token: jwtGenerator(user),
+          token: generateToken(user),
         });
         return;
       }
@@ -47,7 +47,7 @@ router.post('/register', expressAsyncHandler(async (req, res) => {
       name: createdUser.name,
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
-      token: jwtGenerator(createdUser),
+      token: generateToken(createdUser),
     });
   })
 );
