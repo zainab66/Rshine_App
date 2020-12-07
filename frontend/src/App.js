@@ -13,6 +13,8 @@ import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import ProfileScreen from './screens/ProfileScreen';
+import PrivateRoute from './components/PrivateRoute';
+
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -68,7 +70,10 @@ function App() {
       <Route path="/order/:id" component={OrderScreen}></Route>
       <Route path="/cart/:id?" component={CartScreen}></Route>
       <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-      <Route path="/profile" component={ProfileScreen}></Route>
+      <PrivateRoute
+            path="/profile"
+            component={ProfileScreen}
+          ></PrivateRoute>
       <Route path="/product/:id" component={ProductScreen}></Route>
       <Route path="/" component={HomeScreen} exact></Route>
      
