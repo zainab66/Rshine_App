@@ -4,7 +4,11 @@ const expressAsyncHandler = require('express-async-handler');
 const authorize = require("../middleware/authorize")
 const Order = require('../models/orderModel.js');
 
-
+router.get('/mine', authorize, expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
+  })
+);
 
 router.post(
   '/',authorize, expressAsyncHandler(async (req, res) => {
