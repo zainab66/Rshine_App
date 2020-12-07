@@ -16,7 +16,7 @@ export default function SigninScreen(props) {
     : '/';
 
     const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo, loading, error } = userSignin;
+    const { userInfo, loading, error } = userSignin;
     const dispatch = useDispatch();
 
     const submitHandler = (e) => {

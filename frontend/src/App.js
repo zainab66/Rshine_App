@@ -12,6 +12,7 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -42,6 +43,9 @@ function App() {
         <Link to="#">{userInfo.name} <i className="fa fa-caret-down"></i>{' '}</Link>
         <ul className="dropdown-content">
           <li>
+            <Link to="/profile">User Profile</Link>
+            </li>
+          <li>
           <Link to="/orderhistory">Order History</Link>
           </li>
         <Link to="#signout" onClick={signoutHandler}>Sign Out</Link>
@@ -64,8 +68,8 @@ function App() {
       <Route path="/order/:id" component={OrderScreen}></Route>
       <Route path="/cart/:id?" component={CartScreen}></Route>
       <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+      <Route path="/profile" component={ProfileScreen}></Route>
       <Route path="/product/:id" component={ProductScreen}></Route>
-
       <Route path="/" component={HomeScreen} exact></Route>
      
     </main>
