@@ -5,6 +5,22 @@ const expressAsyncHandler = require('express-async-handler');
 const Product = require('../models/productModel.js');
 const authorize = require("../middleware/authorize")
 const isAdmin = require("../middleware/adminAuthorize")
+const multer = require('multer');
+const shortid = require('shortid');
+const path = require('path');
+const { default: slugify } = require('slugify');
+
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, path.join( path.dirname(__dirname), 'uploads'));
+  },
+  filename(req, file, cb) {
+    cb(null, shortid.generate() + '-' + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
 
 /* GET products listing. */
 router.get('/',
@@ -34,45 +50,50 @@ expressAsyncHandler(async (req, res) => {
 );
 
 
-router.post('/', authorize, isAdmin, expressAsyncHandler(async (req, res) => {
-    const product = new Product({
-      name: 'sample name ' + Date.now(),
-      image: '/images/p1.jpg',
-      price: 0,
-      category: 'sample category',
-      brand: 'sample brand',
-      countInStock: 0,
-      rating: 0,
-      numReviews: 0,
-      description: 'sample description',
+router.post('/create', authorize, isAdmin, upload.array('productPictures'), expressAsyncHandler(async (req, res) => {
+  const {name,price,description,category,countInStock,createdBy} = req.body;
+  let productPictures = [];
+  if(req.files.length > 0){
+    productPictures = req.files.map(file => {
+      return {img: file.filename}
     });
-    const createdProduct = await product.save();
-    res.send({ message: 'Product Created', product: createdProduct });
-  })
+  }
+  const newProduct = new Product({
+    name: name,
+    slug : slugify(name),
+    price,
+    description,
+    productPictures,
+    category,
+    countInStock,
+    createdBy: req.user._id,
+  });
+  const createdProduct = await newProduct.save();
+  res.send({ message: 'Product Created', product: createdProduct });
+  //res.status(200).json({ file: req.files, body:req.body});
+})
 );
 
 
 
 router.put('/:id', authorize, isAdmin, expressAsyncHandler(async (req, res) => {
-    const productId = req.params.id;
-    const product = await Product.findById(productId);
-    if (product) {
-      product.name = req.body.name;
-      product.price = req.body.price;
-      product.image = req.body.image;
-      product.category = req.body.category;
-      product.brand = req.body.brand;
-      product.countInStock = req.body.countInStock;
-      product.description = req.body.description;
-      const updatedProduct = await product.save();
-      res.send({ message: 'Product Updated', product: updatedProduct });
-    } else {
-      res.status(404).send({ message: 'Product Not Found' });
-    }
-  })
+  const productId = req.params.id;
+  const product = await Product.findById(productId);
+  if (product) {
+    product.name = req.body.name;
+    product.price = req.body.price;
+    product.image = req.body.image;
+    product.category = req.body.category;
+    product.brand = req.body.brand;
+    product.countInStock = req.body.countInStock;
+    product.description = req.body.description;
+    const updatedProduct = await product.save();
+    res.send({ message: 'Product Updated', product: updatedProduct });
+  } else {
+    res.status(404).send({ message: 'Product Not Found' });
+  }
+})
 );
-
-
 
 
 module.exports = router;

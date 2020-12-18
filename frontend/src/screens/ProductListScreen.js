@@ -4,6 +4,7 @@ import { createProduct, listProducts } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
+import AdminHomeScreen from './AdminHomeScreen';
 
 
 
@@ -31,8 +32,9 @@ export default function ProductListScreen(props) {
   const createHandler = () => {
     dispatch(createProduct());
   };
-  return (
-    <div>
+  return (    <div>
+
+    <AdminHomeScreen/>
      <div className="row">
         <h1>Products</h1>
         <button type="button" className="primary" onClick={createHandler}>

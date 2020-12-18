@@ -11,12 +11,16 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import ProfileScreen from './screens/ProfileScreen';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
+import CategoryScreen from './screens/CategoryScreen';
+import AdminHomeScreen from './screens/AdminHomeScreen';
+
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 
 
 function App() {
@@ -31,89 +35,114 @@ function App() {
   };
 
   return (
+    
     <BrowserRouter>
-    <div className="grid-container">
-    <header className="row">
-      <div>
-        <Link className="brand" to="/">Rshine</Link>
-      </div>
-      <div>
-      <Link to="/cart">Cart {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span> )}
-      </Link>
-      {
-       userInfo ? (
-        <div className="dropdown">
+{userInfo && userInfo.isAdmin ? (
+<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{zIndex:1}}>
+                          <Container fluid>
 
-        <Link to="#">{userInfo.name} <i className="fa fa-caret-down"></i>{' '}</Link>
-        <ul className="dropdown-content">
-          <li>
-            <Link to="/profile">User Profile</Link>
-            </li>
-          <li>
-          <Link to="/orderhistory">Order History</Link>
-          </li>
-        <Link to="#signout" onClick={signoutHandler}>Sign Out</Link>
-        </ul>
-        
-        </div>
-      ) :
-      (
-        <Link to="/signin">Sign In</Link>
-      )
-      }
-       {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Admin <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/productlist">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist">Orders</Link>
-                  </li>
-                  <li>
-                    <Link to="/userlist">Users</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-      </div>
-    </header>
-    <main>
-      <Route path="/signin" component={SigninScreen}></Route>
-      <Route path="/register" component={RegisterScreen}></Route>
-      <Route path="/shipping" component={ShippingAddressScreen}></Route>
-      <Route path="/payment" component={PaymentMethodScreen}></Route>
-      <Route path="/placeorder" component={PlaceOrderScreen}></Route>
-      <Route path="/order/:id" component={OrderScreen}></Route>
-      <Route path="/cart/:id?" component={CartScreen}></Route>
-      <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-      <PrivateRoute
-            path="/profile"
-            component={ProfileScreen}
-          ></PrivateRoute>
-      <AdminRoute
-            path="/productlist"
-            component={ProductListScreen}
-          ></AdminRoute> 
-       <Route
-            path="/product/:id/edit"
-            component={ProductEditScreen}
-            exact
-          ></Route>           
-      <Route path="/product/:id" component={ProductScreen} exact></Route>
-      <Route path="/" component={HomeScreen} exact></Route>
+  <Navbar.Brand href="/home">Rshine</Navbar.Brand>
+  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+  <Navbar.Collapse id="responsive-navbar-nav">
+    <Nav className="ml-auto">
+    <Nav>
+      <Nav.Link href="/cart">Cart {cartItems.length > 0 && (
+<span className="badge">{cartItems.length}</span> )}</Nav.Link>
      
-    </main>
-    <footer className="row center">All right reserved</footer>
-  </div>
-  </BrowserRouter>
+    </Nav>
+      <NavDropdown title="Admin Dashboard" id="collasible-nav-dropdown"><i className="fa fa-caret-down"></i>
+      <NavDropdown.Item href="/home">Home</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="#signout" onClick={signoutHandler}>Sign Out</NavDropdown.Item>
+      </NavDropdown>
+    </Nav>
+    
+  </Navbar.Collapse>
+  </Container>
+
+</Navbar>
+
+):
+(
+userInfo ? (
+
+<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+<Container fluid>
+
+  <Navbar.Brand href="#home">Rshine</Navbar.Brand>
+  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+  <Navbar.Collapse id="responsive-navbar-nav">
+    <Nav className="ml-auto">
+    <Nav>
+      <Nav.Link href="/cart">Cart {cartItems.length > 0 && (
+<span className="badge">{cartItems.length}</span> )}</Nav.Link>
+     
+    </Nav>
+   
+    <NavDropdown title={userInfo.name} id="collasible-nav-dropdown"> <i className="fa fa-caret-down"></i>{' '}
+        <NavDropdown.Item href="/profile">User Profile</NavDropdown.Item>
+        <NavDropdown.Item href="/orderhistory">Order History</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="#signout" onClick={signoutHandler}>Sign Out</NavDropdown.Item>
+      </NavDropdown>
+    </Nav>
+    
+  </Navbar.Collapse>
+  </Container>
+
+</Navbar>
+
+) :(
+<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+<Container fluid>
+
+  <Navbar.Brand href="#home">Rshine</Navbar.Brand>
+  <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+  <Navbar.Collapse id="responsive-navbar-nav">
+    <Nav className="ml-auto">
+    <Nav>
+      <Nav.Link href="/cart">Cart {cartItems.length > 0 && (
+<span className="badge">{cartItems.length}</span> )}</Nav.Link>
+
+</Nav>
+<Nav>
+      <Nav.Link href="/signin">Signin</Nav.Link>
+
+</Nav>
+
+    </Nav>
+    
+  </Navbar.Collapse>
+  </Container>
+
+</Navbar>
+
+)
+)}
+
+        <AdminRoute path="/home" component={AdminHomeScreen} exact/>
+        <AdminRoute path="/category" component={CategoryScreen} />
+        <AdminRoute path="/productlist" component={ProductListScreen} />
+      
+
+
+        <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
+
+<Route path="/signin" component={SigninScreen}></Route>
+<Route path="/register" component={RegisterScreen}></Route>
+<Route path="/shipping" component={ShippingAddressScreen}></Route>
+<Route path="/payment" component={PaymentMethodScreen}></Route>
+<Route path="/placeorder" component={PlaceOrderScreen}></Route>
+<Route path="/order/:id" component={OrderScreen}></Route>
+<Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+<Route path="/cart/:id?" component={CartScreen}></Route>
+<Route path="/product/:id/edit" component={ProductEditScreen} exact></Route> 
+<Route path="/product/:id" component={ProductScreen} exact></Route>
+<Route path="/" component={HomeScreen} exact></Route>   
+
+
+    </BrowserRouter>
+    
   );
 }
 
