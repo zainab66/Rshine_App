@@ -9,7 +9,6 @@ const multer = require('multer');
 const shortid = require('shortid');
 const path = require('path');
 
-const { addCategory, getCategories, updateCategories, deleteCategories } = require('../controller/category');
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
@@ -37,6 +36,7 @@ const storage = multer.diskStorage({
         _id: cate._id,
         name: cate.name,
         slug: cate.slug,
+        parentId: cate.parentId,
        
         children: createCategories(categories, cate._id),
       });
@@ -46,7 +46,7 @@ const storage = multer.diskStorage({
   }
   
 
-router.post('/create',authorize ,isAdmin, upload.single('categoryImage'), (req, res) => {
+router.post('/create',authorize ,isAdmin, upload.single('categoryImage'), expressAsyncHandler(async (req, res) => {
   const categoryObj = {
     name: req.body.name,
     slug: slugify(req.body.name),
@@ -61,23 +61,30 @@ router.post('/create',authorize ,isAdmin, upload.single('categoryImage'), (req, 
   }
 
   const cat =  new Category(categoryObj);
-  cat.save((error, category) => {
-    if (error) return res.status(400).json({ error });
-    if (category) {
-      return res.status(201).json({ category });
-    }
-  });
-});
+  const createdCategory = await cat.save();
+  res.send({ message: 'Category Created', category: createdCategory });
 
-router.get('/', (req, res) => {
-  Category.find({}).exec((error, categories) => {
-    if (error) return res.status(400).json({ error });
-    if (categories) {
-      const categoryList = createCategories(categories);
-      res.status(200).json({ categoryList });
-    }
-  });
-});
+  // cat.save((error, category) => {
+  //   if (error) return res.status(400).json({ error });
+  //   if (category) {
+  //     return res.status(201).json({ category });
+  //   }
+  // });
+}));
+
+router.get('/',  expressAsyncHandler(async (req, res) =>{
+  const categories = await Category.find({});
+    const categoryList = createCategories(categories);
+
+    res.send(categoryList);
+  // Category.find({}).exec((error, categories) => {
+  //   if (error) return res.status(400).json({ error });
+  //   if (categories) {
+  //     const categoryList = createCategories(categories);
+  //     res.status(200).json({ categoryList });
+  //   }
+  // });
+}));
 
 
 // router.post('/create',authorize ,isAdmin, upload.single('categoryImage'), addCategory);

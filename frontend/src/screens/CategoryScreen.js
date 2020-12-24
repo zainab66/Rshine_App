@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategory } from '../actions/categoryActions';
+import { addCategory } from '../actions/categoryActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import AdminHomeScreen from './AdminHomeScreen';
@@ -19,31 +19,42 @@ export default function CategoryScreen(props) {
   const [show, setShow] = useState(false);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllCategory());
+  
 
 
-  }, [dispatch]);
+  const handleClose = () => {
+    const form = new FormData();
+
+    form.append('name', categoryName);
+    form.append('parentId', parentCategoryId);
+    form.append('categoryImage', categoryImage);
+
+    dispatch(addCategory(form));
+   
 
 
-  //    const renderCategories = (categories)  => {
 
-  //        let myCategories = [];
 
-  //       for(let category of categories){
-  //         myCategories.push(
-  //           {
-  //               label: category.name,
-  //               value: category._id,
-  //               children: category.children.length > 0 && renderCategories(category.children)
-  //           }
-  //       );
-  //   }
-  //   return myCategories;
-  // }
 
-  const handleClose = () => setShow(false);
+
+
+    // const cat = {
+    //   categoryName,
+    //   parentCategoryId,
+    //   categoryImage
+    // };
+    //console.log(cat);
+    setShow(false);
+  }
   const handleShow = () => setShow(true);
+
+  const handleCategoryImage = (e) => {
+    setCategoryImage(e.target.files[0]);
+  }
+
+
+
+
   return (
     <div>
       <AdminHomeScreen />
@@ -57,42 +68,77 @@ export default function CategoryScreen(props) {
 
           </Col>
         </Row>
+        <Row>
+          <Col md={12}>
 
-        {loading ? (
-          <LoadingBox></LoadingBox>
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
-
-
-            <>
-                {categories.map((category) => (
-                  <li key={category.name}>
-                    {category.name}
+            {loading ? (
+              <LoadingBox></LoadingBox>
+            ) : error ? (
+              <MessageBox variant="danger">{error}</MessageBox>
+            ) : (
 
 
-                    {category.children.map((sub) =>
-                      <li className="list-group-item" key={sub.name}>
-                        {sub.name}
+                  <>
+                    {/* {categories.map((rowdata,i)=>
+<div>
+  {
+  (typeof  (rowdata.children)=='object')?
+  <div>
+         {rowdata.children.map((subrow,k)=>
+<div>
+  
+  {subrow.name}
+  
+   </div>
+         )}
+  </div>
+  :
+  null
 
-                        {sub.children.map((sub) =>
-                          <li className="list-group-item" key={sub.name}>
-                            {sub.name}
-                          </li>)}
-
-                      </li>)}
-
-
-                  </li>
-                ))}
-
-              </>
-
-
+  }
+  {rowdata.name}
+</div>
 
 
 
-            )}
+
+)} */}
+
+
+
+
+
+
+                    <ul className="list-group list-group-flush">
+                      {categories.map((category) => (
+                        <li className="list-group-item" key={category.name}>
+                          <h5>{category.name}</h5>
+
+
+                          {category.children.map((sub) =>
+                            <li key={sub.name}>
+                              {sub.name}
+
+                              {sub.children.map((subb) =>
+                                <li className="list-group-item" key={subb.name}>
+                                  {subb.name}
+                                </li>)}
+
+                            </li>)}
+
+
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+
+
+
+
+
+                )}
+          </Col>
+        </Row>
       </Container>
 
 
@@ -101,59 +147,54 @@ export default function CategoryScreen(props) {
           <Modal.Title>Add New Category</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input
-          value={categoryName}
-          placeholder={'Category Name'}
-          onChange={(e) => setCategoryName(e.target.value)}
+          <input type="text" className="form-control"
+            value={categoryName}
+            placeholder={'Category Name'}
+            onChange={(e) => setCategoryName(e.target.value)}
           />
 
-          <select> <option>select category</option> {loading ? (
-          <LoadingBox></LoadingBox>
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
+          {loading ? (
+            <LoadingBox></LoadingBox>
+          ) : error ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
 
 
-              <>
-                {categories.map((category) => (
-                  <option key={category.name} value={category.value}>
-                    {category.name}
+                <>
+                  <select className="form-control" value={parentCategoryId} onChange={(e) => setParentCategoryId(e.target.value)}><option>select category</option>
+                    {categories.map((category) => (
 
 
-                    {category.children.map((sub) =>
-                      
-                        <option key={sub.name} value={sub.value}>
-                    {sub.name}
-                        {sub.children.map((sub) =>
-                          <option key={sub.name}>
-                            {sub.name}
-                          </option>)}
+                      <>
+                        <option key={category._id} value={category._id}> {category.name}</option>
+                        {category.children.map((sub) =>
+                          <>
+                            <option key={sub._id} value={sub._id}>  {sub.name}</option>
 
-                      </option>)}
+                            {sub.children.map((subb) =>
 
+                              <option key={subb._id} value={subb._id}>  {subb.name}</option>
 
+                            )}
+                          </>
+                        )}
+                      </>))}
+                  </select>
 
-                   
-
-
-                  </option>
-                ))}
-</>
-            
+                </>
 
 
 
 
 
-            )}
-</select>
+
+              )}
 
 
+          <input type="file" name="categoryImage" onChange={handleCategoryImage} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+
           <Button variant="primary" onClick={handleClose}>
             Save Changes
           </Button>

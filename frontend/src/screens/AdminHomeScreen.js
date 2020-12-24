@@ -16,7 +16,7 @@ export default function AdminHomeScreen(props) {
 
                     </ul>
                 </Col>
-                <Col md={10} style={{marginLeft:"auto"}}></Col>
+                <Col md={10} style={{marginLeft:"auto", paddingTop:'60px'}}></Col>
 
             </Row>
             </Container>

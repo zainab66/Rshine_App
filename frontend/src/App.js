@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
@@ -15,12 +15,15 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import ProfileScreen from './screens/ProfileScreen';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
-import ProductListScreen from './screens/ProductListScreen';
+import ProductAdminScreen from './screens/ProductAdminScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import CategoryScreen from './screens/CategoryScreen';
 import AdminHomeScreen from './screens/AdminHomeScreen';
 
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { getAllCategory } from './actions/categoryActions';
+import MenueHeader from './components/MenueHeader';
+
 
 
 function App() {
@@ -34,11 +37,16 @@ function App() {
     dispatch(signout());
   };
 
+
+  useEffect(() => {
+    dispatch(getAllCategory());
+  }, []);
+
+
   return (
-    
     <BrowserRouter>
 {userInfo && userInfo.isAdmin ? (
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{zIndex:1}}>
+<Navbar collapseOnSelect fixed="top" expand="lg" bg="dark" variant="dark" style={{zIndex:1}}>
                           <Container fluid>
 
   <Navbar.Brand href="/home">Rshine</Navbar.Brand>
@@ -65,8 +73,8 @@ function App() {
 ):
 (
 userInfo ? (
-
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+<>
+<Navbar collapseOnSelect fixed="top" expand="lg" bg="dark" variant="dark">
 <Container fluid>
 
   <Navbar.Brand href="#home">Rshine</Navbar.Brand>
@@ -92,8 +100,9 @@ userInfo ? (
 
 </Navbar>
 
+</>
 ) :(
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+<Navbar collapseOnSelect fixed="top" expand="lg" bg="dark" variant="dark">
 <Container fluid>
 
   <Navbar.Brand href="#home">Rshine</Navbar.Brand>
@@ -122,7 +131,7 @@ userInfo ? (
 
         <AdminRoute path="/home" component={AdminHomeScreen} exact/>
         <AdminRoute path="/category" component={CategoryScreen} />
-        <AdminRoute path="/productlist" component={ProductListScreen} />
+        <AdminRoute path="/productlist" component={ProductAdminScreen} />
       
 
 

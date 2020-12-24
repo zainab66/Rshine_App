@@ -1,5 +1,9 @@
 import Axios from 'axios';
-import { Category_LIST_REQUEST,Category_LIST_SUCCESS,Category_LIST_FAIL} from '../constants/categoryConstants';
+import { Category_LIST_REQUEST,Category_LIST_SUCCESS,
+    Category_LIST_FAIL,
+    Category_CREATE_REQUEST,
+    Category_CREATE_SUCCESS,
+    Category_CREATE_FAIL} from '../constants/categoryConstants';
 
 
 
@@ -49,3 +53,35 @@ export const getAllCategory = () => async (dispatch) =>{
 // export {
 //     getAllCategory
 // }
+
+
+
+
+
+
+
+export const addCategory = (form) => async (dispatch, getState) => {
+    dispatch({ type: Category_CREATE_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.post(
+        '/api/category/create',
+        form,
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({
+        type: Category_CREATE_SUCCESS,
+        payload: data.category,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: Category_CREATE_FAIL, payload: message });
+    }
+  };  

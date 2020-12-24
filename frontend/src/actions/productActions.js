@@ -33,15 +33,15 @@ export const detailsProduct = (productId) => async (dispatch) => {
   };
 
 
-  export const createProduct = () => async (dispatch, getState) => {
+  export const addProduct = (form) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
     const {
       userSignin: { userInfo },
     } = getState();
     try {
       const { data } = await Axios.post(
-        '/api/products',
-        {},
+        '/api/products/create',
+        form,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }

@@ -51,7 +51,7 @@ expressAsyncHandler(async (req, res) => {
 
 
 router.post('/create', authorize, isAdmin, upload.array('productPictures'), expressAsyncHandler(async (req, res) => {
-  const {name,price,description,category,countInStock,createdBy} = req.body;
+  const {name,price,description,category,quantity,createdBy} = req.body;
   let productPictures = [];
   if(req.files.length > 0){
     productPictures = req.files.map(file => {
@@ -65,7 +65,7 @@ router.post('/create', authorize, isAdmin, upload.array('productPictures'), expr
     description,
     productPictures,
     category,
-    countInStock,
+    quantity,
     createdBy: req.user._id,
   });
   const createdProduct = await newProduct.save();
