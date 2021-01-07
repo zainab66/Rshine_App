@@ -25,7 +25,7 @@ export const categoryListReducer = (  state = { loading: true, categories: [] },
 
 
 
-export const productCreateReducer = (state = {}, action) => {
+export const categoryCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case Category_CREATE_REQUEST:
       return { loading: true };

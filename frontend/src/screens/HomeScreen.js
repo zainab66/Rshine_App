@@ -60,12 +60,12 @@ export default function HomeScreen() {
                          <span>{category.name}</span>
 
 <ul>
-                         {category.children.map((sub) =>
+                         {category.childr.map((sub) =>
                            <li key={sub.name}><a href={sub.slug}>
                              {sub.name}
                            </a>
 <ul>
-                             {sub.children.map((subb) =>
+                             {sub.childr.map((subb) =>
                                <li  key={subb.name}><a href={subb.slug}>
                                  {subb.name}
                              </a>
@@ -87,7 +87,6 @@ export default function HomeScreen() {
    
 
 
-    
    </div>
  );
      

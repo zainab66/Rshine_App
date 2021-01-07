@@ -38,7 +38,7 @@ const storage = multer.diskStorage({
         slug: cate.slug,
         parentId: cate.parentId,
        
-        children: createCategories(categories, cate._id),
+        childr: createCategories(categories, cate._id),
       });
     }
   
@@ -77,17 +77,48 @@ router.get('/',  expressAsyncHandler(async (req, res) =>{
     const categoryList = createCategories(categories);
 
     res.send(categoryList);
-  // Category.find({}).exec((error, categories) => {
-  //   if (error) return res.status(400).json({ error });
-  //   if (categories) {
-  //     const categoryList = createCategories(categories);
-  //     res.status(200).json({ categoryList });
-  //   }
-  // });
+
+}));
+
+router.post('/update',authorize ,isAdmin,  upload.array("categoryImage"),expressAsyncHandler(async (req, res) =>{
+ 
+ //res.status(200).json({body:req.body});
+ 
+  const { _id, name, parentId, type } = req.body;
+  const updatedCategories = [];
+  if (name instanceof Array) {
+    for (let i = 0; i < name.length; i++) {
+      const category = {
+        name: name[i],
+        type: type[i],
+      };
+      if (parentId[i] !== "") {
+        category.parentId = parentId[i];
+      }
+
+      const updatedCategory = await Category.findOneAndUpdate(
+        { _id: _id[i] },
+        category,
+        { new: true }
+      );
+      updatedCategories.push(updatedCategory);
+    }
+    return res.status(201).json({ updateCategories: updatedCategories });
+  } else {
+    const category = {
+      name,
+      type,
+    };
+    if (parentId !== "") {
+      category.parentId = parentId;
+    }
+    const updatedCategory = await Category.findOneAndUpdate({ _id }, category, {
+      new: true,
+    });
+    return res.status(201).json({ updatedCategory });
+  }
 }));
 
 
-// router.post('/create',authorize ,isAdmin, upload.single('categoryImage'), addCategory);
-// router.get('/', getCategories);
 
 module.exports = router;

@@ -156,14 +156,14 @@ export default function ProductAdminScreen(props) {
                     {categories.map((category) => (
 
                       <>
-                        <option key={category._id} value={category.name}> {category.name}</option>
+                        <option key={category._id} value={category._id}> {category.name}</option>
                         {category.children.map((sub) =>
                           <>
-                            <option key={sub._id} value={sub.name}>  {sub.name}</option>
+                            <option key={sub._id} value={sub._id}>  {sub.name}</option>
 
                             {sub.children.map((subb) =>
 
-                              <option key={subb._id} value={subb.name}>  {subb.name}</option>
+                              <option key={subb._id} value={subb._id}>  {subb.name}</option>
 
                             )}
                           </>

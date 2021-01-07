@@ -9,6 +9,14 @@ const multer = require('multer');
 const shortid = require('shortid');
 const path = require('path');
 const { default: slugify } = require('slugify');
+const Category = require('../models/categoryModel.js');
+const {
+  createProduct,
+  getProductsBySlug,
+  getProductDetailsById,
+  deleteProductById,
+  getProducts,
+} = require("../controller/product");
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -37,6 +45,7 @@ expressAsyncHandler(async (req, res) => {
   res.send({ createdProducts });
 })
 );
+
 
 router.get('/:id',
 expressAsyncHandler(async (req, res) => {
@@ -95,5 +104,15 @@ router.put('/:id', authorize, isAdmin, expressAsyncHandler(async (req, res) => {
 })
 );
 
+router.get("/productes/:slug", getProductsBySlug);
 
+// router.get('/productes/:slug',
+// expressAsyncHandler(async (req, res) => {
+//   const{slug}=req.params;
+//   const prod = await Category.findOne({slug:slug}).select("_id ");
+//   if (prod) {
+//     const slup= Product.find({ prod: prod._id })
+//     res.status(200).json(slup);}
+// })
+// );
 module.exports = router;

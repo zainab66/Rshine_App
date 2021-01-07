@@ -1,7 +1,7 @@
 import {  PRODUCT_LIST_REQUEST,PRODUCT_LIST_SUCCESS,PRODUCT_LIST_FAIL} from '../constants/productConstants';
 import Axios from 'axios';
 import {  PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS,PRODUCT_DETAILS_FAIL,PRODUCT_CREATE_FAIL,
-  PRODUCT_CREATE_REQUEST,PRODUCT_CREATE_SUCCESS,PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL} from '../constants/productConstants';
+  PRODUCT_CREATE_REQUEST,PRODUCT_CREATE_SUCCESS,PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL,GET_PRODUCTS_BY_SLUG} from '../constants/productConstants';
 
 export const listProducts = () => async (dispatch) =>{
     dispatch({
@@ -78,3 +78,39 @@ export const detailsProduct = (productId) => async (dispatch) => {
       dispatch({ type: PRODUCT_UPDATE_FAIL, error: message });
     }
   };
+
+
+
+  // export const getProductsBySlug = (slug) => async (dispatch) => {
+  //   // dispatch({ type: PRODUCT_Slug_REQUEST  });
+    
+  //     const {data} = await Axios.get(`/api/products/productes/${slug}`);
+  //     console.log('ok',data)
+  //       dispatch({ type: GET_PRODUCTS_BY_SLUG, payload: data });
+   
+  //     dispatch({
+  //       type: PRODUCT_Slug_FAIL,
+  //       payload:
+  //         error.response && error.response.data.message
+  //           ? error.response.data.message
+  //           : error.message,
+  //     });
+    
+  // };
+
+  export const getProductsBySlug = (slug) => {
+    return async dispatch => {
+        const res = await Axios.get(`/api/products/productes/${slug}`);
+        //console.log(res)
+        if (res.status === 200) {
+            dispatch({
+                type:GET_PRODUCTS_BY_SLUG,
+                payload: res.data
+            });
+        } else {
+            // dispatch({
+            //     type: 
+            // })
+        }
+    }
+}

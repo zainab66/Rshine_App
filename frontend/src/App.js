@@ -22,9 +22,7 @@ import AdminHomeScreen from './screens/AdminHomeScreen';
 
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { getAllCategory } from './actions/categoryActions';
-import MenueHeader from './components/MenueHeader';
-
-
+import ProductUserScreen from './screens/ProductUserScreen';
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -148,6 +146,7 @@ userInfo ? (
 <Route path="/product/:id/edit" component={ProductEditScreen} exact></Route> 
 <Route path="/product/:id" component={ProductScreen} exact></Route>
 <Route path="/" component={HomeScreen} exact></Route>   
+<Route path="/:slug" component={ProductUserScreen} exact></Route>
 
 
     </BrowserRouter>

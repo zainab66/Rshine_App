@@ -3,7 +3,7 @@ import { Category_LIST_REQUEST,Category_LIST_SUCCESS,
     Category_LIST_FAIL,
     Category_CREATE_REQUEST,
     Category_CREATE_SUCCESS,
-    Category_CREATE_FAIL} from '../constants/categoryConstants';
+    Category_CREATE_FAIL, Category_UPDATE_REQUEST,Category_UPDATE_SUCCESS,Category_UPDATE_FAIL} from '../constants/categoryConstants';
 
 
 
@@ -22,43 +22,6 @@ export const getAllCategory = () => async (dispatch) =>{
         dispatch({ type: Category_LIST_FAIL, payload: error.message });
     }
 };
-
-
-
-// const getAllCategory = () => {
-//     return async dispatch => {
-
-//         dispatch({ type: Category_LIST_REQUEST });
-//         const res =await Axios.get('/api/category');
-//         //console.log(res);
-//         if (res.status === 200) {
-
-//             const { categoryList } = res.data;
-//            // console.log(res);
-
-//             dispatch({
-//                 type: Category_LIST_SUCCESS,
-//                 payload: { categories: categoryList }
-//             });
-//         } else {
-//             dispatch({
-//                 type: Category_LIST_FAIL,
-//                 payload: { error: res.data.error }
-//             });
-//         }
-
-
-//     }
-// }
-// export {
-//     getAllCategory
-// }
-
-
-
-
-
-
 
 export const addCategory = (form) => async (dispatch, getState) => {
     dispatch({ type: Category_CREATE_REQUEST });
@@ -85,3 +48,30 @@ export const addCategory = (form) => async (dispatch, getState) => {
       dispatch({ type: Category_CREATE_FAIL, payload: message });
     }
   };  
+
+  export const updateCategories = (form) => async (dispatch, getState) => {
+    dispatch({ type: Category_UPDATE_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.post(
+        '/api/category/update',
+        form,
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({
+        type: Category_UPDATE_SUCCESS,
+        payload: data.category,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: Category_UPDATE_FAIL, payload: message });
+    }
+  };  
+ 

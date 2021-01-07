@@ -5,7 +5,7 @@ const {
 } = require('../constants/productConstants');
 const {  PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS,PRODUCT_DETAILS_FAIL, PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS, PRODUCT_CREATE_FAIL, PRODUCT_CREATE_RESET, PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL,
-  PRODUCT_UPDATE_RESET } = require('../constants/productConstants');
+  PRODUCT_UPDATE_RESET,GET_PRODUCTS_BY_SLUG } = require('../constants/productConstants');
 
 
 export const productListReducer = (  state = { loading: true, products: [] },
@@ -67,3 +67,14 @@ export const productUpdateReducer = (state = {}, action) => {
       return state;
   }
 };
+
+
+export const productSlugReducer = (  state = { loading: true, produ: []},
+  action) =>{
+  switch (action.type) {
+      case GET_PRODUCTS_BY_SLUG:
+        return { loading: false, produ: action.payload.produ };
+      default:
+        return state;
+      }
+    };
