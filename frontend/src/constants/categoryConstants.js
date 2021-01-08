@@ -13,3 +13,9 @@ export const Category_UPDATE_REQUEST = 'Category_UPDATE_REQUEST';
 export const Category_UPDATE_SUCCESS = 'Category_UPDATE_SUCCESS';
 export const Category_UPDATE_FAIL = 'Category_UPDATE_FAIL';
 // export const Category_UPDATE_RESET = 'Category_UPDATE_RESET';
+
+
+export const Category_DELETE_REQUEST = 'Category_DELETE_REQUEST';
+export const Category_DELETE_SUCCESS = 'Category_DELETE_SUCCESS';
+export const Category_DELETE_FAIL = 'Category_DELETE_FAIL';
+// export const Category_DELETE_RESET = 'Category_DELETE_RESET';

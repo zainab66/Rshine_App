@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, updateCategories} from '../actions/categoryActions';
+import { getAllCategory,addCategory, updateCategories, deleteCategoriesAction
+} from '../actions/categoryActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import AdminHomeScreen from './AdminHomeScreen';
@@ -32,6 +33,7 @@ export default function CategoryScreen(props) {
   const [checkedArray, setCheckedArray] = useState([]);
   const [expandedArray, setExpandedArray] = useState([]);
   const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
+  const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -148,8 +150,50 @@ export default function CategoryScreen(props) {
     setUpdateCategoryModal(false);
 }
 
+const updateCheckedAndExpandedCategories = () => {
+  const categoryAll = renderCategories();
 
+  const checkedArray = [];
+  const expandedArray = [];
 
+  checked.length > 0 && checked.forEach((categoryId, index) => {
+    const category = categoryAll.find((category, _index) => categoryId === category.value)
+    category && checkedArray.push(category);
+    console.log('cc', category)
+  })
+
+  expanded.length > 0 && expanded.forEach((categoryId, index) => {
+    const category = categoryAll.find((category, _index) => categoryId === category.value)
+    category && expandedArray.push(category);
+    console.log(category)
+  })
+  setCheckedArray(checkedArray);
+  setExpandedArray(expandedArray);
+
+}
+const renderDeleteCategoryModal = () => {
+  updateCheckedAndExpandedCategories();
+  setDeleteCategoryModal(true);  
+}
+
+const deleteCategories = () => {
+  const checkedIdsArray = checkedArray.map((item, index) => ({ _id: item.value }));
+  const expandedIdsArray = expandedArray.map((item, index) => ({ _id: item.value }));
+  const idsArray = expandedIdsArray.concat(checkedIdsArray);
+ // dispatch(deleteCategoriesAction(idsArray))
+  if (checkedIdsArray.length > 0) {
+      dispatch(deleteCategoriesAction(checkedIdsArray))
+          .then(result => {
+              if (result) {
+                  dispatch(getAllCategory())
+                  setDeleteCategoryModal(false)
+              }
+          });
+  }
+
+  setDeleteCategoryModal(false);
+
+}
 
 
   return (
@@ -212,7 +256,7 @@ export default function CategoryScreen(props) {
         </Row>
         <Row>
           <Col>
-            <button ><IoIosTrash /> <span>Delete</span></button>
+            <button  onClick={renderDeleteCategoryModal}><IoIosTrash /> <span>Delete</span></button>
             <button onClick={updateCategory}><IoIosCloudUpload /> <span>Edit</span></button>
 
           </Col>
@@ -426,13 +470,50 @@ export default function CategoryScreen(props) {
       </Modal>
 
 
+      {/* Delete Categories */}
+      <Modal size="lg" show={deleteCategoryModal}  onHide={() => setDeleteCategoryModal(false)}  buttons={[
+              {
+                  label: 'No',
+                  color: 'primary',
+                  onClick: () => {
+                      alert('no');
+                  }
+              },
+              {
+                  label: 'Yes',
+                  color: 'danger',
+                  // onClick: deleteCategories
+              }
+          ]}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+      
+
+         
+        <h5>Expanded</h5>
+          { expandedArray.map((item, index) => <span key={index}>{item.name}</span>)}
+          <h5>Checked</h5>
+          { checkedArray.map((item, index) => <span key={index}>{item.name}</span>)}
 
 
 
 
 
-
-
+          {/* <input type="file" name="categoryImage" onChange={handleCategoryImage} /> */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={renderDeleteCategoryModal}>
+          No         
+          </Button> 
+          
+          <Button variant="danger" onClick= {deleteCategories}>
+            Yes
+            </Button>
+        
+        </Modal.Footer>
+      </Modal>
 
 
 

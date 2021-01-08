@@ -49,7 +49,7 @@ const storage = multer.diskStorage({
 router.post('/create',authorize ,isAdmin, upload.single('categoryImage'), expressAsyncHandler(async (req, res) => {
   const categoryObj = {
     name: req.body.name,
-    slug: slugify(req.body.name),
+    slug: `${slugify(req.body.name)}-${shortid.generate()}`,
   };
 
   if (req.file) {
@@ -119,6 +119,24 @@ router.post('/update',authorize ,isAdmin,  upload.array("categoryImage"),express
   }
 }));
 
+
+router.post('/delete',authorize ,isAdmin,  expressAsyncHandler(async (req, res) =>{
+  const { ids } = req.body.payload;
+  const deletedCategories = [];
+  for (let i = 0; i < ids.length; i++) {
+    const deleteCategory = await Category.findByIdAndDelete({
+      _id: ids[i]._id,
+      createdBy: req.user._id,
+    });
+    deletedCategories.push(deleteCategory);
+  }
+  if (deletedCategories.length == ids.length) {
+    res.status(201).json({ message: "Categories removed" });
+  } else {
+    res.status(400).json({ message: "Something went wrong" });
+  }
+
+}));
 
 
 module.exports = router;
