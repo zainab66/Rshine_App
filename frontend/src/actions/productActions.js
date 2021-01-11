@@ -19,7 +19,8 @@ export const listProducts = () => async (dispatch) =>{
 export const detailsProduct = (productId) => async (dispatch) => {
     dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
     try {
-      const { data } = await Axios.get(`/api/products/${productId}`);
+      const { data } = await Axios.get(`/api/products/prod/${productId}`);
+      console.log(data)
       dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -101,7 +102,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
   export const getProductsBySlug = (slug) => {
     return async dispatch => {
         const res = await Axios.get(`/api/products/productes/${slug}`);
-        //console.log(res)
+        console.log('oooo',res)
         if (res.status === 200) {
             dispatch({
                 type:GET_PRODUCTS_BY_SLUG,

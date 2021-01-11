@@ -9,7 +9,7 @@ const Category = require('../models/categoryModel.js');
 exports.getProductsBySlug = (req, res) => {
     const { slug } = req.params;
     Category.findOne({ slug: slug })
-      .select("_id type")
+      .select("_id")
       .exec((error, category) => {
         if (error) {
           return res.status(400).json({ error });
@@ -21,17 +21,15 @@ exports.getProductsBySlug = (req, res) => {
               return res.status(400).json({ error });
             }
   
-            if (category.type) {
+           
               if (produ.length > 0) {
                 res.status(200).json({
                   produ
                 });
               }
-            } else {
-              res.status(200).json({ produ });
-            }
+           
           });
         }
       });
   };
-  
+ 

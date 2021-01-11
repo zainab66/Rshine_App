@@ -5,7 +5,7 @@ import { productListReducer, productDetailsReducer, productCreateReducer,  produ
 } from './reducers/productReducers';
 import { userSigninReducer, userRegisterReducer, userDetailsReducer,  userUpdateProfileReducer} from './reducers/userReducers';
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderMineListReducer} from './reducers/orderReducers';
-import { categoryListReducer,categoryCreateReducer } from './reducers/categoryReducers';
+import { categoryListReducer,categoryCreateReducer ,categoryUpdateReducer,categoryDeleteReducer} from './reducers/categoryReducers';
 
 
 const initialState = {
@@ -42,8 +42,9 @@ const reducer = combineReducers({
     productUpdate: productUpdateReducer,
     categoryList: categoryListReducer,
     categoryCreate:categoryCreateReducer,
-    productSlug:productSlugReducer
-  
+    productSlug:productSlugReducer,
+    categoryUpdate:categoryUpdateReducer,
+    categoryDelete:categoryDeleteReducer
 
 })
 

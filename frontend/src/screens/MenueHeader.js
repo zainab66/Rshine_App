@@ -8,7 +8,7 @@ import { getAllCategory } from '../actions/categoryActions';
 import {NavLink} from 'react-router-dom';
 
 
-export default function HomeScreen() {
+export default function MenueHeader() {
   // const dispatch = useDispatch();
   // const productList = useSelector(state => state.productList);
   // const { loading, error, products } = productList;
@@ -61,12 +61,12 @@ export default function HomeScreen() {
 
 <ul>
                          {category.childr.map((sub) =>
-                           <li key={sub.name}><a href={sub.slug}>
+                           <li key={sub.name}><a href={`/${sub.slug}`}>
                              {sub.name}
                            </a>
 <ul>
                              {sub.childr.map((subb) =>
-                               <li  key={subb.name}><a href={subb.slug}>
+                               <li  key={subb.name}><a href={`/${subb.slug}`}>
                                  {subb.name}
                              </a>
                                </li>)}</ul>

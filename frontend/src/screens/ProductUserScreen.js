@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import HomeScreen from './HomeScreen';
+import HomeScreen from './MenueHeader';
 import { getProductsBySlug } from '../actions/productActions';
 import{generatePublicUrl} from '../urlConfig';
+import { Link } from "react-router-dom";
+
+
+
+
 export default function ProductUserScreen(props) {
     
     const productSlug = useSelector((state) => state.productSlug);
@@ -13,7 +18,7 @@ export default function ProductUserScreen(props) {
 
 
     useEffect(() => {
-        //console.log(props)
+        console.log(props)
         const{match}=props;
 
 
@@ -29,7 +34,8 @@ export default function ProductUserScreen(props) {
         {produ.map((pp) => {
             return(
 
-        <div className="productContainer">
+        <Link  to={`/${pp.slug}/${pp._id}/p`}
+         className="productContainer">
             <div className="productImgContainer">
                 
                 <img src={generatePublicUrl(pp.productPictures[0].img)}   alt=""/>
@@ -40,7 +46,7 @@ export default function ProductUserScreen(props) {
                 <span>666544</span></div>
                 <div>{pp.price}</div>
             </div>
-        </div>
+        </Link>
         )})}</div>
         </div>
     )

@@ -17,7 +17,7 @@ export default function ProductAdminScreen(props) {
     products: listProduct,
   } = productList;
   const [name, setName] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [countInStock, setCountInStock] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -36,7 +36,7 @@ export default function ProductAdminScreen(props) {
   const handleClose = () => {
     const form = new FormData();
     form.append("name", name);
-    form.append("quantity", quantity);
+    form.append("countInStock", countInStock);
     form.append("price", price);
     form.append("description", description);
     form.append("category", categoryId);
@@ -82,7 +82,7 @@ export default function ProductAdminScreen(props) {
         <th>#</th>
         <th>Name</th>
         <th>Price</th>
-        <th>Quantity</th>
+        <th>CountInStock</th>
         <th>Description</th>
         <th>Category</th>
         <th>product Pictures</th>
@@ -95,7 +95,7 @@ export default function ProductAdminScreen(props) {
         <td>{product._id}</td>
         <td>{product.name}</td>
         <td>{product.price}</td>
-        <td>{product.quantity}</td>
+        <td>{product.countInStock}</td>
         <td>{product.description}</td>
         <td>{product.category}</td>
         <td>{product.productPictures.map(picture => <div className="productImgContainer">
@@ -128,10 +128,10 @@ export default function ProductAdminScreen(props) {
 
 
         <input  className="form-control"
-          label="Quantity"
-          value={quantity}
-          placeholder={`Quantity`}
-          onChange={(e) => setQuantity(e.target.value)}
+          label="countInStock"
+          value={countInStock}
+          placeholder={`countInStock`}
+          onChange={(e) => setCountInStock(e.target.value)}
         />
         <input  className="form-control"
           label="Price"
@@ -157,11 +157,11 @@ export default function ProductAdminScreen(props) {
 
                       <>
                         <option key={category._id} value={category._id}> {category.name}</option>
-                        {category.children.map((sub) =>
+                        {category.childr.map((sub) =>
                           <>
                             <option key={sub._id} value={sub._id}>  {sub.name}</option>
 
-                            {sub.children.map((subb) =>
+                            {sub.childr.map((subb) =>
 
                               <option key={subb._id} value={subb._id}>  {subb.name}</option>
 
