@@ -173,6 +173,10 @@ export default function OrderScreen(props) {
 
                       <PayPalButton
                         amount={order.totalPrice}
+                        options={{
+                          clientId: "Aa89zB9BYaMxcyqFgLS_k9nDdzYAQMTTXEhgy8NHrs5jdRouxBuVpDigk33jcGNyXgX1YK6kR44Wm52j"
+                          ,currency:"CAD"
+                        }}
                         onSuccess={successPaymentHandler}
                       ></PayPalButton>
                     </>

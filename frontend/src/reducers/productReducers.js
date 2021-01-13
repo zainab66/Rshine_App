@@ -5,7 +5,10 @@ const {
 } = require('../constants/productConstants');
 const {  PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS,PRODUCT_DETAILS_FAIL, PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS, PRODUCT_CREATE_FAIL, PRODUCT_CREATE_RESET, PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL,
-  PRODUCT_UPDATE_RESET,GET_PRODUCTS_BY_SLUG } = require('../constants/productConstants');
+  PRODUCT_UPDATE_RESET,GET_PRODUCTS_BY_SLUG,PRODUCT_REVIEW_CREATE_REQUEST,
+  PRODUCT_REVIEW_CREATE_SUCCESS,
+  PRODUCT_REVIEW_CREATE_FAIL,
+  PRODUCT_REVIEW_CREATE_RESET } = require('../constants/productConstants');
 
 
 export const productListReducer = (  state = { loading: true, products: [] },
@@ -78,3 +81,19 @@ export const productSlugReducer = (  state = { loading: true, produ: []},
         return state;
       }
     };
+
+
+export const productReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PRODUCT_REVIEW_CREATE_REQUEST:
+      return { loading: true };
+    case PRODUCT_REVIEW_CREATE_SUCCESS:
+      return { loading: false, success: true, review: action.payload };
+    case PRODUCT_REVIEW_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case PRODUCT_REVIEW_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};    

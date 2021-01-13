@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { detailsProduct } from '../actions/productActions';
+import { createReview, detailsProduct } from '../actions/productActions';
 import { IoIosArrowForward, IoIosStar, IoMdCart } from "react-icons/io";
 import { generatePublicUrl } from '../urlConfig';
 import HomeScreen from './MenueHeader';
 import { AiFillThunderbolt } from "react-icons/ai";
+import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstants';
 
 export default function ProductDetailsPage(props) {
   const dispatch = useDispatch();
@@ -17,14 +18,46 @@ export default function ProductDetailsPage(props) {
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
+  const productReviewCreate = useSelector((state) => state.productReviewCreate);
+  const {
+    loading: loadingReviewCreate,
+    error: errorReviewCreate,
+    success: successReviewCreate,
+  } = productReviewCreate;
+
+  const [rating, setRating] = useState(0);
+  
+  const [hover, setHover] = useState(null);
+
+  const [comment, setComment] = useState('');
   useEffect(() => {
+    if (successReviewCreate) {
+      window.alert('Review Submitted Successfully');
+      setRating('');
+      setComment('');
+      dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
+    }
     dispatch(detailsProduct(productId));
-  }, [dispatch, productId]);
+  }, [dispatch, productId, successReviewCreate]);
 
   const addToCartHandler = () => {
     props.history.push(`/cart/${productId}?qty=${qty}`);
   };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (comment && rating) {
+      dispatch(
+        createReview(productId, { rating, comment, name: userInfo.name })
+      );
+    } else {
+      alert('Please enter comment and rating');
+    }
+  };
+
   return (
     <div>
       <HomeScreen />
@@ -151,7 +184,81 @@ export default function ProductDetailsPage(props) {
                     </>
                   )}
               </p>
-              
+              <div>
+
+              <Rating
+          rating={product.rating}
+          numReviews={product.numReviews}
+        ></Rating>
+
+
+
+            <h2 id="reviews">Reviews</h2>
+            {product.reviews.length === 0 && (
+              <MessageBox>There is no review</MessageBox>
+            )}
+            <ul>
+              {product.reviews.map((review) => (
+                <li key={review._id}>
+                  <strong>{review.name}</strong>
+                  <Rating rating={review.rating} caption=" "></Rating>
+                  <p>{review.createdAt.substring(0, 10)}</p>
+                  <p>{review.comment}</p>
+                </li>
+              ))}
+              <li>
+                {userInfo ? (
+                  <form className="form" onSubmit={submitHandler}>
+                    <div>
+                      <h2>Write a customer review</h2>
+                    </div>
+                    <div>
+                      <label htmlFor="rating">Rating</label>
+                      {[...Array(5)].map((star,i)=>{
+                        const ratingValue=i+1;
+                        return(
+                          <label>
+                           <input className="rattingInput" type="radio" name="rating" value={ratingValue}
+                             onClick={() => setRating(ratingValue) }
+                             />
+                            
+                        <IoIosStar className="star" color={ratingValue <= (hover||rating) ? "#ffc107":"#e4e5e9"} size={25}
+                           onMouseEnter={()=>setHover(ratingValue)}
+                            onMouseLeave={()=>setHover(null)}/></label>);
+                      })}
+                   
+                    </div>
+                    <div>
+                      <label htmlFor="comment">Comment</label>
+                      <textarea
+                        id="comment"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      ></textarea>
+                    </div>
+                    <div>
+                      <label />
+                      <button className="primary" type="submit">
+                        Submit
+                      </button>
+                    </div>
+                    <div>
+                      {loadingReviewCreate && <LoadingBox></LoadingBox>}
+                      {errorReviewCreate && (
+                        <MessageBox variant="danger">
+                          {errorReviewCreate}
+                        </MessageBox>
+                      )}
+                    </div>
+                  </form>
+                ) : (
+                  <MessageBox>
+                    Please <Link to="/signin">Sign In</Link> to write a review
+                  </MessageBox>
+                )}
+              </li>
+            </ul>
+          </div>
                     <p style={{ display: "flex" }}>
                       <span
                         style={{

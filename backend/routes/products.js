@@ -59,7 +59,7 @@ router.get('/prod/:id', expressAsyncHandler(async (req, res) => {
 
 
 router.post('/create', authorize, isAdmin, upload.array('productPictures'), expressAsyncHandler(async (req, res) => {
-  const {name,price,description,category,countInStock,createdBy} = req.body;
+  const {name,price,description,category,countInStock,rating,numReviews,createdBy} = req.body;
   let productPictures = [];
   if(req.files.length > 0){
     productPictures = req.files.map(file => {
@@ -74,6 +74,8 @@ router.post('/create', authorize, isAdmin, upload.array('productPictures'), expr
     productPictures,
     category,
     countInStock,
+    rating,
+    numReviews,
     createdBy: req.user._id,
   });
   const createdProduct = await newProduct.save();
@@ -105,13 +107,33 @@ router.put('/:id', authorize, isAdmin, expressAsyncHandler(async (req, res) => {
 
 router.get("/productes/:slug", getProductsBySlug);
 
-// router.get('/productes/:slug',
-// expressAsyncHandler(async (req, res) => {
-//   const{slug}=req.params;
-//   const prod = await Category.findOne({slug:slug}).select("_id ");
-//   if (prod) {
-//     const slup= Product.find({ prod: prod._id })
-//     res.status(200).json(slup);}
-// })
-// );
+router.post('/:id/reviews', authorize, expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (product) {
+      if (product.reviews.find((x) => x.name === req.user.name)) {
+        return res
+          .status(400)
+          .send({ message: 'You already submitted a review' });
+      }
+      const review = {
+        name: req.user.name,
+        rating: Number(req.body.rating),
+        comment: req.body.comment,
+      };
+      product.reviews.push(review);
+      product.numReviews = product.reviews.length;
+      product.rating =
+        product.reviews.reduce((a, c) => c.rating + a, 0) /
+        product.reviews.length;
+      const updatedProduct = await product.save();
+      res.status(201).send({
+        message: 'Review Created',
+        review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+      });
+    } else {
+      res.status(404).send({ message: 'Product Not Found' });
+    }
+  })
+);
 module.exports = router;
