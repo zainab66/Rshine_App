@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MenueHeader from './screens/MenueHeader';
+import HomeScreen from './screens/HomeScreen';
 import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
 import { signout } from './actions/userActions';
@@ -19,6 +19,8 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import CategoryScreen from './screens/CategoryScreen';
 import AdminHomeScreen from './screens/AdminHomeScreen';
 import "./App.css";
+import {
+  IoIosCart,IoIosSearch} from 'react-icons/io'
 
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { getAllCategory } from './actions/categoryActions';
@@ -46,19 +48,47 @@ function App() {
   return (
     <BrowserRouter>
 {userInfo && userInfo.isAdmin ? (
-<Navbar collapseOnSelect fixed="top" expand="lg" bg="dark" variant="dark" style={{zIndex:1}}>
-                          <Container fluid>
+<Navbar collapseOnSelect fixed="top" expand="lg" bg="light" variant="light" style={{zIndex:1}}>
+                          <Container >
 
   <Navbar.Brand href="/home">Rshine</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+  
   <Navbar.Collapse id="responsive-navbar-nav">
+  <div className="searchInputContainer">
+            <input
+              className="searchInput"
+              placeholder={"search for products, brands and more"}
+            />
+            <div className="searchIconContainer">
+              <IoIosSearch
+                style={{
+                  color: "#2874f0",
+                }}
+              />
+            </div>
+          </div>
     <Nav className="ml-auto">
     <Nav>
-      <Nav.Link href="/cart">Cart {cartItems.length > 0 && (
-<span className="badge">{cartItems.length}</span> )}</Nav.Link>
+      <Nav.Link href="/cart">    <div style={{ fontSize: "19px", position: "relative" }}>
+{cartItems.length > 0 && (
+<span style={{
+          position: "absolute",
+          background: "red",
+          color:"white",
+          width: "16px",
+          height: "16px",
+          borderRadius: "5px",
+          fontSize: "10px",
+          border: "1px solid #fff",
+          textAlign: "center",
+          alignSelf: "center",
+
+        
+        }}>{cartItems.length}</span> )}<IoIosCart size="25"/> Cart</div> </Nav.Link>
      
     </Nav>
-      <NavDropdown title="Admin Dashboard" id="collasible-nav-dropdown"><i className="fa fa-caret-down"></i>
+    <NavDropdown className="dropDown " title={userInfo.name} id="collasible-nav-dropdown"> 
       <NavDropdown.Item href="/home">Home</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item href="#signout" onClick={signoutHandler}>Sign Out</NavDropdown.Item>
@@ -74,20 +104,47 @@ function App() {
 (
 userInfo ? (
 <>
-<Navbar collapseOnSelect fixed="top" expand="lg" bg="dark" variant="dark">
-<Container fluid>
+<Navbar collapseOnSelect fixed="top" expand="lg" bg="light" variant="light" style={{zIndex:1}}>
+<Container >
 
   <Navbar.Brand href="#home">Rshine</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
+  <div className="searchInputContainer">
+            <input
+              className="searchInput"
+              placeholder={"search for products, brands and more"}
+            />
+            <div className="searchIconContainer">
+              <IoIosSearch
+                style={{
+                  color: "#2874f0",
+                }}
+              />
+            </div>
+          </div>
     <Nav className="ml-auto">
     <Nav>
-      <Nav.Link href="/cart">Cart {cartItems.length > 0 && (
-<span className="badge">{cartItems.length}</span> )}</Nav.Link>
+    <Nav.Link href="/cart">    <div style={{ fontSize: "19px", position: "relative" }}>
+{cartItems.length > 0 && (
+<span style={{
+          position: "absolute",
+          background: "red",
+          color:"white",
+          width: "16px",
+          height: "16px",
+          borderRadius: "5px",
+          fontSize: "10px",
+          border: "1px solid #fff",
+          textAlign: "center",
+          alignSelf: "center",
+
+        
+        }}>{cartItems.length}</span> )}<IoIosCart size="25"/> Cart</div> </Nav.Link>
      
     </Nav>
    
-    <NavDropdown title={userInfo.name} id="collasible-nav-dropdown"> <i className="fa fa-caret-down"></i>{' '}
+    <NavDropdown className="dropDown " title={userInfo.name} id="collasible-nav-dropdown"> 
         <NavDropdown.Item href="/profile">User Profile</NavDropdown.Item>
         <NavDropdown.Item href="/orderhistory">Order History</NavDropdown.Item>
         <NavDropdown.Divider />
@@ -102,16 +159,43 @@ userInfo ? (
 
 </>
 ) :(
-<Navbar collapseOnSelect fixed="top" expand="lg" bg="dark" variant="dark">
-<Container fluid>
+<Navbar collapseOnSelect fixed="top" expand="lg"  bg="light" variant="light" style={{zIndex:1}}>
+<Container >
 
   <Navbar.Brand href="#home">Rshine</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
+  <div className="searchInputContainer">
+            <input
+              className="searchInput"
+              placeholder={"search for products, brands and more"}
+            />
+            <div className="searchIconContainer">
+              <IoIosSearch
+                style={{
+                  color: "#2874f0",
+                }}
+              />
+            </div>
+          </div>
     <Nav className="ml-auto">
     <Nav>
-      <Nav.Link href="/cart">Cart {cartItems.length > 0 && (
-<span className="badge">{cartItems.length}</span> )}</Nav.Link>
+    <Nav.Link href="/cart">    <div style={{ fontSize: "19px", position: "relative" }}>
+{cartItems.length > 0 && (
+<span style={{
+          position: "absolute",
+          background: "red",
+          color:"white",
+          width: "16px",
+          height: "16px",
+          borderRadius: "5px",
+          fontSize: "10px",
+          border: "1px solid #fff",
+          textAlign: "center",
+          alignSelf: "center",
+
+        
+        }}>{cartItems.length}</span> )}<IoIosCart size="25"/> Cart</div> </Nav.Link>
 
 </Nav>
 <Nav>
@@ -147,7 +231,7 @@ userInfo ? (
 <Route path="/cart/:id?" component={CartScreen} exact></Route>
 <Route path="/product/:id/edit" component={ProductEditScreen} exact></Route> 
 {/* <Route path="/:product/:id" component={ProductScreen} exact></Route> */}
-<Route path="/" component={MenueHeader} exact></Route>
+<Route path="/" component={HomeScreen} exact></Route>
 <Route path="/:productSlug/:productId/p" component={ProductDetailsPage} ></Route>
 <Route path="/:slug" component={ProductUserScreen} exact></Route>
 

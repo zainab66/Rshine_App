@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import HomeScreen from './MenueHeader';
+import MenueHeader from './MenueHeader';
 import { getProductsBySlug } from '../actions/productActions';
 import{generatePublicUrl} from '../urlConfig';
 import { Link } from "react-router-dom";
@@ -29,7 +29,7 @@ export default function ProductUserScreen(props) {
     return (
         <div>
 
-        <HomeScreen/>
+        <MenueHeader/>
         <div style={{display:'flex'}}>
         {produ.map((pp) => {
             return(

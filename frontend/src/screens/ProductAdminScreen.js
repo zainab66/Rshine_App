@@ -55,64 +55,71 @@ export default function ProductAdminScreen(props) {
     setProductPictures([...productPictures, e.target.files[0]]);
   };
 
-
+  const deleteHandler = () => {
+    /// TODO: dispatch delete action
+  };
     return (
         <div>
               <AdminHomeScreen />
-      <Container>
-        <Row>
-          <Col md={12}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h3>Products</h3>
-              <Button onClick={handleShow}>Add</Button>
-            </div>
-
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-          {loadingList ? (
+              <div className="row">
+        <h1>Products</h1>
+        <button type="button" className="primary" onClick={handleShow}>
+         Add Product
+        </button>
+      </div>
+      {loadingList ? (
         <LoadingBox></LoadingBox>
       ) : errorList ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-          <Table style={{fontSize:12}} responsive="sm">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>CountInStock</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>product Pictures</th>
-
-      </tr>
-    </thead>
-    <tbody>
-    {listProduct.map((product) => (
-      <tr key={product._id}>
-        <td>{product._id}</td>
-        <td>{product.name}</td>
-        <td>{product.price}</td>
-        <td>{product.countInStock}</td>
-        <td>{product.description}</td>
-        <td>{product.category}</td>
-        <td>{product.productPictures.map(picture => <div className="productImgContainer">
+        <Table striped bordered hover style={{fontSize:12,border:15,margin:15}}  responsive="lg">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>PRICE</th>
+              <th>CATEGORY</th>
+              <th>CountInStock</th>
+              <th>Description</th>
+              <th>product Pictures</th>
+              <th>ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listProduct.map((product) => (
+              <tr key={product._id}>
+                <td>{product._id}</td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.category}</td>
+                <td>{product.countInStock}</td>
+                <td>{product.description}</td>
+                <td>{product.productPictures.map(picture => <div className="productImgContainer">
           <img src={`http://localhost:3001/public/${picture.img}`}/>
         </div>)}</td>
-      </tr>
-     
-     
-                  ))}
-
-    </tbody>
-  </Table>
-                )}
-
-          </Col>
-        </Row>
-        </Container>
+                <td>
+                  <button
+                    type="button"
+                    className="small"
+                    onClick={() =>
+                      props.history.push(`/product/${product._id}/edit`)
+                    }
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="small"
+                    onClick={() => deleteHandler(product)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
               <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Product</Modal.Title>

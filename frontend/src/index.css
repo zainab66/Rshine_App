@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: gray;
+
 }
 
 code {
@@ -64,17 +66,17 @@ code {
   background: #fff;
   border-bottom: 1px solid #cecece;
   box-shadow: 0 2px 2px -2px #333;
-  padding-top: 60px;
+  padding-top: 50px;
 }
 
 .MenueHeader ul{
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 10px;
 }
 .MenueHeader > ul{
   display: flex;
-  margin: 0 50px;
+  margin: 0 300px;
   position: relative;
 }
 
@@ -300,3 +302,54 @@ code {
 .rattingInput{
   display: none;
 }
+
+.form-inline{
+  margin-left: 40%;
+
+}
+.dropdown{
+   padding-right: 1rem;
+   margin-right: 6rem;
+   margin-top: 0.2rem;
+   font-size: 17px;
+}
+.searchInputContainer {
+    width: 560px;
+    position: relative;
+    background: #fff;
+    height: 36px;
+    border-radius: 1px;
+    overflow: hidden;
+    display: flex;
+  }
+.searchInput {
+    width: 518px;
+    border: 0;
+    height: 36px;
+    outline: none;
+    box-sizing: border-box;
+    padding: 0 10px;
+  }
+.searchIconContainer {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+ 
+  main{
+    padding-top: 20px;
+  }
+  
+.details{
+    padding-top: 150px;
+  }
+  .success {
+    color: #20a020;
+  }
+  .danger {
+    color: #a02020;
+  }
+  .color-primary{
+    background-color: lightgray;
+  }
