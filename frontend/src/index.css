@@ -194,8 +194,8 @@ code {
   object-fit: contain;
 }
 .breed ul{
-  padding: 0;
-  margin: 0;
+  padding-bottom: 10px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
 }
@@ -204,7 +204,8 @@ code {
   margin-right: 5px;
   display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 30px;
+  font-weight: bold;
 }
 .breed ul li a{
   text-decoration: none;
@@ -342,7 +343,7 @@ code {
   }
   
 .details{
-    padding-top: 150px;
+    padding-top: 120px;
   }
   .success {
     color: #20a020;
@@ -353,3 +354,58 @@ code {
   .color-primary{
     background-color: lightgray;
   }
+  .classic-tabs{
+    padding-top: 50px;
+  }
+
+  .img-hover-zoom {
+    height: 300px; /* [1.1] Set it as per your need */
+    overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+  }
+  
+  /* [2] Transition property for smooth transformation of images */
+  .img-hover-zoom img {
+    transition: transform .5s ease;
+  }
+  
+  /* [3] Finally, transforming the image when container gets hovered */
+  .img-hover-zoom:hover img {
+    transform: scale(1.5);
+  }
+
+  /* Point-zoom Container */
+.img-hover-zoom--point-zoom img {
+  transform-origin: 65% 75%;
+  transition: transform 1s, filter .5s ease-out;
+}
+
+/* The Transformation */
+.img-hover-zoom--point-zoom:hover img {
+  transform: scale(5);
+}
+
+.App .sampleImage {
+  height: 300px;
+  width: 600px;
+  cursor: crosshair; }
+
+.App .image-container .frame {
+  height: 100px;
+  width: 200px;
+  top: 0;
+  left: 0;
+  display: none;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  position: absolute;
+  pointer-events: none; }
+
+.App .image-container .zoomedImageContainer {
+  height: 300px;
+  width: 600px;
+  overflow: hidden;
+  position: absolute;
+  background-position: 0 0; }
+
+.App .image-container.right {
+  text-align: right; }

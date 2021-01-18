@@ -35,22 +35,16 @@ export default function ProductList() {
         <>{products.length === 0 && <MessageBox>No Product Found</MessageBox>}
         {products.map((product) => {
              return(
-              <div class="col-md-3">
+              <div class="col-md-4">
 
                 <div class="">
                 <Link  to={`/${product.slug}/${product._id}/p`}>
-<div class="view zoom overlay rounded z-depth-2">
+<div class="img-hover-zoom">
 
                 <img class="  img-fluid w-100"
                   src={generatePublicUrl(product.productPictures[0].img)} alt="Sample"/>
                 
-                <a href="#!">
-                  <div class="mask">
-                    <img class=" img-fluid w-100"
-                      src={generatePublicUrl(product.productPictures[0].img)} alt=""/>
-                    <div class="mask rgba-black-slight"></div>
-                  </div>
-                </a>
+               
                 
               </div>                 
               </Link>

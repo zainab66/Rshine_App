@@ -71,7 +71,25 @@ export default function ProductDetailsPage(props) {
       ) : (
     <div className="details">
       <div class="container">
-
+      <div className="breed">
+             <ul>
+                 <li>
+                   <a href="#">Home</a>
+                   <IoIosArrowForward />
+                 </li>
+                 <li>
+                   <a href="#">Mobiles</a>
+                   <IoIosArrowForward />
+                 </li>
+                <li>
+                  <a href="#">Samsung</a>
+                  <IoIosArrowForward />
+                </li>
+                 <li>
+                   <a href="#">{product.name}</a>
+                 </li>
+               </ul>
+             </div>
         <section class="mb-5">
 
           <div class="row">
@@ -84,12 +102,12 @@ export default function ProductDetailsPage(props) {
                 <div class="row product-gallery mx-1">
 
                   <div class="col-12 mb-0">
-                    <div class="view overlay rounded z-depth-1 " style={{ paddingBottom: 10 }} >
+                    <figure class="img-hover-zoom view overlay rounded z-depth-1 main-img " style={{ marginBottom: 10 ,maxHeight:450}} >
                      
                         <img src={generatePublicUrl(product.productPictures[0].img)}
                           class="img-fluid z-depth-1" alt={`${product.productPictures[0].img}`} />
                       
-                    </div>
+                    </figure>
 
                   </div>
                   <div class="col-12">
@@ -327,7 +345,7 @@ rating={product.rating}
 
               <div class="">
 
-                <div class="view zoom overlay z-depth-2 rounded">
+                <div class="img-hover-zoom">
                   <img class="img-fluid w-100"
                     src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample" />
                   <a href="#!">
