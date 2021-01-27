@@ -45,52 +45,127 @@ export default function MenueHeader() {
     //   </div>
     // );
 
-    <div className="MenueHeader">
+//     <div className="MenueHeader">
          
    
 
-           {loading ? (
-             <LoadingBox></LoadingBox>
-           ) : error ? (
-             <MessageBox variant="danger">{error}</MessageBox>
-           ) : (
+//            {loading ? (
+//              <LoadingBox></LoadingBox>
+//            ) : error ? (
+//              <MessageBox variant="danger">{error}</MessageBox>
+//            ) : (
 
-                 <>
+//                  <>
 
-                   <ul >
-                     {categories.map((category) => (
-                       <li  key={category.name}>
-                         <span>{category.name}</span>
+//                    <ul >
+//                      {categories.map((category) => (
+//                        <li  key={category.name}>
+//                          <span>{category.name}</span>
 
-<ul>
-                         {category.childr.map((sub) =>
-                           <li key={sub.name}><a href={`/${sub.slug}`}>
-                             {sub.name}
-                           </a>
-<ul>
-                             {sub.childr.map((subb) =>
-                               <li  key={subb.name}><a href={`/${subb.slug}`}>
-                                 {subb.name}
-                             </a>
-                               </li>)}</ul>
+// <ul>
+//                          {category.childr.map((sub) =>
+//                            <li key={sub.name}><a href={`/${sub.slug}`}>
+//                              {sub.name}
+//                            </a>
+// <ul>
+//                              {sub.childr.map((subb) =>
+//                                <li  key={subb.name}><a href={`/${subb.slug}`}>
+//                                  {subb.name}
+//                              </a>
+//                                </li>)}</ul>
 
-                           </li>)}</ul>
-
-
-                       </li>
-                     ))}
-                   </ul>
-                 </>
+//                            </li>)}</ul>
 
 
+//                        </li>
+//                      ))}
+//                    </ul>
+//                  </>
 
 
 
-               )}
+
+
+//                )}
    
 
 
-   </div>
+//    </div>
+
+
+
+// <div className="MenueHeader">{loading ? (
+//              <LoadingBox></LoadingBox>
+//            ) : error ? (
+//              <MessageBox variant="danger">{error}</MessageBox>
+//            ) : (
+//                  <>
+//                  <ul class="justify-content-center ">
+
+//                  {categories.map((category) => (
+//   <li class="">
+//     <span class=" " href="#">{category.name}</span>
+ 
+
+//   <ul class="">
+//     {category.childr.map((sub) =>
+//   <li class="">
+//     <a class=" " href="#"> {sub.name}</a>
+//   </li>)}
+//   </ul>
+
+
+
+//   </li>     ))}</ul>
+//                  </>
+//                  )}
+
+
+
+
+
+
+
+// </div>
+
+
+<div className="menueHedr">
+<ul class="nav justify-content-center">
+
+{loading ? (
+              <LoadingBox></LoadingBox>
+            ) : error ? (
+              <MessageBox variant="danger">{error}</MessageBox>
+            ) : (<>
+              {categories.map((category) => (
+  <li class="nav-item">
+    <a class="nav-link" href="#"><div class="btn-group">
+  <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  {category.name}
+  </button>
+  <div class="dropdown-menu">
+  {category.childr.map((sub) =>
+    <a class="dropdown-item" href="#"> {sub.name}</a>
+  )}
+  </div>
+</div></a>
+  </li>
+ 
+ 
+              ))}</>)}
+</ul>
+
+</div>
+
+
+
+
+
+
+
+
+
+
  );
      
 }

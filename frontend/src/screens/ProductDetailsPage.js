@@ -11,6 +11,8 @@ import MenueHeader from './MenueHeader';
 import { AiFillThunderbolt } from "react-icons/ai";
 import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstants';
 import { Form } from 'react-bootstrap';
+import ProductImage from './ProductImage';
+import FootrScreen from './FootrScreen'
 
 
 export default function ProductDetailsPage(props) {
@@ -74,15 +76,15 @@ export default function ProductDetailsPage(props) {
       <div className="breed">
              <ul>
                  <li>
-                   <a href="#">Home</a>
+                   <a href="#"><Link to="/">Home</Link></a>
                    <IoIosArrowForward />
                  </li>
-                 <li>
+                 {/* <li>
                    <a href="#">Mobiles</a>
                    <IoIosArrowForward />
-                 </li>
+                 </li> */}
                 <li>
-                  <a href="#">Samsung</a>
+                  <a href="#">{product.category}</a>
                   <IoIosArrowForward />
                 </li>
                  <li>
@@ -101,7 +103,10 @@ export default function ProductDetailsPage(props) {
 
                 <div class="row product-gallery mx-1">
 
-                  <div class="col-12 mb-0">
+                <ProductImage detail={product} />
+
+{/* 
+                  <div class=" mb-0">
                     <figure class="img-hover-zoom view overlay rounded z-depth-1 main-img " style={{ marginBottom: 10 ,maxHeight:450}} >
                      
                         <img src={generatePublicUrl(product.productPictures[0].img)}
@@ -109,22 +114,22 @@ export default function ProductDetailsPage(props) {
                       
                     </figure>
 
-                  </div>
-                  <div class="col-12">
+                  </div> */}
+                  {/* <div class="">
                     <div class="row">
                     {product.productPictures.map((thumb, index) => (
-                      <div class="col-3">
-                        <div class="view overlay rounded z-depth-1 gallery-item hoverable">
+                      <div class="">
+                        <div class="imgContainer">
                        
                         <img src={generatePublicUrl(thumb.img)} alt={thumb.img}
-                          class="img-fluid " />
+                          class=" " />
                     
                           <div class="mask rgba-white-slight"></div>
                         </div>
                       </div>
 ))}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
               </div>
@@ -135,7 +140,6 @@ export default function ProductDetailsPage(props) {
               <p class="mb-2 text-muted text-uppercase small">{product.category}</p>
               <Rating
 rating={product.rating}
-   numReviews={product.numReviews}
               ></Rating>
 
               <p><span class="mr-1"><strong> CA${product.price}</strong></span></p>
@@ -196,8 +200,8 @@ rating={product.rating}
                   </tbody>
                 </table>
               </div>
-              <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Go to Shopping</button>
-              <button type="button" class="btn btn-secondary btn-md mr-1 mb-2" onClick={addToCartHandler}><IoMdCart /><span>ADD TO CART</span></button>
+              {/* <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Go to Shopping</button> */}
+              <button type="button" class="btnCart  btn-md mr-1 mb-2" onClick={addToCartHandler}><IoMdCart size={25}/><span>ADD TO CART</span></button>
             </div>
           </div>
 
@@ -225,7 +229,6 @@ rating={product.rating}
               <p class="small text-muted text-uppercase mb-2">{product.category}</p>
               <Rating
 rating={product.rating}
-   numReviews={product.numReviews}
               ></Rating>
               <h6>CA${product.price}</h6>
               <p class="pt-1">{product.description}</p>
@@ -376,6 +379,8 @@ rating={product.rating}
 
 
 )}
+    <FootrScreen/>
+
     </div>
 
     //     <div className="productDescriptionContainer">

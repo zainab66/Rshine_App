@@ -35,15 +35,94 @@ export default function ShippingAddressScreen(props) {
   };
 
   return (
+
+  //   <main >
+
+ 
+  //     <section class="mt-5 mb-4">
+
+      
+
+        
+  //         <div class="col-lg-8 mb-4">
+
+        
+  //           <div class="card wish-list pb-1">
+  //             <div class="card-body">
+
+  //               <h5 class="mb-2">Choose a delivery address</h5>
+
+           
+              
+  //               <div class="md-form md-outline mt-0">
+  //               <label for="form14">Country </label>
+  //                 <input type="text" id="form14"  class="form-control"/>
+  //               </div>
+
+              
+  //               <div class="md-form md-outline mt-0">
+  //               <label for="form14">Full name </label>
+  //                 <input type="text" id="form14"  class="form-control"/>
+  //               </div>
+
+              
+       
+           
+  //               <div class="md-form md-outline mt-0">
+  //               <label for="form14">Street address </label>
+  //                 <input type="text" id="form14"  class="form-control"/>
+  //               </div>
+
+              
+  //               <div class="md-form md-outline">
+  //               <label for="form15">Apt / Suite / Unit (optional)</label>
+  //                 <input type="text" id="form15" class="form-control"/>
+  //               </div>
+
+             
+  //               <div class="md-form md-outline">
+  //               <label for="form16">City </label>
+  //                 <input type="text" id="form16" class="form-control"/>
+  //               </div>
+
+              
+  //               <div class="md-form md-outline">
+  //               <label for="form17">Province</label>
+  //                 <input type="text" id="form17" class="form-control"/>
+  //               </div>
+
+  //               <div class="md-form md-outline">
+  //               <label for="form17">Postal code</label>
+  //                 <input type="text" id="form17" class="form-control"/>
+  //               </div>
+
+              
+          
+
+  //             </div>
+  //           </div>
+        
+
+  //         </div>
+        
+        
+
+
+  //     </section>
+
+
+  // </main>
     <div>
-      <CheckoutSteps step1 step2></CheckoutSteps>
-      <form className="form" onSubmit={submitHandler}>
+      <div className="contain">
+      <CheckoutSteps step1 step2></CheckoutSteps></div>
+      <form className="formShipping" onSubmit={submitHandler}>
         <div>
-          <h1>Shipping Address</h1>
+          <h3>Choose a delivery address</h3>
         </div>
-        <div>
+        
+          <div class="md-form md-outline mt-0">
           <label htmlFor="fullName">Full Name</label>
-          <input
+          <input class="form-control"
             type="text"
             id="fullName"
             placeholder="Enter full name"
@@ -52,9 +131,9 @@ export default function ShippingAddressScreen(props) {
             required
           ></input>
         </div>
-        <div>
+        <div class="md-form md-outline mt-0">
           <label htmlFor="address">Address</label>
-          <input
+          <input class="form-control"
             type="text"
             id="address"
             placeholder="Enter address"
@@ -63,9 +142,9 @@ export default function ShippingAddressScreen(props) {
             required
           ></input>
         </div>
-        <div>
+        <div class="md-form md-outline mt-0">
           <label htmlFor="city">City</label>
-          <input
+          <input class="form-control"
             type="text"
             id="city"
             placeholder="Enter city"
@@ -74,9 +153,9 @@ export default function ShippingAddressScreen(props) {
             required
           ></input>
         </div>
-        <div>
+        <div class="md-form md-outline mt-0">
           <label htmlFor="postalCode">Postal Code</label>
-          <input
+          <input class="form-control"
             type="text"
             id="postalCode"
             placeholder="Enter postal code"
@@ -85,9 +164,9 @@ export default function ShippingAddressScreen(props) {
             required
           ></input>
         </div>
-        <div>
+        <div class="md-form md-outline mt-0">
           <label htmlFor="country">Country</label>
-          <input
+          <input class="form-control"
             type="text"
             id="country"
             placeholder="Enter country"
@@ -99,7 +178,7 @@ export default function ShippingAddressScreen(props) {
        
         <div>
           <label />
-          <button className="primary" type="submit">
+          <button  class="btn btn-primary btn-block waves-effect waves-light" type="submit">
             Continue
           </button>
         </div>

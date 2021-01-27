@@ -13,6 +13,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.cart:hover {
+color: blue;
+}
 
 .sidebar{
   position: fixed;
@@ -59,15 +62,16 @@ code {
   max-height: 100%;
   object-fit: contain;
 }
-
-.MenueHeader{
-  width: 100%;
-  height: 100px;
-  background: #fff;
+.menueHedr{
+  padding-top: 80px;
+  padding-bottom: 20px;
+}
+/* .menueHedr{
+ 
   border-bottom: 1px solid #cecece;
   box-shadow: 0 2px 2px -2px #333;
-  padding-top: 50px;
-}
+ 
+} */
 
 .MenueHeader ul{
   list-style: none;
@@ -86,6 +90,8 @@ code {
   cursor: pointer;
   padding: 0 20px;
   font-size: 14px;
+  font-weight: 500;
+
 }
 .MenueHeader> ul > li > span:hover{
   color: #2874f0;
@@ -111,6 +117,7 @@ code {
 }
 .MenueHeader > ul > li > ul > li> a {
   font-weight: bold;
+  color: #000;
   display: block;
   
 }
@@ -120,7 +127,7 @@ code {
   font-size: 12px;
   text-decoration: none;
   display: block;
-  color: #707070;
+  color: #000;
 }
 
 .slugProduct{
@@ -311,37 +318,49 @@ code {
 .dropdown{
    padding-right: 1rem;
    margin-right: 6rem;
-   margin-top: 0.2rem;
-   font-size: 17px;
+   margin-top: 0rem;
+   font-size: 19px;
+}
+.dropDown:hover{
+  color: blue;
+
 }
 .searchInputContainer {
-    width: 560px;
-    position: relative;
-    background: #fff;
-    height: 36px;
-    border-radius: 1px;
-    overflow: hidden;
-    display: flex;
-  }
+  width: 565px;
+  position: relative;
+  background: #fff;
+  height: 38px;
+  border-radius: 1px;
+  overflow: hidden;
+  display: flex;
+  margin-left: 30px;
+
+}
 .searchInput {
-    width: 518px;
-    border: 0;
-    height: 36px;
-    outline: none;
-    box-sizing: border-box;
-    padding: 0 10px;
-  }
+  width: 518px;
+  height: 38px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  border-color: blue;
+  border-radius: 50px 5px 5px 50px ; 
+}
 .searchIconContainer {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: blue; 
+  border-radius: 5px 50px 50px 5px;
+}
  
   main{
-    padding-top: 20px;
+    padding-top: 50px;
   }
-  
+  .card-img-top{
+    width: 300px;
+    height: 200px;
+  }
+
 .details{
     padding-top: 120px;
   }
@@ -359,7 +378,6 @@ code {
   }
 
   .img-hover-zoom {
-    height: 300px; /* [1.1] Set it as per your need */
     overflow: hidden; /* [1.2] Hide the overflowing of child elements */
   }
   
@@ -409,3 +427,230 @@ code {
 
 .App .image-container.right {
   text-align: right; }
+
+  .imgf{
+    width:200px;height:200px;
+
+  
+      }
+  .imgContainer img{
+    width: 100px;
+    height: 100px;
+    margin-left: 16px;
+  }
+  .imgContainer{
+  display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+padding: 4px 0 0 0 ;
+}
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+.selectedQty{
+  width:70px;
+  height: 60px;
+}
+
+/* Form */
+.formShipping {
+  width: 500px;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.formShipping > div {
+  display: flex;
+  flex-direction: column;
+  margin: 0.1rem;
+}
+.formShipping label {
+  margin: 0.5rem 0;
+}
+.formSin {
+  width: 500px;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.formSin > div {
+  display: flex;
+  flex-direction: column;
+  margin: 0.1rem;
+}
+.formSin label {
+  margin: 0.5rem 0;
+}
+
+.formPayment{
+  width: 500px;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.formPayment > div {
+  display: flex;
+  flex-direction: column;
+  margin: 0.1rem;
+}
+.formPayment label {
+  margin: 1rem 0;
+}
+.formPayment input{
+  margin-right: 10px;
+}
+/* Checkout Steps */
+.checkout-steps > div {
+  border-top: 0.3rem #c0c0c0 solid;
+  color: #c0c0c0;
+  flex: 1;
+  padding: 1rem;
+  font-weight: bold;
+}
+.checkout-steps > div.active {
+  border-top-color: #f08000;
+  color: #f08000;
+}
+
+.contain{
+  padding-top: 100px;
+  width: 500px;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+/* Alert */
+.loading {
+  display: block !important;
+}
+.success {
+  color: #20a020;
+}
+.danger {
+  color: #a02020;
+}
+.alert {
+  padding: 1rem;
+  border: 0.1rem solid transparent;
+  border-radius: 0.5rem;
+}
+.alert-info {
+  color: #2020a0;
+  background-color: #e0e0ff;
+}
+.alert-danger {
+  color: #a02020;
+  background-color: #ffe0e0;
+}
+.alert-success {
+  color: #20a020;
+  background-color: #eeffe0;
+}
+img.small {
+  max-width: 5rem;
+  width: 100%;
+}
+.min-30 {
+  min-width: 30rem;
+}
+.orderItem{
+  width:150px;
+  height: 60px;
+}
+.blog-header {
+  line-height: 1;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.blog-header-logo {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 2.25rem;
+}
+
+.blog-header-logo:hover {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+}
+@media (min-width: 768px) {
+  .display-4 {
+    font-size: 3rem;
+  }
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-scroller .nav-link {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: .875rem;
+}
+
+.imgcas{
+  height: 450px;
+}
+.btn-group{
+  font-size: 14px;
+  font-weight: 500;
+
+}
+.btn-group:hover{
+  background-color: blue;
+}
+.btnCart{
+  background-color:blue; /* Green */
+border-radius: 25px;  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+}
+/* Form */
+.formSingup {
+  width: 500px;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.formSingup > div {
+  display: flex;
+  flex-direction: column;
+  margin: 0.1rem;
+}
+.formSingup label {
+  margin: 0.5rem 0;
+}
+.formSingup {
+  width: 500px;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+.formSingup > div {
+  display: flex;
+  flex-direction: column;
+  margin: 0.1rem;
+}
+.formSingup label {
+  margin: 0.5rem 0;
+}

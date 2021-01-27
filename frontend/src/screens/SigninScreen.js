@@ -5,6 +5,7 @@ import { signin } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
+import FootrScreen from './FootrScreen'
 
 
 export default function SigninScreen(props) {
@@ -34,16 +35,16 @@ export default function SigninScreen(props) {
 
     return (
         <div>
-            <div>
-      <form className="form" onSubmit={submitHandler}>
+            <div className="contain">
+      <form className="formSin" onSubmit={submitHandler}>
         <div>
-          <h1>Sign In</h1>
+          <h1 class="text-center" >Login</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         <div>
-          <label htmlFor="email">Email address</label>
-          <input
+          <label htmlFor="email"></label>
+          <input class="form-control"
             type="email"
             id="email"
             placeholder="Enter email"
@@ -52,8 +53,8 @@ export default function SigninScreen(props) {
           ></input>
         </div>
         <div>
-          <label htmlFor="password">Password</label>
-          <input
+          <label htmlFor="password"></label>
+          <input class="form-control"
             type="password"
             id="password"
             placeholder="Enter password"
@@ -63,7 +64,7 @@ export default function SigninScreen(props) {
         </div>
         <div>
           <label />
-          <button className="primary" type="submit">
+          <button  class="btnCart btn-block waves-effect waves-light" type="submit">
             Sign In
           </button>
         </div>
@@ -72,12 +73,17 @@ export default function SigninScreen(props) {
           <div>
             New customer?{' '}
             <Link to={`/register?redirect=${redirect}`}>
-              Create your account
-            </Link>
+            Create account
+          </Link>
           </div>
+          <label />
+
         </div>
       </form>
-    </div>
+    </div>   
+    
+     <FootrScreen/>
+
         </div>
     )
 }

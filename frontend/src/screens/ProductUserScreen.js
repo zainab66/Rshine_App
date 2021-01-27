@@ -27,9 +27,8 @@ export default function ProductUserScreen(props) {
 
 
     return (
-        <div>
+        <main>
 
-        <MenueHeader/>
         <div style={{display:'flex'}}>
         {produ.map((pp) => {
             return(
@@ -48,6 +47,6 @@ export default function ProductUserScreen(props) {
             </div>
         </Link>
         )})}</div>
-        </div>
+        </main>
     )
 }

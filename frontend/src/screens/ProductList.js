@@ -20,10 +20,52 @@ export default function ProductList() {
        
       }, [dispatch]);
     return (
-        <main role="main">
+        <main >
+  <section class="text-center mb-4">
 
+<div class="row wow fadeIn">
+{loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox variant="danger">{error}</MessageBox>
+      ) : (
+        <>{products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+        {products.map((product) => {
+             return(
+  <div class="col-lg-3 col-md-6 mb-4">
+
+    <div class="card">
+    <Link  to={`/${product.slug}/${product._id}/p`}>
+    <div class="img-hover-zoom">
+
+      <div class="view overlay">
+        <img src={generatePublicUrl(product.productPictures[0].img)} class="card-img-top" alt=""/>
+        <a>
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+</div>
+</Link>
+      <div class="card-body text-center">
+        <a href="" class="grey-text">
+          <h5>{product.name}</h5>
+        </a>
+       
+        <h4 class="font-weight-bold blue-text">
+          <strong>CA${product.price}</strong>
+        </h4>
+
+      </div>
+
+    </div>
+
+  </div>
+     )})}
+     </>)}
+</div>
+</section>
       
-        <div class="album py-5 bg-light">
+        {/* <div class="album py-5 bg-light">
           <div class="container">
       
             <div class="row">
@@ -64,7 +106,7 @@ export default function ProductList() {
               </div>
               </div>
               </div>
-
+ */}
 
             {/* {loading ? (
         <LoadingBox></LoadingBox>
