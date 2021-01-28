@@ -59,7 +59,8 @@ router.get('/prod/:id', expressAsyncHandler(async (req, res) => {
 
 
 router.post('/create', authorize, isAdmin, upload.array('productPictures'), expressAsyncHandler(async (req, res) => {
-  const {name,price,description,category,countInStock,rating,numReviews,createdBy} = req.body;
+  const {name,price,discountPrice,sizeOption1,sizeOption2, colorOption1, colorOption2, colorOption3, colorOption4,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,
+    description,category,countInStock,madeBy,material, costToDeliver,readyToDispatch,rating,numReviews,createdBy} = req.body;
   let productPictures = [];
   if(req.files.length > 0){
     productPictures = req.files.map(file => {
@@ -70,10 +71,31 @@ router.post('/create', authorize, isAdmin, upload.array('productPictures'), expr
     name: name,
     slug : slugify(name),
     price,
+    discountPrice,
+    sizeOption1,
+    sizeOption2,
+    colorOption1,
+    colorOption2,
+    colorOption3,
+    colorOption4,
+    option1,
+    option2,
+    option3,
+    option4,
+    option5,
+    option6,
+    option7,
+    option8,
+    option9,
+    option10,
     description,
     productPictures,
     category,
     countInStock,
+    madeBy,
+    material,
+    costToDeliver,
+    readyToDispatch,
     rating,
     numReviews,
     createdBy: req.user._id,

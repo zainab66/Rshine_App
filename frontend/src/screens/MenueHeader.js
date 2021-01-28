@@ -145,7 +145,7 @@ export default function MenueHeader() {
   </button>
   <div class="dropdown-menu">
   {category.childr.map((sub) =>
-    <a class="dropdown-item" href="#"> {sub.name}</a>
+    <a class="dropdown-item" href={`/${sub.slug}`}> {sub.name}</a>
   )}
   </div>
 </div></a>

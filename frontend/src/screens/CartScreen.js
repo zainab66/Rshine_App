@@ -6,15 +6,39 @@ import { Link } from 'react-router-dom';
 import { generatePublicUrl } from '../urlConfig';
 import { Form } from 'react-bootstrap';
 import FootrScreen from './FootrScreen'
+import { useLocation } from 'react-router-dom';
 
 export default function CartScreen(props) {
+  const{search} =useLocation()
+  const searchParams = new URLSearchParams(search)
+  const option=searchParams.get('option')
+  const sizeOption=searchParams.get('sizeOption')
+  const colorOption=searchParams.get('colorOption')
+  const qty=Number(searchParams.get('qty'))
+
     const productId = props.match.params.id;
-    const qty = props.location.search
-    ? Number(props.location.search.split('=')[1])
-    : 1;
- 
+    // const qty = props.location.search
+    // ? Number(props.location.search.split('=')[1])
+    // : 1;
+    
+    //  const sizeOption = props.location.search
+    //  ? String(props.location.search.split('=')[2])
+    //  : "";
+    //  const colorOption = props.location.search
+    //  ? String(props.location.search.split('=')[3])
+    //  : "";
+    //  const option = props.location.search
+    //  ? String(props.location.search.split('=')[4].split('%20') )
+    //  : "";
+    console.log("sizeOption",sizeOption)
+    console.log("colorOption",colorOption)
+
+    console.log("qty",qty)
+    console.log("option",option)
+
     const cart = useSelector((state) => state.cart);
     const { cartItems, error } = cart;
+    console.log("cart",cartItems)
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
     cart.itemsPrice = toPrice(
       cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
@@ -26,9 +50,9 @@ export default function CartScreen(props) {
     
     useEffect(() => {
         if (productId) {
-          dispatch(addToCart(productId, qty));
+          dispatch(addToCart(productId, qty,sizeOption,colorOption,option));
         }
-      }, [dispatch, productId, qty]);
+      }, [dispatch, productId, qty,sizeOption,colorOption,option]);
     
       
     const removeFromCartHandler = (id) => {
@@ -76,9 +100,9 @@ export default function CartScreen(props) {
                         <div class="d-flex justify-content-between">
                           <div>
                             <h5>{item.name}</h5>
-                            <p class="mb-3 text-muted text-uppercase small">Shirt - blue</p>
-                            <p class="mb-2 text-muted text-uppercase small">Color: blue</p>
-                            <p class="mb-3 text-muted text-uppercase small">Size: M</p>
+                            <p class="mb-3 text-muted text-uppercase small">Options :{option}</p>
+                            <p class="mb-2 text-muted text-uppercase small">Color: {colorOption}</p>
+                            <p class="mb-3 text-muted text-uppercase small">Size: {sizeOption}</p>
                           </div>
                           <div>
                           <div class="selectedQty ">

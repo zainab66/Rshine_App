@@ -29,10 +29,71 @@ const productSchema = new mongoose.Schema({
         type: Number, 
         required: true 
     },
-    // quantity: {
-    //     type: Number,
-    //     required: true
-    // },
+    discountPrice: { 
+        type: Number, 
+    },
+    madeBy: { 
+        type: String, 
+    },
+    material: { 
+        type: String, 
+    },
+    costToDeliver:{ 
+        type: String,
+    },
+    readyToDispatch :{ 
+        type: String,
+    },
+    sizeOption1: { 
+        type: String,
+    },
+    sizeOption2: { 
+        type: String,
+    },
+    colorOption1: { 
+        type: String,
+    },
+    colorOption2: { 
+        type: String,
+    },
+    colorOption3: { 
+        type: String,
+    },
+    colorOption4: { 
+        type: String,
+    },
+    option1: { 
+        type: String,
+    },
+    option2: { 
+        type: String,
+    },
+    option3: { 
+        type: String,
+    },
+    option4: { 
+        type: String,
+    },
+    option5: { 
+        type: String,
+    },
+    option6: { 
+        type: String,
+    },
+    option7: { 
+        type: String,
+    },
+    option8: { 
+        type: String,
+    },
+    option9: { 
+        type: String,
+    },
+    option10: { 
+        type: String,
+    },
+    
+
     countInStock: { type: Number, required: true },
 
     description: {
@@ -48,7 +109,7 @@ const productSchema = new mongoose.Schema({
     numReviews: { type: Number },
     reviews: [reviewSchema],
 
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true,unique:true },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     updatedAt: Date,
 

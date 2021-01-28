@@ -654,3 +654,29 @@ border-radius: 25px;  color: white;
 .formSingup label {
   margin: 0.5rem 0;
 }
+.discount{
+  text-decoration: line-through;
+  font-size:16px;
+  padding: 12px;
+}
+.costDeliver{
+ position: absolute;
+ top:70px;
+ right:12px;
+}
+.listTogle{
+  padding-top: 40px;
+}
+
+.instock{
+  position: absolute;
+  top:80px;
+  right: 18px;
+}
+.material{
+  width: 4%;
+  padding-right: 5px;
+}
+.fa-hand-stop-o{
+  padding-right: 5px;
+}

@@ -54,19 +54,28 @@ function App() {
                           <Navbar.Brand href="#home"><h1 style={{color:"#2874f0"}}>Rshine</h1></Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
-  <div className="searchInputContainer">
-            <input 
+  {/* search component */}
+  <div
+          style={{
+            padding: "0 10px",
+          }}
+        >
+          <div className="searchInputContainer">
+            <input
               className="searchInput"
               placeholder={"search for products, brands and more"}
             />
             <div className="searchIconContainer">
               <IoIosSearch size={25}
                 style={{
-                  color: "#2874f0",
+                  color: "#fff",
+                  padding:"0px",
                 }}
               />
             </div>
           </div>
+        </div>
+        {/* search component ends here */}
     <Nav className="ml-auto">
     <Nav>
       <Nav.Link href="/cart">    <div className="cart" style={{ fontSize: "19px", position: "relative" }}>
@@ -109,19 +118,28 @@ userInfo ? (
 <Navbar.Brand href="#home"><h1 style={{color:"#2874f0"}}>Rshine</h1></Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
-  <div className="searchInputContainer">
-            <input 
+   {/* search component */}
+   <div
+          style={{
+            padding: "0 10px",
+          }}
+        >
+          <div className="searchInputContainer">
+            <input
               className="searchInput"
               placeholder={"search for products, brands and more"}
             />
             <div className="searchIconContainer">
               <IoIosSearch size={25}
                 style={{
-                  color: "#2874f0",
+                  color: "#fff",
+                  padding:"0px",
                 }}
               />
             </div>
           </div>
+        </div>
+        {/* search component ends here */}
     <Nav className=" ml-auto">
     <Nav >
     <Nav.Link href="/cart">    <div className="cart"  style={{ fontSize: "19px", position: "relative" }}>
