@@ -17,7 +17,7 @@ router.post('/',authorize, expressAsyncHandler(async (req, res) => {
       const order = new Order({
         orderItems: req.body.orderItems,
         shippingAddress: req.body.shippingAddress,
-        paymentMethod: req.body.paymentMethod,
+      //  paymentMethod: req.body.paymentMethod,
         itemsPrice: req.body.itemsPrice,
         shippingPrice: req.body.shippingPrice,
         taxPrice: req.body.taxPrice,

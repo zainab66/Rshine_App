@@ -23,8 +23,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
         },
       });
       dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
-      dispatch({ type: CART_EMPTY });
-      localStorage.removeItem('cartItems');
+      
     } catch (error) {
       dispatch({
         type: ORDER_CREATE_FAIL,
@@ -70,6 +69,8 @@ export const payOrder = (order, paymentResult) => async (
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+     dispatch({ type: CART_EMPTY });
+      localStorage.removeItem('cartItems');
   } catch (error) {
     const message =
       error.response && error.response.data.message

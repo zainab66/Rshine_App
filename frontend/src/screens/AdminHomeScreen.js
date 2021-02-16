@@ -12,7 +12,8 @@ export default function AdminHomeScreen(props) {
                 <Col md={2} className="sidebar">
                     <ul>
                         <li><NavLink to={'/Category'}>Category</NavLink></li>
-                        <li><NavLink to={'/productlist'}>Products</NavLink></li>
+                        <li><NavLink to={'/Productlist'}>Products</NavLink></li>
+                        <li><NavLink to={'/CrouselImages'}>CrouselImages</NavLink></li>
 
                     </ul>
                 </Col>

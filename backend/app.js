@@ -12,6 +12,7 @@ const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products');
 const ordersRouter = require('./routes/orders');
 const categoryRouter = require('./routes/category');
+const crouselRouter = require('./routes/crousel');
 
 const app = express();
 
@@ -23,18 +24,18 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public',express.static(path.join(__dirname, 'uploads')));
+app.use('/public', express.static(path.join(__dirname, 'uploads')));
 
 //mongodb connection
 mongoose.connect(
   `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.amlpj.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
-   {
-     useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-    ).then(() => {
-      console.log('Database connected')
-    });
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+).then(() => {
+  console.log('Database connected')
+});
 
 app.get('/api/config/paypal', (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
@@ -45,14 +46,15 @@ app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/category', categoryRouter);
+app.use('/api/crousel', crouselRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

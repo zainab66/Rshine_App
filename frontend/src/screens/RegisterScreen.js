@@ -5,6 +5,7 @@ import { register } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import FootrScreen from './FootrScreen'
+import MenueHeader from './MenueHeader'
 
 export default function RegisterScreen(props) {
   const [name, setName] = useState('');
@@ -34,72 +35,39 @@ export default function RegisterScreen(props) {
     }
   }, [props.history, redirect, userInfo]);
   return (
+
     <>
-    <div className="contain">
-      <form className="formSingup" onSubmit={submitHandler}>
-        <div>
-          <h1 class="text-center">Create account</h1>
-        </div>
-        {loading && <LoadingBox></LoadingBox>}
-        {error && <MessageBox variant="danger">{error}</MessageBox>}
-        <div>
-          <label htmlFor="name"></label>
-          <input  class="form-control"
-            type="text"
-            id="name"
-            placeholder=" Name"
-            required
-            onChange={(e) => setName(e.target.value)}
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="email"></label>
-          <input  class="form-control"
-            type="email"
-            id="email"
-            placeholder=" Email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="password"></label>
-          <input  class="form-control"
-            type="password"
-            id="password"
-            placeholder=" Password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="confirmPassword"></label>
-          <input  class="form-control"
-            type="password"
-            id="confirmPassword"
-            placeholder=" Confirm Password"
-            required
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          ></input>
-        </div>
-        <div>
-          <label />
-          <button className="btnCart" type="submit">
-            Create
-          </button>
-        </div>
-        <div>
-          <label />
-          <div>
-          Returning customer?{' '}
-            <Link to={`/signin?redirect=${redirect}`}>Sign in</Link>
+      <MenueHeader />
+      <div className="zz">
+        <form class="form-signin" onSubmit={submitHandler}>
+          <h1 class="h4 mb-3 font-weight-normal text-center">Create account</h1>
+          {loading && <LoadingBox></LoadingBox>}
+          {error && <MessageBox variant="danger">{error}</MessageBox>}
+
+          <label for="inputName" class="formLabel">Your name</label>
+          <input type="text" id="name" class="form-control" onChange={(e) => setName(e.target.value)} required />
+
+          <label for="inputEmail" class="formLabel">Email address</label>
+          <input type="email" id="inputEmail" class="form-control" onChange={(e) => setEmail(e.target.value)} required autofocus />
+
+          <label for="inputPassword" class="formLabel">Password</label>
+          <input type="password" id="inputPassword" class="form-control" onChange={(e) => setPassword(e.target.value)} required />
+
+          <label for="confirmPassword" class="formLabel">Password again</label>
+          <input type="password" id="confirmPassword" class="form-control" onChange={(e) => setConfirmPassword(e.target.value)} required />
+
+          <div class="mt-4 mb-4">
+            <label className="newCustmer">
+              Returning customer?{' '}
+              <Link className="linkCreateAccount" to={`/signin?redirect=${redirect}`}>
+                Sign in
+            </Link>
+            </label>
           </div>
-          <label/>
-        </div>
-      </form>
-      
-    </div>
-         <FootrScreen/>
-</>
+          <button class="btnForAll  btn-block waves-effect waves-light" type="submit">Create your Rshine account</button>
+        </form>
+      </div>
+      <FootrScreen />
+    </>
   );
 }

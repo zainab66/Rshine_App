@@ -1,30 +1,30 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MenueHeader from './MenueHeader';
-import { getProductsBySlug } from '../actions/productActions';
-import { generatePublicUrl } from '../urlConfig';
-import { Link } from "react-router-dom";
+import { listProducts } from '../actions/productActions';
+import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { Link } from "react-router-dom";
+import { generatePublicUrl } from '../urlConfig';
 
-export default function ProductUserScreen(props) {
-    const productSlug = useSelector((state) => state.productSlug);
-    const { produ } = productSlug;
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        const { match } = props;
-        dispatch(getProductsBySlug(match.params.slug));
-    }, [dispatch,props]);
+export default function ProductHomeScreen() {
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
 
-    return (<>
-    {produ.length !== 0 && 
-        <MenueHeader />}
+  useEffect(() => {
+    dispatch(listProducts({}));
 
-        <div class="container productList">
+  }, [dispatch]);
+  return (
+    <div class="container productList">
       <div class="row pt-4">
-       
-              
-                {produ.map((product) => {
+        {loading ? (
+          <LoadingBox></LoadingBox>
+        ) : error ? (
+          <MessageBox variant="danger">{error}</MessageBox>) : (
+              <>{products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+                {products.map((product) => {
                   return (
                     <div class="col-lg-4">
                       <Link id="productLink" to={`/${product.slug}/${product._id}/p`}>
@@ -40,10 +40,8 @@ export default function ProductUserScreen(props) {
                     </div>
                   )
                 })}
-            
+              </>)}
       </div>
     </div>
-    </>
-       
-    )
+  )
 }

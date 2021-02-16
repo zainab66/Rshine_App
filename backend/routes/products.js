@@ -59,8 +59,8 @@ router.get('/prod/:id', expressAsyncHandler(async (req, res) => {
 
 
 router.post('/create', authorize, isAdmin, upload.array('productPictures'), expressAsyncHandler(async (req, res) => {
-  const {name,price,discountPrice,sizeOption1,sizeOption2, colorOption1, colorOption2, colorOption3, colorOption4,option1,option2,option3,option4,option5,option6,option7,option8,option9,option10,
-    description,category,countInStock,madeBy,material, costToDeliver,readyToDispatch,rating,numReviews,createdBy} = req.body;
+  const {name,price,discountPrice,sizeOption1,priceSizeOption1,sizeOption2,priceSizeOption2, colorOption1, colorOption2, colorOption3, colorOption4,firstOption,priceFirstOption,sizefirstOption1, priceSizefirstOption1,sizefirstOption2, priceSizefirstOption2,option2,option3,option4,option5,option6,option7,option8,option9,option10,
+    description,addYourPersonalisation,category,countInStock,madeBy,material, standardDelivery,expressDelivery, readyToDispatchRange,readyToDispatchDaysOrWeeks ,rating,numReviews,createdBy} = req.body;
   let productPictures = [];
   if(req.files.length > 0){
     productPictures = req.files.map(file => {
@@ -73,12 +73,19 @@ router.post('/create', authorize, isAdmin, upload.array('productPictures'), expr
     price,
     discountPrice,
     sizeOption1,
+    priceSizeOption1,
     sizeOption2,
+    priceSizeOption2,
     colorOption1,
     colorOption2,
     colorOption3,
     colorOption4,
-    option1,
+    firstOption,
+    priceFirstOption,
+    sizefirstOption1,
+    priceSizefirstOption1,
+    sizefirstOption2,
+    priceSizefirstOption2,
     option2,
     option3,
     option4,
@@ -89,13 +96,16 @@ router.post('/create', authorize, isAdmin, upload.array('productPictures'), expr
     option9,
     option10,
     description,
+    addYourPersonalisation,
     productPictures,
     category,
     countInStock,
     madeBy,
     material,
-    costToDeliver,
-    readyToDispatch,
+    standardDelivery,
+    expressDelivery,
+    readyToDispatchRange ,
+    readyToDispatchDaysOrWeeks,
     rating,
     numReviews,
     createdBy: req.user._id,
