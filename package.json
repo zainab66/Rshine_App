@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "cd frontend && npm run build",
-    "install-client": "cd frontend && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
+    
+    "heroku-postbuild": "cd frontend && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
