@@ -57,6 +57,11 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
+
+if(process.env.NODE_ENV === 'production'){
+app.use(express.static('frontend/build'))
+}
+
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development

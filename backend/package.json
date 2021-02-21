@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+   
+    "build":"cd frontend && npm run build",
+    "indtall-client":"cd frontend && npm indtall",
+    "heroku-postbuild":"npm run indtall-client && npm run build",
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
