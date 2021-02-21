@@ -15,6 +15,7 @@
     "postcode-validator": "^3.1.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
+    "react-bootstrap-dropdown-menu": "^1.1.23",
     "react-bootstrap-zoom": "0.0.1",
     "react-bootstrap4-modal": "^1.7.5",
     "react-checkbox-tree": "^1.6.0",

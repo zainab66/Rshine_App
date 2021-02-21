@@ -10,6 +10,7 @@ import MenueHeader from './MenueHeader';
 import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstants';
 import ProductImage from './ProductImage';
 import FootrScreen from './FootrScreen'
+import { addToCart } from '../actions/cartActions';
 
 
 export default function ProductDetailsPage(props) {
@@ -49,9 +50,9 @@ export default function ProductDetailsPage(props) {
     dispatch(detailsProduct(productId));
   }, [dispatch, productId, successReviewCreate]);
 
-  const addToCartHandler = () => {
-    props.history.push(`/cart/${productId}?qty=${qty}&sizeOption=${sizeOption}&sizeFirstOption=${sizeFirstOption}&colorOption=${colorOption}&option=${option}&message=${message}`);
-  };
+  // const addToCartHandler = () => {
+  //   props.history.push(`/cart/${productId}?qty=${qty}&sizeOption=${sizeOption}&sizeFirstOption=${sizeFirstOption}&colorOption=${colorOption}&option=${option}&message=${message}`);
+  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -145,7 +146,12 @@ export default function ProductDetailsPage(props) {
                             <span className="danger">Unavailable</span>
                           )}
                       </p>
-                      <form onSubmit={addToCartHandler}>
+                      <form onSubmit={() => {
+                  const { _id, name, price,countInStock } = product;
+                  const img = product.productPictures[0].img;
+                  dispatch(addToCart({ _id, name, price, img,countInStock,colorOption,sizeOption,sizeFirstOption,option,message,qty }));
+                  props.history.push(`/cart/${productId}?qty=${qty}`);
+                }}>
                         <div class="table-responsive">
                           {product.colorOption1 && (<>
                             <label for="color">Color</label>

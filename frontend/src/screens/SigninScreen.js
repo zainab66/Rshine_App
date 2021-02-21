@@ -5,9 +5,7 @@ import { signin } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import MenueHeader from './MenueHeader'
-
 import FootrScreen from './FootrScreen'
-
 
 export default function SigninScreen(props) {
   const [email, setEmail] = useState('');
@@ -30,8 +28,10 @@ export default function SigninScreen(props) {
     if (userInfo) {
       props.history.push(redirect);
     }
-  }, [props.history, redirect, userInfo]);
-
+  }, [props.history,redirect, userInfo]);
+  // if (userInfo) {
+  //   return <Redirect to={'/'} />
+  // }
   return (
     <>
       <MenueHeader />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Table } from 'react-bootstrap';
-import AdminHomeScreen from './AdminHomeScreen';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { addProduct, listProducts } from '../actions/productActions';
@@ -117,61 +116,57 @@ export default function ProductAdminScreen(props) {
     /// TODO: dispatch delete action
   };
   return (
-    <div>
-      <AdminHomeScreen />
-      <div className="row">
-        <h1>Products</h1>
-        <button type="button" className="primary" onClick={handleShow}>
-          Add Product
-        </button>
-      </div>
+    <div className="productAdminScreen">
+       <div class="pricing  text-center">
+      <button type="button" className="productActions" onClick={handleShow}><i class="fas fa-plus"></i><span className="ml-1">Add Product</span></button>
+    </div>
       {loadingList ? (
         <LoadingBox></LoadingBox>
       ) : errorList ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-            <Table striped bordered hover style={{ fontSize: 12, border: 15, margin: 15 }} responsive="lg">
+            <Table striped bordered hover style={{ fontSize: 12, border: 15, margin: 15 }} responsive>
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>NAME</th>
-                  <th>PRICE</th>
-                  <th>discountPrice</th>
-                  <th>CATEGORY</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>DiscountPrice(%)</th>
+                  <th>Category</th>
                   <th>CountInStock</th>
                   <th>Description</th>
                   <th>AddYourPersonalisation</th>
-                  <th>madeBy</th>
-                  <th>material</th>
-                  <th>sizeOption1</th>
-                  <th>priceSizeOption1</th>
-                  <th>sizeOption2</th>
-                  <th>priceSizeOption2</th>
-                  <th>colorOption1</th>
-                  <th>colorOption2</th>
-                  <th>colorOption3</th>
-                  <th>colorOption4</th>
-                  <th>firstOption</th>
-                  <th>priceFirstOption</th>
-                  <th>sizefirstOption1</th>
-                  <th>priceSizefirstOption1</th>
-                  <th>sizefirstOption2</th>
-                  <th>priceSizefirstOption2</th>
-                  <th>option2</th>
-                  <th>option3</th>
-                  <th>option4</th>
-                  <th>option5</th>
-                  <th>option6</th>
-                  <th>option7</th>
-                  <th>option8</th>
-                  <th>option9</th>
-                  <th>option10</th>
-                  <th>standardDelivery</th>
-                  <th>expressDelivery</th>
-                  <th>readyToDispatchRange</th>
-                  <th>readyToDispatchDaysOrWeeks</th>
-                  <th>product Pictures</th>
-                  <th>ACTIONS</th>
+                  <th>MadeBy</th>
+                  <th>Material</th>
+                  <th>SizeOption1</th>
+                  <th>PriceSizeOption1</th>
+                  <th>SizeOption2</th>
+                  <th>PriceSizeOption2</th>
+                  <th>ColorOption1</th>
+                  <th>ColorOption2</th>
+                  <th>ColorOption3</th>
+                  <th>ColorOption4</th>
+                  <th>FirstOption</th>
+                  <th>PriceFirstOption</th>
+                  <th>SizefirstOption1</th>
+                  <th>PriceSizefirstOption1</th>
+                  <th>SizefirstOption2</th>
+                  <th>PriceSizefirstOption2</th>
+                  <th>Option2</th>
+                  <th>Option3</th>
+                  <th>Option4</th>
+                  <th>Option5</th>
+                  <th>Option6</th>
+                  <th>Option7</th>
+                  <th>Option8</th>
+                  <th>Option9</th>
+                  <th>Option10</th>
+                  <th>StandardDelivery</th>
+                  <th>ExpressDelivery</th>
+                  <th>ReadyToDispatchRange</th>
+                  <th>ReadyToDispatchDaysOrWeeks</th>
+                  <th>Product Pictures</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -214,10 +209,8 @@ export default function ProductAdminScreen(props) {
                     <td>{product.expressDelivery}</td>
                     <td>{product.readyToDispatchRange}</td>
                     <td>{product.readyToDispatchDaysOrWeeks}</td>
-
-
                     <td>{product.productPictures.map(picture => <div className="productImgContainer">
-                      <img src={`http://localhost:3001/public/${picture.img}`} alt="" />
+                      <img className="small" src={`http://localhost:3001/public/${picture.img}`} alt="" />
                     </div>)}</td>
                     <td>
                       <button
@@ -242,234 +235,116 @@ export default function ProductAdminScreen(props) {
               </tbody>
             </Table>
           )}
-      <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Product</Modal.Title>
+          <Modal.Title><h2 className="AddNewCategory">Add New Product</h2></Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <div className="addNewProduct">
 
-          <input type="text" className="form-control"
-            label="Product Name"
-            value={name}
-            placeholder={'Product Name'}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <label for="inputProductName" class="productFormLabel">Product Name</label>
+          <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)}/>
 
+          <label for="inputCountInStock" class="productFormLabel">CountInStock</label>
+          <input className="form-control" value={countInStock} onChange={(e) => setCountInStock(e.target.value)} />
+          
+          <label for="inputPrice" class="productFormLabel">Price</label>
+          <input className="form-control" value={price} onChange={(e) => setPrice(e.target.value)}/>
+         
+          <label for="inputDiscountPrice" class="productFormLabel">DiscountPrice</label>
+          <input className="form-control" value={discountPrice} onChange={(e) => setDiscountPrice(e.target.value)}/>
+         
+          <label for="inputDescription" class="productFormLabel">Description</label>
+          <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)}/>
+          
+          <label for="inputAddYourPersonalisation" class="productFormLabel">AddYourPersonalisation</label>
+          <input type="text" className="form-control" value={addYourPersonalisation} onChange={(e) => setAddYourPersonalisation(e.target.value)}/>
+        
+          <label for="inputMadeBy" class="productFormLabel">MadeBy</label>
+          <input type="text" className="form-control" value={madeBy} onChange={(e) => setMadeBy(e.target.value)}/>
+          
+          <label for="inputMaterial" class="productFormLabel">Material</label>
+          <input type="text" className="form-control" value={material} onChange={(e) => setMaterial(e.target.value)}/>
+        
+          <label for="inputSizeOption1" class="productFormLabel">SizeOption1</label>
+          <input type="text" className="form-control" value={sizeOption1} onChange={(e) => setSizeOption1(e.target.value)}/>
+          
+          <label for="inputPriceSizeOption1" class="productFormLabel">PriceSizeOption1</label>
+          <input type="text" className="form-control" value={priceSizeOption1} onChange={(e) => setPriceSizeOption1(e.target.value)}/>
+         
+          <label for="inputSizeOption2" class="productFormLabel">SizeOption2</label>
+          <input type="text" className="form-control" value={sizeOption2} onChange={(e) => setSizeOption2(e.target.value)}/>
+        
+          <label for="inputPriceSizeOption2" class="productFormLabel">PriceSizeOption2</label>
+          <input type="text" className="form-control" value={priceSizeOption2} onChange={(e) => setPriceSizeOption2(e.target.value)}/>
+         
+          <label for="inputColorOption1" class="productFormLabel">ColorOption1</label>
+          <input type="text" className="form-control" value={colorOption1} onChange={(e) => setColorOption1(e.target.value)}/>
+          
+          <label for="inputColorOption2" class="productFormLabel">ColorOption2</label>
+          <input type="text" className="form-control" value={colorOption2} onChange={(e) => setColorOption2(e.target.value)}/>
+         
+          <label for="inputColorOption3" class="productFormLabel">ColorOption3</label>
+          <input type="text" className="form-control" value={colorOption3} onChange={(e) => setColorOption3(e.target.value)}/>
+        
+          <label for="inputColorOption4" class="productFormLabel">ColorOption4</label>
+          <input type="text" className="form-control" value={colorOption4} onChange={(e) => setColorOption4(e.target.value)}/>
 
-          <input className="form-control"
-            label="CountInStock"
-            value={countInStock}
-            placeholder={`CountInStock`}
-            onChange={(e) => setCountInStock(e.target.value)}
-          />
-          <input className="form-control"
-            label="Price"
-            value={price}
-            placeholder={`Price`}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-          <input className="form-control"
-            label="DiscountPrice"
-            value={discountPrice}
-            placeholder={`DiscountPrice`}
-            onChange={(e) => setDiscountPrice(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="Description"
-            value={description}
-            placeholder={`Description`}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="AddYourPersonalisation"
-            value={addYourPersonalisation}
-            placeholder={`AddYourPersonalisation`}
-            onChange={(e) => setAddYourPersonalisation(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="MadeBy"
-            value={madeBy}
-            placeholder={`MadeBy`}
-            onChange={(e) => setMadeBy(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="Material"
-            value={material}
-            placeholder={`Material`}
-            onChange={(e) => setMaterial(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="SizeOption1"
-            value={sizeOption1}
-            placeholder={`SizeOption1`}
-            onChange={(e) => setSizeOption1(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="PriceSizeOption1"
-            value={priceSizeOption1}
-            placeholder={`PriceSizeOption1`}
-            onChange={(e) => setPriceSizeOption1(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="SizeOption2"
-            value={sizeOption2}
-            placeholder={`SizeOption2`}
-            onChange={(e) => setSizeOption2(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="PriceSizeOption2"
-            value={priceSizeOption2}
-            placeholder={`PriceSizeOption2`}
-            onChange={(e) => setPriceSizeOption2(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="ColorOption1"
-            value={colorOption1}
-            placeholder={`ColorOption1`}
-            onChange={(e) => setColorOption1(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="ColorOption2"
-            value={colorOption2}
-            placeholder={`ColorOption2`}
-            onChange={(e) => setColorOption2(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="ColorOption3"
-            value={colorOption3}
-            placeholder={`ColorOption3`}
-            onChange={(e) => setColorOption3(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="ColorOption4"
-            value={colorOption4}
-            placeholder={`ColorOption4`}
-            onChange={(e) => setColorOption4(e.target.value)}
-          />
+          <label for="inputFirstOption" class="productFormLabel">FirstOption</label>
+          <input type="text" className="form-control" value={firstOption} onChange={(e) => setFirstOption(e.target.value)}/>
+         
+          <label for="inputPriceFirstOption" class="productFormLabel">PriceFirstOption</label>
+          <input type="text" className="form-control" value={priceFirstOption} onChange={(e) => setPriceFirstOption(e.target.value)}/>
+          
+          <label for="inputSizefirstOption1" class="productFormLabel">SizefirstOption1</label>
+          <input type="text" className="form-control" value={sizefirstOption1} onChange={(e) => setSizefirstOption1(e.target.value)}/>
+          
+          <label for="inputPriceSizefirstOption1" class="productFormLabel">PriceSizefirstOption1</label>
+          <input type="text" className="form-control" value={priceSizefirstOption1} onChange={(e) => setPriceSizefirstOption1(e.target.value)}/>
+         
+          <label for="inputSizefirstOption2" class="productFormLabel">SizefirstOption2</label>
+          <input type="text" className="form-control" value={sizefirstOption2} onChange={(e) => setSizefirstOption2(e.target.value)}/>
+        
+          <label for="inputPriceSizefirstOption2" class="productFormLabel">PriceSizefirstOption2</label>
+          <input type="text" className="form-control" value={priceSizefirstOption2} onChange={(e) => setPriceSizefirstOption2(e.target.value)}/>
+          
+          <label for="inputOption2" class="productFormLabel">Option2</label>
+          <input type="text" className="form-control" value={option2} onChange={(e) => setOption2(e.target.value)}/>
+          
+          <label for="inputOption3" class="productFormLabel">Option3</label>
+          <input type="text" className="form-control" value={option3} onChange={(e) => setOption3(e.target.value)}/>
+          
+          <label for="inputOption4" class="productFormLabel">Option4</label>
+          <input type="text" className="form-control" value={option4} onChange={(e) => setOption4(e.target.value)}/>
+       
+          <label for="inputOption5" class="productFormLabel">Option5</label>
+          <input type="text" className="form-control" value={option5} onChange={(e) => setOption5(e.target.value)}/>
 
+          <label for="inputOption6" class="productFormLabel">Option6</label>
+          <input type="text" className="form-control" value={option6} onChange={(e) => setOption6(e.target.value)}/>
 
-          <input type="text" className="form-control"
-            label="FirstOption"
-            value={firstOption}
-            placeholder={`FirstOption`}
-            onChange={(e) => setFirstOption(e.target.value)}
-          />
+          <label for="inputOption7" class="productFormLabel">Option7</label>
+          <input type="text" className="form-control" value={option7} onChange={(e) => setOption7(e.target.value)}/>
 
-          <input type="text" className="form-control"
-            label="PriceFirstOption"
-            value={priceFirstOption}
-            placeholder={`PriceFirstOption`}
-            onChange={(e) => setPriceFirstOption(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="SizefirstOption1"
-            value={sizefirstOption1}
-            placeholder={`SizefirstOption1`}
-            onChange={(e) => setSizefirstOption1(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="PriceSizefirstOption1"
-            value={priceSizefirstOption1}
-            placeholder={`PriceSizefirstOption1`}
-            onChange={(e) => setPriceSizefirstOption1(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="SizefirstOption2"
-            value={sizefirstOption2}
-            placeholder={`SizefirstOption2`}
-            onChange={(e) => setSizefirstOption2(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="PriceSizefirstOption2"
-            value={priceSizefirstOption2}
-            placeholder={`PriceSizefirstOption2`}
-            onChange={(e) => setPriceSizefirstOption2(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="Option2"
-            value={option2}
-            placeholder={`Option2`}
-            onChange={(e) => setOption2(e.target.value)}
-          />
+          <label for="inputOption8" class="productFormLabel">Option8</label>
+          <input type="text" className="form-control" value={option8} onChange={(e) => setOption8(e.target.value)}/>
 
-          <input type="text" className="form-control"
-            label="Option3"
-            value={option3}
-            placeholder={`Option3`}
-            onChange={(e) => setOption3(e.target.value)}
-          />
+          <label for="inputOption9" class="productFormLabel">Option9</label>
+          <input type="text" className="form-control" value={option9} onChange={(e) => setOption9(e.target.value)}/>
 
-          <input type="text" className="form-control"
-            label="Option4"
-            value={option4}
-            placeholder={`Option4`}
-            onChange={(e) => setOption4(e.target.value)}
-          />
+          <label for="inputOption10" class="productFormLabel">Option10</label>
+          <input type="text" className="form-control" value={option10} onChange={(e) => setOption10(e.target.value)}/>
+         
+          <label for="inputStandardDelivery" class="productFormLabel">StandardDelivery</label>
+          <input type="text" className="form-control" value={standardDelivery} onChange={(e) => setStandardDelivery(e.target.value)}/>
 
-          <input type="text" className="form-control"
-            label="Option5"
-            value={option5}
-            placeholder={`Option5`}
-            onChange={(e) => setOption5(e.target.value)}
-          />
-
-          <input type="text" className="form-control"
-            label="Option6"
-            value={option6}
-            placeholder={`Option6`}
-            onChange={(e) => setOption6(e.target.value)}
-          />
-
-
-          <input type="text" className="form-control"
-            label="Option7"
-            value={option7}
-            placeholder={`Option7`}
-            onChange={(e) => setOption7(e.target.value)}
-          />
-
-
-          <input type="text" className="form-control"
-            label="Option8"
-            value={option8}
-            placeholder={`Option8`}
-            onChange={(e) => setOption8(e.target.value)}
-          />
-
-
-          <input type="text" className="form-control"
-            label="Option9"
-            value={option9}
-            placeholder={`Option9`}
-            onChange={(e) => setOption9(e.target.value)}
-          />
-
-
-          <input type="text" className="form-control"
-            label="Option10"
-            value={option10}
-            placeholder={`Option10`}
-            onChange={(e) => setOption10(e.target.value)}
-          />
-          <input type="text" className="form-control"
-            label="StandardDelivery"
-            value={standardDelivery}
-            placeholder={`StandardDelivery`}
-            onChange={(e) => setStandardDelivery(e.target.value)}
-          />
-
-          <input type="text" className="form-control"
-            label="ExpressDelivery"
-            value={expressDelivery}
-            placeholder={`ExpressDelivery`}
-            onChange={(e) => setExpressDelivery(e.target.value)} />
-          <input type="text" className="form-control"
-            label=" ReadyToDispatchRange "
-            value={readyToDispatchRange}
-            placeholder={`ReadyToDispatchRange`}
-            onChange={(e) => setReadyToDispatchRange(e.target.value)}
-          />
-
+          <label for="inputExpressDelivery" class="productFormLabel">ExpressDelivery</label>
+          <input type="text" className="form-control" value={expressDelivery} onChange={(e) => setExpressDelivery(e.target.value)} />
+          
+          <label for="inputReadyToDispatchRange" class="productFormLabel">ReadyToDispatchRange</label>
+          <input type="text" className="form-control" value={readyToDispatchRange} onChange={(e) => setReadyToDispatchRange(e.target.value)}/>
+        
+          <label for="option" class="categoryFormLabel">ReadyToDispatchDaysOrWeeks</label>
           <select class="custom-select d-block w-100 mb-3" id="readyToDispatchDaysOrWeeks" value={readyToDispatchDaysOrWeeks}
             onChange={(e) => setReadyToDispatchDaysOrWeeks(e.target.value)} required>
             <option>Select your Processing time</option>
@@ -477,17 +352,15 @@ export default function ProductAdminScreen(props) {
             <option >Weeks</option>
           </select>
 
-
-
-
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
                 <>
+                  <label for="option" class="categoryFormLabel">Categories</label>
                   <select class="custom-select d-block w-100 mb-3" id="readyToDispatchDaysOrWeeks" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
-                    <option>select category</option>
+                    <option>Select category</option>
                     {categories.map((category) => (
 
                       <>
@@ -516,12 +389,12 @@ export default function ProductAdminScreen(props) {
             ))
             : null}
 
-          <input type="file" name="productPicture" onChange={handleProductPictures} />
-
+          <input type="file" class="form-control" name="productPicture" onChange={handleProductPictures} />
+          </div>
         </Modal.Body>
         <Modal.Footer>
 
-          <Button variant="primary" onClick={handleClose}>
+          <Button style={{ color: 'black', background: '#00bbcc', borderRadius: 25, borderColor: '#ffd480' }} onClick={handleClose}>
             Save Changes
           </Button>
         </Modal.Footer>

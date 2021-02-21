@@ -8,7 +8,6 @@ require("dotenv").config();
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      isSeller: user.isSeller,
     },
     process.env.jwtSecret || 'somethingsecret',
     {

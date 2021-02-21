@@ -34,7 +34,6 @@ export default function ProductListScreen(props) {
   };
   return (    <div>
 
-    <AdminHomeScreen/>
      <div className="row">
         <h1>Products</h1>
         <button type="button" className="primary" onClick={createHandler}>

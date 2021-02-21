@@ -5,6 +5,7 @@ const User  = require('../models/userModel.js');
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils.js');
 const authorize = require("../middleware/authorize")
+const {validateSignupRequest,validateSigninRequest,isRequestValidated} = require("../middleware/validInfo")
 
 const expressAsyncHandler = require('express-async-handler');
 
@@ -18,7 +19,7 @@ router.get(
   })
 );
 
-router.post('/signin', expressAsyncHandler(async (req, res) => {
+router.post('/signin',validateSigninRequest,isRequestValidated, expressAsyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
@@ -36,7 +37,9 @@ router.post('/signin', expressAsyncHandler(async (req, res) => {
   })
 );
 
-router.post('/register', expressAsyncHandler(async (req, res) => {
+router.post('/register',validateSignupRequest,isRequestValidated, expressAsyncHandler(async (req, res) => {
+  const user2 = await User.findOne({ email: req.body.email });
+  if (user2)return res.status(401).send({message:'User already exists'});
     const user = new User({
       name: req.body.name,
       email: req.body.email,

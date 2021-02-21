@@ -13,6 +13,7 @@ const productsRouter = require('./routes/products');
 const ordersRouter = require('./routes/orders');
 const categoryRouter = require('./routes/category');
 const crouselRouter = require('./routes/crousel');
+const cartRouter = require('./routes/cart');
 
 const app = express();
 
@@ -30,8 +31,10 @@ app.use('/public', express.static(path.join(__dirname, 'uploads')));
 mongoose.connect(
   `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.amlpj.mongodb.net/${process.env.MONGO_DB_DATABASE}?retryWrites=true&w=majority`,
   {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+     useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
   }
 ).then(() => {
   console.log('Database connected')
@@ -47,6 +50,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/crousel', crouselRouter);
+app.use('/api/cart', cartRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

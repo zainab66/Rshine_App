@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { CART_EMPTY } from '../constants/cartConstants';
+// import { CART_EMPTY } from '../constants/cartConstants';
 import { ORDER_CREATE_FAIL,
     ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_FAIL,
     ORDER_DETAILS_REQUEST,
@@ -69,7 +69,7 @@ export const payOrder = (order, paymentResult) => async (
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-     dispatch({ type: CART_EMPTY });
+    //  dispatch({ type: CART_EMPTY });
       localStorage.removeItem('cartItems');
   } catch (error) {
     const message =

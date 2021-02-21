@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { savePaymentMethod } from '../actions/cartActions';
+// import { savePaymentMethod } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 
 export default function PaymentMethodScreen(props) {
@@ -11,17 +11,17 @@ export default function PaymentMethodScreen(props) {
   }
   const [paymentMethod, setPaymentMethod] = useState('PayPal');
   const dispatch = useDispatch();
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(savePaymentMethod(paymentMethod));
-    props.history.push('/placeorder');
-  };
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   dispatch(savePaymentMethod(paymentMethod));
+  //   props.history.push('/placeorder');
+  // };
   return (
     <div>
             <div className="contain">
 
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
-      <form className="formPayment" onSubmit={submitHandler}>
+      {/* <form className="formPayment" onSubmit={submitHandler}>
         <div>
           <h1>Payment Method</h1>
         </div>
@@ -71,7 +71,7 @@ export default function PaymentMethodScreen(props) {
             Continue
           </button>
         </div>
-      </form>
+      </form> */}
     </div>
     </div>
   );
