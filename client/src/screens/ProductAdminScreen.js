@@ -210,7 +210,7 @@ export default function ProductAdminScreen(props) {
                     <td>{product.readyToDispatchRange}</td>
                     <td>{product.readyToDispatchDaysOrWeeks}</td>
                     <td>{product.productPictures.map(picture => <div className="productImgContainer">
-                      <img className="small" src={`http://localhost:3001/public/${picture.img}`} alt="" />
+                      <img className="small" src={picture.img} alt="" />
                     </div>)}</td>
                     <td>
                       <button
@@ -364,7 +364,7 @@ export default function ProductAdminScreen(props) {
                     {categories.map((category) => (
 
                       <>
-                        <option key={category.id} value={category.name}> {category.name}</option>
+                        {/* <option key={category.id} value={category.name}> {category.name}</option> */}
                         {category.childr.map((sub) =>
                           <>
                             <option key={sub.id} value={sub.name}>  {sub.name}</option>

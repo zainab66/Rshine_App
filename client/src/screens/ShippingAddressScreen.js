@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveShippingAddress } from '../actions/cartActions';
+//import { saveShippingAddress } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { postcodeValidator } from 'postcode-validator';
@@ -29,18 +29,18 @@ export default function ShippingAddressScreen(props) {
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      saveShippingAddress({
-        fullName,
-        address,
-        Apartment,
-        city,
-        postalCode,
-        country,
-        province
-      })
+    // dispatch(
+    //   saveShippingAddress({
+    //     fullName,
+    //     address,
+    //     Apartment,
+    //     city,
+    //     postalCode,
+    //     country,
+    //     province
+    //   })
 
-    );
+    // );
     country && postcodeValidator(postalCode, country) && (
       props.history.push('/placeorder'))
   };
@@ -146,11 +146,11 @@ export default function ShippingAddressScreen(props) {
                                 border: "2px solid #ffd480",
                                 textAlign: "center",
                                 alignSelf: "center",
-                                marginLeft: 70,
+                                marginLeft: 50,
                                 marginTop: -50
                               }}>{item.qty}</span>)}
                             <img class="small"
-                              src={generatePublicUrl(item.image)} alt={item.name} />
+                              src={item.image} alt={item.name} />
                             <div className="orderItemName">
                               {item.name}
                             </div>

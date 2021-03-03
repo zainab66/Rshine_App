@@ -10,6 +10,9 @@ const shortid = require('shortid');
 const path = require('path');
 const { default: slugify } = require('slugify');
 const Category = require('../models/categoryModel.js');
+const multerS3 = require('multer-s3')
+const aws = require('aws-sdk')
+
 const {
   createProduct,
   getProductsBySlug,
@@ -27,7 +30,27 @@ const storage = multer.diskStorage({
   },
 });
 
+const s3 = new aws.S3({
+  accessKeyId: 'AKIAJIH5FD67D5P3F5UQ',
+  secretAccessKey: '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',
+})
+
 const upload = multer({ storage });
+const uploadS3 = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'rshine-app',
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, shortid.generate() + '-' + file.originalname)
+    }
+  })
+})
+
+
 
 
 /* GET products listing. */
@@ -58,13 +81,13 @@ router.get('/prod/:id', expressAsyncHandler(async (req, res) => {
 );
 
 
-router.post('/create', authorize, isAdmin, upload.array('productPictures'), expressAsyncHandler(async (req, res) => {
+router.post('/create', authorize, isAdmin, uploadS3.array('productPictures'), expressAsyncHandler(async (req, res) => {
   const {name,price,discountPrice,sizeOption1,priceSizeOption1,sizeOption2,priceSizeOption2, colorOption1, colorOption2, colorOption3, colorOption4,firstOption,priceFirstOption,sizefirstOption1, priceSizefirstOption1,sizefirstOption2, priceSizefirstOption2,option2,option3,option4,option5,option6,option7,option8,option9,option10,
     description,addYourPersonalisation,category,countInStock,madeBy,material, standardDelivery,expressDelivery, readyToDispatchRange,readyToDispatchDaysOrWeeks ,rating,numReviews,createdBy} = req.body;
   let productPictures = [];
   if(req.files.length > 0){
     productPictures = req.files.map(file => {
-      return {img: file.filename}
+      return {img: file.location}
     });
   }
   const newProduct = new Product({
@@ -111,8 +134,8 @@ router.post('/create', authorize, isAdmin, upload.array('productPictures'), expr
     createdBy: req.user._id,
   });
   const createdProduct = await newProduct.save();
-  res.send({ message: 'Product Created', product: createdProduct });
-  //res.status(200).json({ file: req.files, body:req.body});
+  //res.send({ message: 'Product Created', product: createdProduct });
+  res.status(200).json({ file: req.files, body:req.body});
 })
 );
 

@@ -13,7 +13,7 @@ export const getAllCategory = () => async (dispatch) =>{
  
     });
     try {
-        const  { data }  = await Axios.get('/api/category');
+        const  { data }  = await Axios.get('http://localhost:3001/api/category');
         //const { data } = res.data;
 
         dispatch({ type: Category_LIST_SUCCESS, payload: data});
@@ -30,7 +30,7 @@ export const addCategory = (form) => async (dispatch, getState) => {
     } = getState();
     try {
       const { data } = await Axios.post(
-        '/api/category/create',
+        'http://localhost:3001/api/category/create',
         form,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -56,7 +56,7 @@ export const addCategory = (form) => async (dispatch, getState) => {
     } = getState();
     try {
       const { data } = await Axios.post(
-        '/api/category/update',
+        'http://localhost:3001/api/category/update',
         form,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -85,7 +85,7 @@ export const addCategory = (form) => async (dispatch, getState) => {
       userSignin: { userInfo },
     } = getState();
     try {
-      const {data} = Axios.post(`/api/category/delete`, {payload:{ids}},{
+      const {data} = Axios.post(`http://localhost:3001/api/category/delete`, {payload:{ids}},{
         headers: { Authorization: `Bearer ${userInfo.token}` },
       });
       dispatch({ type: Category_DELETE_SUCCESS });

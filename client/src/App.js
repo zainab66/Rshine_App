@@ -28,8 +28,8 @@ import AboutUsScreen from './screens/AboutUsScreen';
 import { updateCart } from './actions/cartActions';
 
 function App() {
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  // const cart = useSelector((state) => state.cart);
+  // const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
@@ -37,9 +37,9 @@ function App() {
   const signoutHandler = () => {
     dispatch(signout());
   };
-  useEffect(() => {
+   useEffect(() => {
     dispatch(updateCart());
-  }, []);
+  }, [dispatch,userInfo]);
 
   useEffect(() => {
     dispatch(getAllCategory());
@@ -66,7 +66,7 @@ function App() {
               </Nav>
               <Nav className="ml-auto">
                 <Nav.Link href="/cart" className="cartBtn">
-                  {cartItems.length > 0 && (
+                 
                     <span style={{
                       position: "absolute",
                       background: "#00bbcc",
@@ -80,7 +80,7 @@ function App() {
                       alignSelf: "center",
                       marginLeft: 18,
                             marginTop: -4   
-                    }}>{cartItems.reduce((a, c) => a + c.qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black" }} />  </Nav.Link>
+                    }}></span><IoIosCart size="22" style={{ color: "black" }} />  </Nav.Link>
                 <Nav.Link active href="#" >Hello,{userInfo.name}</Nav.Link>
                 <Nav.Link className="adminLin" href="#signout" onClick={signoutHandler}>Sign Out</Nav.Link>
               </Nav>
@@ -153,10 +153,10 @@ function App() {
                         </button>
                       </div>
                     </div>
-                    <Nav className="ml-auto">
+                    <Nav className="ml-auto pl-2">
                       <Nav.Link href="/cart" className="cartBtn">
 
-                        {cartItems.length > 0 && (
+                       
                           <span style={{
                             position: "absolute",
                             background: "#00bbcc",
@@ -168,14 +168,16 @@ function App() {
                             border: "2px solid #ffd480",
                             textAlign: "center",
                             alignSelf: "center",
-                            marginLeft: 30,
-                            marginTop: 8
-                          }}>{cartItems.reduce((a, c) => a + c.qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black", marginTop: 16, marginRight: 12, marginLeft: 12 }} />  </Nav.Link>
+                            marginLeft: 28,
+                            marginTop: 5
+                          }}></span><IoIosCart size="22" style={{ color: "black", marginBottom:8,marginTop:8, marginRight: 7, marginLeft: 7}} />  </Nav.Link>
                       {/* <NavDropdown title={userInfo.name} id="collasible-nav-dropdown" >
                         <NavDropdown.Item href="/Profile">User Profile</NavDropdown.Item>
                         <NavDropdown.Item href="/orderhistory">Order History</NavDropdown.Item>
                         <NavDropdown.Item href="#signout" onClick={signoutHandler}>Sign Out</NavDropdown.Item>
                       </NavDropdown> */}
+                      </Nav>
+                      <Nav>
                       <li class="nav-item avatar dropdown">
                         <button class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-saju" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false">
@@ -214,9 +216,9 @@ function App() {
                         </button>
                       </div>
                     </div>
-                    <Nav className="ml-auto">
+                    <Nav className="ml-auto pl-2">
                       <Nav.Link href="/cart" className="cartBtn">
-                        {cartItems.length > 0 && (
+                      
                           <span style={{
                             position: "absolute",
                             background: "#00bbcc",
@@ -228,10 +230,11 @@ function App() {
                             border: "2px solid #ffd480",
                             textAlign: "center",
                             alignSelf: "center",
-                            marginLeft: 30,
-                            marginTop: 6                          }}>{cartItems.reduce((a, c) => a + c.qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black", marginTop: 10, marginRight: 12, marginLeft: 12  }} />  </Nav.Link>
-                      <Nav.Link href="/signin" className=" signinBtn " style={{ color: "black", paddingTop: 21 }}>Sign<span className="pl-1">In</span>  </Nav.Link>
-                      <Nav.Link href="/register" className="registerBtn " style={{ color: "black", paddingTop: 21 }}>Register</Nav.Link>
+                            marginLeft: 28,
+                            marginTop: 5 }}></span><IoIosCart size="22" style={{ color: "black",marginBottom:8, marginTop:8, marginRight: 7, marginLeft: 7  }} />  </Nav.Link>
+                  
+                      <Nav.Link href="/signin" className=" signinBtn " style={{ color: "black", margin: 10 }}>Sign<span className="pl-1">In</span>  </Nav.Link>
+                      <Nav.Link href="/register" className="registerBtn " style={{ color: "black",marginLeft: 0,margin: 10}}>Register</Nav.Link>
                     </Nav>
                   </Navbar.Collapse>
                 </Container>
@@ -245,8 +248,8 @@ function App() {
       <AdminRoute path="/CrouselImages" component={CrouselAdminScreen} />
       <PrivateRoute path="/Profile" component={ProfileScreen}></PrivateRoute>
       <Route path="/" component={HomeScreen} exact></Route>
-      {/* <Route path="/cart" component={CartScreen} ></Route> */}
-
+      <Route path="/cart" component={CartScreen} ></Route>
+      
       <Route path="/AboutUs" component={AboutUsScreen} exact></Route>
       <Route path="/signin" component={SigninScreen}></Route>
       <Route path="/register" component={RegisterScreen}></Route>
@@ -255,7 +258,7 @@ function App() {
       <Route path="/placeorder" component={PlaceOrderScreen}></Route>
       <Route path="/order/:id" component={OrderScreen}></Route>
       <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-      <Route path="/cart/:id?" component={CartScreen} exact></Route>
+      {/* <Route path="/cart/:id?" component={CartScreen} exact></Route> */}
 
       <Route path="/product/:id/edit" component={ProductEditScreen} exact></Route>
       <Route path="/:productSlug/:productId/p" component={ProductDetailsPage} exact ></Route>

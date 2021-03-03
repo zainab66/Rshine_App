@@ -17,7 +17,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       const {
         userSignin: { userInfo },
       } = getState();
-      const { data } = await Axios.post('/api/orders', order, {
+      const { data } = await Axios.post('https://backend-rshine.herokuapp.com/api/orders', order, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
@@ -42,7 +42,7 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(`/api/orders/${orderId}`, {
+    const { data } = await Axios.get(`https://backend-rshine.herokuapp.com/api/orders/${orderId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
@@ -65,7 +65,7 @@ export const payOrder = (order, paymentResult) => async (
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = Axios.put(`/api/orders/${order._id}/pay`, paymentResult, {
+    const { data } = Axios.put(`https://backend-rshine.herokuapp.com/api/orders/${order._id}/pay`, paymentResult, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
@@ -87,7 +87,7 @@ export const listOrderMine = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get('/api/orders/mine', {
+    const { data } = await Axios.get('https://backend-rshine.herokuapp.com/api/orders/mine', {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },

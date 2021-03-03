@@ -10,7 +10,7 @@ export const addCrousel = (form) => async (dispatch, getState) => {
     } = getState();
     try {
       const { data } = await Axios.post(
-        '/api/crousel/create',
+        'https://backend-rshine.herokuapp.com/api/crousel/create',
         form,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },

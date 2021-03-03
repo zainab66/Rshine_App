@@ -29,7 +29,7 @@ export default function OrderScreen(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     const addPayPalScript = async () => {
-      const { data } = await Axios.get('/api/config/paypal');
+      const { data } = await Axios.get('https://backend-rshine.herokuapp.com/api/config/paypal');
       const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=CAD`;
@@ -126,11 +126,11 @@ export default function OrderScreen(props) {
                                         border: "2px solid #ffd480",
                                         textAlign: "center",
                                         alignSelf: "center",
-                                        marginLeft: 70,
+                                        marginLeft: 50,
                                         marginTop: -50
                                       }}>{item.qty}</span>)}
                                     <img class="small"
-                                      src={generatePublicUrl(item.image)} alt={item.name} />
+                                      src={item.image} alt={item.name} />
                                     <div className="orderItemName">
                                       {item.name}
                                     </div>

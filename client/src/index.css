@@ -37,14 +37,14 @@ body {
 }
 /* signIn and signUp component */
 .signinBtn {
- font: 0.9em sans-serif;
+ font: 1em sans-serif;
 }
 .signinBtn:hover {
-  background:#ffeecc;
+  background:#ffd480;
   border-radius: 25px;
 }
 .registerBtn {
-font: 0.9em sans-serif;
+font: 1em sans-serif;
 }
 .registerBtn:hover {
   background:#ffd480;
@@ -414,7 +414,10 @@ font-size: 14px;
   padding-top: 2px;
 }
 .addYourPersonalisation{
-  font-size: 10px;
+font: 0.8em sans-serif;
+}
+.addYourPersonalisation1{
+  font: 0.8em sans-serif;
 }
 .priceSaved{
   margin-top: -15px;
@@ -442,7 +445,7 @@ font-size: 14px;
   font: 1.6em sans-serif;
 }
 .itemTittle{
-  font: 1.6em sans-serif;
+  font: 1.2em sans-serif;
 }
 .removeBtn {
 color: #000;
@@ -463,6 +466,99 @@ border: none;
 .Subtotal{
   font: 1.2em sans-serif;
 }
+/* .quantityControl{
+  display: flex;
+  align-items: center;
+}
+.quantityControl button{
+  font: 1.3em sans-serif;
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  border: none;
+  border: 2px solid #ffd480;
+  background: #00bbcc;
+  text-align: center;
+
+}
+.quantityControl input{
+  width: 60px;
+  height: 25px;
+  border: 1px solid  black;
+  border-radius: 25px;
+  font: 1.2em sans-serif;
+  text-align: center;
+} */
+.quantity {
+  display: inline-block; }
+ 
+ .quantity .input-text.qty {
+  width: 35px;
+  height: 41px;
+  padding: 0 5px;
+  text-align: center;
+  background-color: transparent;
+  border: 1px solid #ffd480;
+ }
+ 
+ .quantity.buttons_added {
+  text-align: left;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: top; }
+ 
+ .quantity.buttons_added input {
+  display: inline-block;
+  margin: 0;
+  vertical-align: top;
+  box-shadow: none;
+ }
+ 
+ .quantity.buttons_added .minus,
+ .quantity.buttons_added .plus {
+  padding: 7px 10px 8px;
+  height: 41px;
+  background-color: #00bbcc;
+  border: 2px solid #ffd480;
+  cursor:pointer;}
+ 
+ .quantity.buttons_added .minus {
+  border-radius: 25px 0 0 25px ;
+}
+ 
+ .quantity.buttons_added .plus {
+  border-radius: 0 25px 25px 0;
+}
+ 
+ .quantity.buttons_added .minus:hover,
+ .quantity.buttons_added .plus:hover {
+  background: #ffd480; }
+ 
+ .quantity input::-webkit-outer-spin-button,
+ .quantity input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0; }
+  
+  .quantity.buttons_added .minus:focus,
+ .quantity.buttons_added .plus:focus {
+  outline: none; }
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* shippingScreen */
 .shippingDetails{
   margin-top: 90px;
@@ -485,14 +581,15 @@ border: none;
   padding-bottom: -12px;
 }
 img.small {
-  max-width: 5rem;
+  max-width: 4rem;
   width: 100%;
 }
 .orderItem{
   font: 1.1em sans-serif;
 }
 .orderItemName{
-  font: 1.2em sans-serif;
+  font: 0.9em sans-serif;
+  margin: 4px;
 }
 .orderItemDetails{
   font: 1.3em sans-serif;

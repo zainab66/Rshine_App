@@ -30,7 +30,7 @@ export default function ProductHomeScreen() {
                       <Link id="productLink" to={`/${product.slug}/${product._id}/p`}>
                         <div class="img-hover-zoom">
                           <div class="view overlay">
-                            <img class="" src={generatePublicUrl(product.productPictures[0].img)} alt={product.name} width="275" height="250" />
+                            <img class="" src={product.productPictures[0].img} alt={product.name} width="275" height="250" />
                             <div class="mask rgba-white-slight"></div>
                           </div>
                         </div>

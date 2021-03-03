@@ -374,12 +374,12 @@ export default function CategoryAdminScreen(props) {
             <Modal.Title>Confirm</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h2 className="EditCategory">Expanded<span className="ParentsCategory ml-1">(Parents Category)</span></h2>
+            {/* <h2 className="EditCategory">Expanded<span className="ParentsCategory ml-1">(Parents Category)</span></h2>
             {expandedArray.map((item, index) => <span key={index}> <ul class="list-group">
-              <li class="list-group-item">{item.name}</li></ul></span>)}
-            <h2 className="EditCategory mt-4">Checked<span className="ParentsCategory ml-1">(Subs Category)</span></h2>
+              <li class="list-group-item"><i class="fa fa-circle fa-fw" style={{fontSize:8,marginRight:2}}></i>{item.name}</li></ul></span>)} */}
+            <h2 className="EditCategory mt-4">Checked</h2>
             {checkedArray.map((item, index) => <span key={index}><ul class="list-group">
-              <li class="list-group-item">{item.name}</li></ul></span>)}
+              <li class="list-group-item"><i class="fa fa-circle fa-fw" style={{fontSize:8,marginRight:2}}></i>{item.name}</li></ul></span>)}
           </Modal.Body>
           <Modal.Footer>
             <Button style={{ color: 'black', background: '#00bbcc', borderRadius: 25, borderColor: '#ffd480' }} onClick={() => setDeleteCategoryModal(false)}>

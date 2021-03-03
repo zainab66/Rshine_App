@@ -11,7 +11,7 @@ export const listProducts = () => async (dispatch) =>{
  
     });
     try {
-        const { data } = await Axios.get('/api/products');
+        const { data } = await Axios.get('http://localhost:3001/api/products');
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch(error){
         dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
@@ -21,7 +21,7 @@ export const listProducts = () => async (dispatch) =>{
 export const detailsProduct = (productId) => async (dispatch) => {
     dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
     try {
-      const { data } = await Axios.get(`/api/products/prod/${productId}`);
+      const { data } = await Axios.get(`http://localhost:3001/api/products/prod/${productId}`);
       console.log(data)
       dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
     } catch (error) {
@@ -43,7 +43,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
     } = getState();
     try {
       const { data } = await Axios.post(
-        '/api/products/create',
+        'http://localhost:3001/api/products/create',
         form,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -69,7 +69,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
       userSignin: { userInfo },
     } = getState();
     try {
-      const { data } = await Axios.put(`/api/products/${product._id}`, product, {
+      const { data } = await Axios.put(`http://localhost:3001/api/products/${product._id}`, product, {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       });
       dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
@@ -103,7 +103,7 @@ export const detailsProduct = (productId) => async (dispatch) => {
 
   export const getProductsBySlug = (slug) => {
     return async dispatch => {
-        const res = await Axios.get(`/api/products/productes/${slug}`);
+        const res = await Axios.get(`http://localhost:3001/api/products/productes/${slug}`);
         console.log('oooo',res)
         if (res.status === 200) {
             dispatch({
@@ -128,7 +128,7 @@ export const createReview = (productId, review) => async (
   } = getState();
   try {
     const { data } = await Axios.post(
-      `/api/products/${productId}/reviews`,
+      `https://backend-rshine.herokuapp.com/api/products/${productId}/reviews`,
       review,
       {
         headers: { Authorization: `Bearer ${userInfo.token}` },

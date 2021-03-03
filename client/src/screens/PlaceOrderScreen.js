@@ -155,11 +155,11 @@ export default function PlaceOrderScreen(props) {
                                   border: "2px solid #ffd480",
                                   textAlign: "center",
                                   alignSelf: "center",
-                                  marginLeft: 70,
+                                  marginLeft: 50,
                                   marginTop: -50
                                 }}>{item.qty}</span>)}
                               <img class="small"
-                                src={generatePublicUrl(item.image)} alt={item.name} />
+                                src={item.image} alt={item.name} />
                               <div className="orderItemName">
                                 {item.name}
                               </div>

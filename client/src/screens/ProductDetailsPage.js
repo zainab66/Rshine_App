@@ -11,6 +11,7 @@ import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstants';
 import ProductImage from './ProductImage';
 import FootrScreen from './FootrScreen'
 import { addToCart } from '../actions/cartActions';
+import CartItem from "./CartItem";
 
 
 export default function ProductDetailsPage(props) {
@@ -106,7 +107,16 @@ export default function ProductDetailsPage(props) {
                       <Rating
                         rating={product.rating}
                       ></Rating>
-                      {!option &&
+
+
+                      {!option && !sizeOption &&
+                        (product.discountPrice ? (<>
+                          <p><span class="mr-1"><strong className="discount"> CA${(product.price - product.price * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.price}</strong></span></p>
+                          <p className="priceSaved">You save CA${(product.price * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>)
+                          : (<p><span class="mr-1"><strong> CA${product.price}</strong></span></p>))}
+
+
+                      {!option && sizeOption &&
                         (sizeOption === product.sizeOption1 && product.discountPrice ? (<>
                           <p><span class="mr-1"><strong className="discount"> CA${(product.priceSizeOption1 - product.priceSizeOption1 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSizeOption1}</strong></span></p>
                           <p className="priceSaved">You save CA${(product.priceSizeOption1 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>) : (
@@ -122,6 +132,8 @@ export default function ProductDetailsPage(props) {
                                   : (<p><span class="mr-1"><strong> CA${product.price}</strong></span></p>))
 
                               ))))}
+
+
 
                       {option &&
                         (sizeFirstOption === product.sizefirstOption1 && product.discountPrice ? (<>
@@ -146,12 +158,21 @@ export default function ProductDetailsPage(props) {
                             <span className="danger">Unavailable</span>
                           )}
                       </p>
-                      <form onSubmit={() => {
+                      {/* onSubmit={() => {
                   const { _id, name, price,countInStock } = product;
                   const img = product.productPictures[0].img;
                   dispatch(addToCart({ _id, name, price, img,countInStock,colorOption,sizeOption,sizeFirstOption,option,message,qty }));
                   props.history.push(`/cart/${productId}?qty=${qty}`);
-                }}>
+                }} */}
+
+                
+                      <form onSubmit={() => {
+                   
+                    const { _id, name, price} = product;
+                    const img = product.productPictures[0].img;
+                    dispatch(addToCart({ _id, name, price, img },Number(qty)));
+                    props.history.push(`/cart`);
+                  }}>
                         <div class="table-responsive">
                           {product.colorOption1 && (<>
                             <label for="color">Color</label>
@@ -190,7 +211,7 @@ export default function ProductDetailsPage(props) {
                                 <option> {product.sizeOption2}</option>
                               </select>
                             </>))}
-                          <label>Add your personalisation </label>
+                          <h5 className="addYourPersonalisation1 mt-4">Add your personalisation </h5>
                           <p className="addYourPersonalisation">{product.addYourPersonalisation}</p>
                           <textarea class="form-control" rows="3" id="comment1" value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
                           {product.countInStock > 0 && (<>
@@ -211,6 +232,12 @@ export default function ProductDetailsPage(props) {
                       </form>
                     </div>
                   </div>
+                  {/* <button onClick={() => {
+                  const { _id, name, price,countInStock } = product;
+                  const img = product.productPictures[0].img;
+                  dispatch(addToCart2({ _id, name, price, img,countInStock,colorOption,sizeOption,sizeFirstOption,option,message },qty));
+                  props.history.push(`/cart`);
+                }}></button> */}
                 </section>
                 <div class="classic-tabs">
                   <ul class="nav  nav-justified pb-4" id="advancedTab" role="tablist">

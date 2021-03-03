@@ -9,8 +9,8 @@ export default function ProductImage(props) {
             let images = [];
             props.detail.productPictures && props.detail.productPictures.map(item => {
                 images.push({
-                    original: generatePublicUrl(item.img),
-                    thumbnail: generatePublicUrl(item.img)
+                    original: item.img,
+                    thumbnail: item.img
                 })
             })
             setImages(images)
