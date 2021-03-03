@@ -31,8 +31,8 @@ const storage = multer.diskStorage({
 });
 
 const s3 = new aws.S3({
-  accessKeyId: '',
-  secretAccessKey: '',
+  accessKeyId: (process.env.accessKeyId),
+  secretAccessKey: (process.env.secretAccessKey),
 })
 
 const upload = multer({ storage });
