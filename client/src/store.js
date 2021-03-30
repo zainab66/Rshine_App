@@ -6,9 +6,10 @@ import {
 
 } from './reducers/productReducers';
 import { userSigninReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer } from './reducers/userReducers';
-import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderMineListReducer } from './reducers/orderReducers';
+import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderMineListReducer,CustmerlistOrder } from './reducers/orderReducers';
 import { categoryListReducer, categoryCreateReducer, categoryUpdateReducer, categoryDeleteReducer } from './reducers/categoryReducers';
 import { crouselCreateReducer } from './reducers/crouselReducers';
+import { addressReducer } from './reducers/addressReducers';
 
 
 const initialState = {
@@ -52,6 +53,8 @@ const reducer = combineReducers({
   categoryDelete: categoryDeleteReducer,
   productReviewCreate: productReviewCreateReducer,
   crouselCreate: crouselCreateReducer,
+  addressw: addressReducer,
+  orderCustmer:CustmerlistOrder
 
 })
 

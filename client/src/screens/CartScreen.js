@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { addToCart, getCartItems  } from '../actions/cartActions';
+import { addToCart, getCartItems ,removeCartItem,removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import FootrScreen from './FootrScreen'
 import MenueHeader from './MenueHeader'
@@ -30,11 +30,11 @@ export default function CartScreen(props) {
     }
   }, [dispatch, cart.cartItems]);
 
-    console.log(' cart.cartItems' , cart.cartItems);
+    //console.log(' cart.cartItems' , cart.cartItems);
 
-    console.log(' cart' , cart);
+    //console.log(' cart' , cart);
 
-    console.log(' cartItems' , cartItems);
+  //  console.log(' cartItems' , cartItems);
 
 
 
@@ -55,13 +55,18 @@ export default function CartScreen(props) {
     dispatch(addToCart({ _id, name, price,  img }, qty));
   };
 
-  // const removeFromCartHandler = (id) => {
-  //   // delete action
-  //   dispatch(removeFromCart(id));
-  // };
+  const removeFromCartHandler = (_id) => {
+    // delete action
 
+    console.log('wwqqqq',_id)
+    
+    dispatch(removeFromCart({ productId: _id }));
+  };
+  const onRemoveCartItem = (_id) => {
+    dispatch(removeCartItem({ productId: _id }));
+  };
   const checkoutHandler = () => {
-    props.history.push('/signin?redirect=shipping');
+    props.history.push('/signin?redirect=CheckoutPage');
   };
 
 //   return (
@@ -89,7 +94,7 @@ export default function CartScreen(props) {
     <>
       <MenueHeader />
       <div className="cartDetails">
-        {Object.keys(cartItems) ? (<>
+      {!cartItems  ? (<>
           <main role="main" class="container">
             <div class="starter-template">
               Your cart is empty<a href="/" class="btnForAll ml-1" ><IoMdCart size={25} style={{ paddingBottom: 4, paddingLeft: 4 }} /><span className="continueShopping ">Continue shopping</span></a>
@@ -102,8 +107,9 @@ export default function CartScreen(props) {
                   <div class="col-lg-8">
                     <div class="card wish-list mb-4">
                       <div class="card-body">
-                        {/* <h2 class="numItemTittle mb-4">
-                          <span>{cartItems.reduce((a, c) => a + c.qty, 0)}</span> items in your basket</h2> */}
+                     
+                        <h2 class="numItemTittle mb-4">
+                          <span> {Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty, 0)}</span> items in your basket</h2> 
                         {Object.keys(cartItems).map((key, index) => (
                           <>
                             <div class="row mb-4">
@@ -166,10 +172,12 @@ export default function CartScreen(props) {
                                   </div>
                                   <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                      {/* <button class="removeBtn small text-uppercase mr-3" onClick={() => removeFromCartHandler(cartItems[key]._id)} ><i
-                                        class="fas fa-trash-alt mr-1"></i> Remove item </button> */}
-                                      {/* <a href="#!" type="button" class="card-link-secondary small text-uppercase"><i
-                                      class="fas fa-heart mr-1"></i> Move to wish list </a> */}
+
+                                    {/* onClick={() => removeFromCartHandler(cartItems[key]._id)} */}
+                                       <button class="removeBtn small text-uppercase mr-3" onClick={() => onRemoveCartItem(cartItems[key]._id)} ><i
+                                        class="fas fa-trash-alt mr-1"></i> Remove item </button>
+                                       <a href="#!" type="button" class="card-link small text-uppercase"><i
+                                      class="fas fa-heart mr-1"></i> Move to wish list </a> 
                                     </div>
                                     <p class="mb-0"><span className="itemPriceCart">CA${cartItems[key].price}</span></p>
 
@@ -205,11 +213,11 @@ export default function CartScreen(props) {
                       <div class="card-body">
                         <ul class="list-group list-group-flush">
                           <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                            {/* <div className="Subtotal">
-                              Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items)
-                            </div> */}
-                            {/* <span className="Subtotal">CA$
-                        {cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}</span> */}
+                             <div className="Subtotal">
+                              Subtotal ({Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty, 0)} items)
+                            </div> 
+                             <span className="Subtotal">CA$
+                        {Object.keys(cartItems).reduce((a, c) => a + cartItems[c].price * cartItems[c].qty, 0).toFixed(2)}</span> 
                           </li>
                         </ul>
                         <button type="button" class="btnForAll  btn-block waves-effect waves-light" onClick={checkoutHandler}

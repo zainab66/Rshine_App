@@ -14,6 +14,7 @@ const ordersRouter = require('./routes/orders');
 const categoryRouter = require('./routes/category');
 const crouselRouter = require('./routes/crousel');
 const cartRouter = require('./routes/cart');
+const addressRouter = require('./routes/address');
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use('/api/orders', ordersRouter);
 app.use('/api/category', categoryRouter);
 app.use('/api/crousel', crouselRouter);
 app.use('/api/cart', cartRouter);
+app.use('/api/address', addressRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

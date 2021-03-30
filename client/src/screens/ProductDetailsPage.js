@@ -171,7 +171,7 @@ export default function ProductDetailsPage(props) {
                     const { _id, name, price} = product;
                     const img = product.productPictures[0].img;
                     dispatch(addToCart({ _id, name, price, img },Number(qty)));
-                    props.history.push(`/cart`);
+                    props.history.push(`/signin?redirect=cart`);
                   }}>
                         <div class="table-responsive">
                           {product.colorOption1 && (<>

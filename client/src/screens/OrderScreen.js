@@ -11,7 +11,8 @@ import { Navbar, Container } from 'react-bootstrap';
 import Logo from '../rshineLogo.png'
 import CheckoutSteps from '../components/CheckoutSteps';
 import FooterShippingScreen from './FooterShippingScreen'
-
+import { getAddress } from '../actions/addressActions';
+import { getCartItems } from '../actions/cartActions';
 export default function OrderScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -25,8 +26,47 @@ export default function OrderScreen(props) {
     error: errorPay,
     success: successPay,
   } = orderPay;
-
+  const addressw = useSelector(state => state.addressw);
+  const {  address } = addressw;
+  const [address11, setAddress] = useState([]);
+  const cart = useSelector((state) => state.cart);
+  const [cartItems, setCartItems] = useState(cart.cartItems);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (address) {
+      const address1 = address.map((adr) => ({
+        ...adr,
+        selected: false,
+        edit: false,
+      }));
+      setAddress(address1)
+    };
+    //user.address.length === 0 && setNewAddress(true);
+  }, [dispatch, address]);
+
+  useEffect(() => {
+    dispatch(getAddress());
+    dispatch(getCartItems());
+  }, [dispatch]);
+
+
+  const formatDate = (date) => {
+    if (date) {
+      const d = new Date(date);
+      return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+    }
+    return "";
+  };
+
+  useEffect(() => {
+    if (cart.cartItems) {
+      setCartItems(cart.cartItems)
+
+      // dispatch(addToCart2());
+    }
+  }, [dispatch, cart.cartItems]);
+
+
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data } = await Axios.get('https://backend-rshine.herokuapp.com/api/config/paypal');
@@ -97,11 +137,21 @@ export default function OrderScreen(props) {
                               <div class="media-body pb-1 mb-0 small lh-125 ">
                                 <div class="d-flex justify-content-between align-items-center w-100">
                                   <strong class="text-gray-dark">Ship to</strong>
-                                  <strong class="text-dark">{order.shippingAddress.address},{order.shippingAddress.city},{order.shippingAddress.province},{order.shippingAddress.postalCode}</strong>
+                                  {address11.map((adr) => (
+                            <strong class="text-dark">{adr.address},{adr.city},{adr.province},{adr.postalCode}</strong>))}
+                                  {/* <strong class="text-dark">{order.shippingAddress.address},{order.shippingAddress.city},{order.shippingAddress.province},{order.shippingAddress.postalCode}</strong> */}
                                   <a class="text-info" href="/shipping">Change</a>
                                 </div>
                               </div>
                             </div>
+                            <hr></hr>
+                              {order.isPaid ? (
+                  <MessageBox variant="success">
+                    Paid at {formatDate(order.paidAt)}
+                  </MessageBox>
+                ) : (
+                  <MessageBox variant="danger">Not Paid</MessageBox>
+                )}
                           </div>
                         </div>
                       </div>
@@ -109,7 +159,7 @@ export default function OrderScreen(props) {
                         <div class="card-body">
                           <h2 class="orderItemDetails mb-4">
                             Order Items</h2>
-                          {order.orderItems.map((item) => (
+                          {order.items.map((item) => (
                             <>
                               <div class="row mb-4">
                                 <div class="col-md-7 col-lg-12">
@@ -130,7 +180,7 @@ export default function OrderScreen(props) {
                                         marginTop: -50
                                       }}>{item.qty}</span>)}
                                     <img class="small"
-                                      src={item.image} alt={item.name} />
+                                      src={item.img} alt={item.name} />
                                     <div className="orderItemName">
                                       {item.name}
                                     </div>
@@ -170,7 +220,7 @@ export default function OrderScreen(props) {
                                 <div class="d-flex justify-content-between">
                                   Subtotal
                           <div class="orderItem ">
-                                    CA${order.orderItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
+                                    CA${order.items.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
                                   </div>
                                 </div>
                               </div>
@@ -209,12 +259,13 @@ export default function OrderScreen(props) {
                           {error && <MessageBox variant="danger">{error}</MessageBox>}
                         </div>
                       </div>
-                      <div class="card mb-4">
-                        <div class="card-body">
-                          <h2 class="orderMethod">Select a payment method</h2>  {order.isPaid && (
-                            alert('Payment completed successfully')
-                          )}
+                     
                           {!order.isPaid && (
+                             <div class="card mb-4">
+                             <div class="card-body">
+                               <h2 class="orderMethod">Select a payment method</h2>  {order.isPaid && (
+                                 alert('Payment completed successfully')
+                               )}
                             <>
                               {!sdkReady ? (
                                 <LoadingBox></LoadingBox>
@@ -236,9 +287,9 @@ export default function OrderScreen(props) {
                                   </>
                                 )}
                             </>
-                          )}
+                         
                         </div>
-                      </div>
+                      </div> )}
                     </div>
                   </div>
                 </section>

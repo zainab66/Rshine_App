@@ -37,7 +37,7 @@ export const signout = () => (dispatch) => {
    localStorage.removeItem('shippingAddress');
    dispatch({ type: USER_SIGNOUT });
    dispatch({ type: RESET_CART });
-  // document.location.href = '/';
+   document.location.href = '/';
 };
 
 

@@ -41,10 +41,10 @@ export default function ProfileScreen() {
     }
   };
   return (
-    <div>
-      <form className="form" onSubmit={submitHandler}>
+    <div className="formProfileUser">
+    <form className="form-signin" onSubmit={submitHandler}>
         <div>
-          <h1>User Profile</h1>
+          <h1 className="mb-3">User Profile</h1>
         </div>
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -62,46 +62,43 @@ export default function ProfileScreen() {
               </MessageBox>
             )}
             <div>
-              <label htmlFor="name">Name</label>
-              <input
+              <label htmlFor="name" class="formLabel">Name</label>
+              <input  class="form-control"
                 id="name"
                 type="text"
-                placeholder="Enter name"
+               
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="email">Email</label>
-              <input
+              <label htmlFor="email" class="formLabel">Email</label>
+              <input  class="form-control"
                 id="email"
                 type="email"
-                placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="password">Password</label>
-              <input
+              <label htmlFor="password" class="formLabel">Password</label>
+              <input  class="form-control"
                 id="password"
                 type="password"
-                placeholder="Enter password"
                 onChange={(e) => setPassword(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="confirmPassword">confirm Password</label>
-              <input
+              <label htmlFor="confirmPassword" class="formLabel">confirm Password</label>
+              <input  class="form-control"
                 id="confirmPassword"
                 type="password"
-                placeholder="Enter confirm password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></input>
             </div>
             <div>
               <label />
-              <button className="primary" type="submit">
+              <button className="btnForAll  btn-block waves-effect waves-light" type="submit">
                 Update
               </button>
             </div>

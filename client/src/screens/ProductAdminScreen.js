@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Table } from 'react-bootstrap';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { addProduct, listProducts } from '../actions/productActions';
+import { addProduct, listProducts,deleteProduct } from '../actions/productActions';
 export default function ProductAdminScreen(props) {
   const productList = useSelector((state) => state.productList);
   const {
@@ -111,10 +111,12 @@ export default function ProductAdminScreen(props) {
   const handleProductPictures = (e) => {
     setProductPictures([...productPictures, e.target.files[0]]);
   };
-
-  const deleteHandler = () => {
-    /// TODO: dispatch delete action
+  const deleteHandler = (product) => {
+    if (window.confirm('Are you sure to delete?')) {
+      dispatch(deleteProduct(product._id));
+    }
   };
+ 
   return (
     <div className="productAdminScreen">
        <div class="pricing  text-center">
@@ -213,7 +215,7 @@ export default function ProductAdminScreen(props) {
                       <img className="small" src={picture.img} alt="" />
                     </div>)}</td>
                     <td>
-                      <button
+                      {/* <button
                         type="button"
                         className="small"
                         onClick={() =>
@@ -221,12 +223,11 @@ export default function ProductAdminScreen(props) {
                         }
                       >
                         Edit
-                  </button>
+                  </button> */}
                       <button
                         type="button"
                         className="small"
-                        onClick={() => deleteHandler(product)}
-                      >
+                        onClick={() => deleteHandler(product)}>
                         Delete
                   </button>
                     </td>

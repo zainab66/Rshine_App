@@ -7,7 +7,7 @@ import {
   ADD_TO_CART_REQUEST,
   ADD_TO_CART_SUCCESS,
   ADD_TO_CART_FAILURE,
-  RESET_CART
+  RESET_CART,REMOVE_CART_ITEM_REQUEST,REMOVE_CART_ITEM_SUCCESS,REMOVE_CART_ITEM_FAILURE
 } from '../constants/cartConstants';
 import store from "../store";
 
@@ -36,10 +36,23 @@ import store from "../store";
 //       )
 //     };
 
-// export const removeFromCart = (productId) => (dispatch, getState) => {
-//   dispatch({ type: CART_REMOVE_ITEM, payload: productId });
-//   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
-// };
+export const removeFromCart = (productId) => (dispatch, getState) => {
+ 
+  const {
+    cart: {
+      cartItems
+    },
+  } = store.getState();
+ // localStorage.removeItem('productId');
+  // let cartItems = localStorage.getItem('cart') ?
+ //  JSON.parse(localStorage.getItem('cart')) : null;
+   dispatch({ type: CART_REMOVE_ITEM, payload: productId });
+   //localStorage.setItem('cart', JSON.stringify(cartItems));
+   localStorage.setItem('cart', JSON.stringify(getState().cart));
+ //  localStorage.getItem('cart', JSON.stringify(getState().cart));
+
+  
+};
 
 // export const saveShippingAddress = (data) => (dispatch) => {
 //   dispatch({ type: CART_SAVE_SHIPPING_ADDRESS, payload: data });
@@ -113,7 +126,7 @@ export const addToCart = (product, newQty) => {
         headers: { Authorization: `Bearer ${userSignin.userInfo.token}` },
       }
       );
-      console.log(res);
+     // console.log(res);
       if (res.status === 201) {
         dispatch(getCartItems(payload));
       }
@@ -121,7 +134,7 @@ export const addToCart = (product, newQty) => {
       localStorage.setItem('cart', JSON.stringify(cartItems));
     }
 
-    console.log('addToCart::', cartItems);
+   // console.log('addToCart::', cartItems);
 
     dispatch({
       type: ADD_TO_CART_SUCCESS,
@@ -186,3 +199,27 @@ export const updateCart = () => {
 
 
 
+export const removeCartItem = (payload) => {
+  return async (dispatch) => {
+    const { userSignin } = store.getState();
+
+    try {
+      dispatch({ type: REMOVE_CART_ITEM_REQUEST});
+      const res = await Axios.post(`http://localhost:3001/api/cart/removeItem`, { payload }, {
+        headers: { Authorization: `Bearer ${userSignin.userInfo.token}` },
+      });
+      if (res.status === 202) {
+        dispatch({ type:REMOVE_CART_ITEM_SUCCESS });
+        dispatch(getCartItems());
+      } else {
+        const { error } = res.data;
+        dispatch({
+          type:REMOVE_CART_ITEM_FAILURE,
+          payload: { error },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

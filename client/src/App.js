@@ -26,10 +26,12 @@ import Logo from './rshineLogo.png'
 import CrouselAdminScreen from './screens/CrouselAdminScreen';
 import AboutUsScreen from './screens/AboutUsScreen';
 import { updateCart } from './actions/cartActions';
+import CheckoutPage from './screens/CheckoutPageScreen';
+import OrdersAdminScreen from './screens/OrdersAdminScreen';
 
 function App() {
-  // const cart = useSelector((state) => state.cart);
-  // const { cartItems } = cart;
+   const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
@@ -63,10 +65,13 @@ function App() {
                 <Nav.Link active className="adminLink" href="/Category">Category</Nav.Link>
                 <Nav.Link active className="adminLink" href="/Productlist">Products</Nav.Link>
                 <Nav.Link active className="adminLink" href="/CrouselImages">Crousel-Images</Nav.Link>
+                <Nav.Link active className="adminLink" href="/Orders">Orders</Nav.Link>
+
               </Nav>
               <Nav className="ml-auto">
                 <Nav.Link href="/cart" className="cartBtn">
-                 
+                {cartItems.length > 0 && (
+
                     <span style={{
                       position: "absolute",
                       background: "#00bbcc",
@@ -80,7 +85,7 @@ function App() {
                       alignSelf: "center",
                       marginLeft: 18,
                             marginTop: -4   
-                    }}></span><IoIosCart size="22" style={{ color: "black" }} />  </Nav.Link>
+                    }}>{Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black" }} />  </Nav.Link>
                 <Nav.Link active href="#" >Hello,{userInfo.name}</Nav.Link>
                 <Nav.Link className="adminLin" href="#signout" onClick={signoutHandler}>Sign Out</Nav.Link>
               </Nav>
@@ -155,6 +160,7 @@ function App() {
                     </div>
                     <Nav className="ml-auto pl-2">
                       <Nav.Link href="/cart" className="cartBtn">
+                      {cartItems && (
 
                        
                           <span style={{
@@ -170,7 +176,7 @@ function App() {
                             alignSelf: "center",
                             marginLeft: 28,
                             marginTop: 5
-                          }}></span><IoIosCart size="22" style={{ color: "black", marginBottom:8,marginTop:8, marginRight: 7, marginLeft: 7}} />  </Nav.Link>
+                          }}>{Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black", marginBottom:8,marginTop:8, marginRight: 7, marginLeft: 7}} />  </Nav.Link>
                       {/* <NavDropdown title={userInfo.name} id="collasible-nav-dropdown" >
                         <NavDropdown.Item href="/Profile">User Profile</NavDropdown.Item>
                         <NavDropdown.Item href="/orderhistory">Order History</NavDropdown.Item>
@@ -218,7 +224,7 @@ function App() {
                     </div>
                     <Nav className="ml-auto pl-2">
                       <Nav.Link href="/cart" className="cartBtn">
-                      
+                      {cartItems && (
                           <span style={{
                             position: "absolute",
                             background: "#00bbcc",
@@ -231,7 +237,7 @@ function App() {
                             textAlign: "center",
                             alignSelf: "center",
                             marginLeft: 28,
-                            marginTop: 5 }}></span><IoIosCart size="22" style={{ color: "black",marginBottom:8, marginTop:8, marginRight: 7, marginLeft: 7  }} />  </Nav.Link>
+                            marginTop: 5 }}>{Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black",marginBottom:8, marginTop:8, marginRight: 7, marginLeft: 7  }} />  </Nav.Link>
                   
                       <Nav.Link href="/signin" className=" signinBtn " style={{ color: "black", margin: 10 }}>Sign<span className="pl-1">In</span>  </Nav.Link>
                       <Nav.Link href="/register" className="registerBtn " style={{ color: "black",marginLeft: 0,margin: 10}}>Register</Nav.Link>
@@ -246,10 +252,13 @@ function App() {
       <AdminRoute path="/Category" component={CategoryAdminScreen} />
       <AdminRoute path="/Productlist" component={ProductAdminScreen} />
       <AdminRoute path="/CrouselImages" component={CrouselAdminScreen} />
+      <AdminRoute path="/Orders" component={OrdersAdminScreen} />
+
       <PrivateRoute path="/Profile" component={ProfileScreen}></PrivateRoute>
       <Route path="/" component={HomeScreen} exact></Route>
       <Route path="/cart" component={CartScreen} ></Route>
-      
+      <Route path="/CheckoutPage" component={CheckoutPage} ></Route>
+
       <Route path="/AboutUs" component={AboutUsScreen} exact></Route>
       <Route path="/signin" component={SigninScreen}></Route>
       <Route path="/register" component={RegisterScreen}></Route>

@@ -3,7 +3,8 @@ import {  PRODUCT_LIST_REQUEST,PRODUCT_LIST_SUCCESS,PRODUCT_LIST_FAIL,PRODUCT_RE
   PRODUCT_REVIEW_CREATE_FAIL,} from '../constants/productConstants';
 import Axios from 'axios';
 import {  PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS,PRODUCT_DETAILS_FAIL,PRODUCT_CREATE_FAIL,
-  PRODUCT_CREATE_REQUEST,PRODUCT_CREATE_SUCCESS,PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL,GET_PRODUCTS_BY_SLUG} from '../constants/productConstants';
+  PRODUCT_CREATE_REQUEST,PRODUCT_CREATE_SUCCESS,PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL,GET_PRODUCTS_BY_SLUG,DELETE_PRODUCT_BY_ID_REQUEST,DELETE_PRODUCT_BY_ID_SUCCESS,DELETE_PRODUCT_BY_ID_FAILURE} from '../constants/productConstants';
+  import store from "../store";
 
 export const listProducts = () => async (dispatch) =>{
     dispatch({
@@ -146,3 +147,25 @@ export const createReview = (productId, review) => async (
     dispatch({ type: PRODUCT_REVIEW_CREATE_FAIL, payload: message });
   }
 };
+
+
+
+export const deleteProduct = (productId) => async (dispatch, getState) => {
+  dispatch({ type: DELETE_PRODUCT_BY_ID_REQUEST, payload: productId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.delete(`/api/products/${productId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: DELETE_PRODUCT_BY_ID_SUCCESS });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type:DELETE_PRODUCT_BY_ID_FAILURE, payload: message });
+  }
+};
+

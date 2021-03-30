@@ -1,46 +1,37 @@
-const express = require('express');
-const router = express.Router();
-const expressAsyncHandler = require('express-async-handler');
+// const express = require('express');
+// const router = express.Router();
+ const expressAsyncHandler = require('express-async-handler');
+// const authorize = require("../middleware/authorize")
+// const Order = require('../models/orderModel.js');
+
+// module.exports = router;
 const authorize = require("../middleware/authorize")
-const Order = require('../models/orderModel.js');
+const { addOrder, getOrders,updateOrder } = require("../controller/order");
+const router = require("express").Router();
+const Order = require("../models/orderModel");
 
-router.get('/mine', authorize, expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({ user: req.user._id });
-    res.send(orders);
-  })
-);
+// router.post('/',authorize, expressAsyncHandler(async (req, res) => {
+//     if (req.body.orderItems.length === 0) {
+//       res.status(400).send({ message: 'Cart is empty' });
+//     } else {
+//       const order = new Order({
+//         orderItems: req.body.orderItems,
+//         //shippingAddress: req.body.shippingAddress,
+//       //  paymentMethod: req.body.paymentMethod,
+//         itemsPrice: req.body.itemsPrice,
+//         shippingPrice: req.body.shippingPrice,
+//         taxPrice: req.body.taxPrice,
+//         totalPrice: req.body.totalPrice,
+//         user: req.user._id,
+//       });
+//       const createdOrder = await order.save();
+//       res
+//         .status(201)
+//         .send({ message: 'New Order Created', order: createdOrder });
+//     }
+//   })
+// );
 
-router.post('/',authorize, expressAsyncHandler(async (req, res) => {
-    if (req.body.orderItems.length === 0) {
-      res.status(400).send({ message: 'Cart is empty' });
-    } else {
-      const order = new Order({
-        orderItems: req.body.orderItems,
-        shippingAddress: req.body.shippingAddress,
-      //  paymentMethod: req.body.paymentMethod,
-        itemsPrice: req.body.itemsPrice,
-        shippingPrice: req.body.shippingPrice,
-        taxPrice: req.body.taxPrice,
-        totalPrice: req.body.totalPrice,
-        user: req.user._id,
-      });
-      const createdOrder = await order.save();
-      res
-        .status(201)
-        .send({ message: 'New Order Created', order: createdOrder });
-    }
-  })
-);
-
-router.get('/:id',authorize,expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
-    if (order) {
-      res.send(order);
-    } else {
-      res.status(404).send({ message: 'Order Not Found' });
-    }
-  })
-);
 
 
 router.put('/:id/pay', authorize, expressAsyncHandler(async (req, res) => {
@@ -61,5 +52,40 @@ router.put('/:id/pay', authorize, expressAsyncHandler(async (req, res) => {
     }
   })
 );
+
+
+
+router.post("/addOrder", authorize, addOrder);
+router.get("/getOrders", authorize, getOrders);
+
+router.get('/mine', authorize, expressAsyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
+  res.send(orders);
+})
+);
+
+router.get('/getCustomerOrders', authorize, expressAsyncHandler(async (req, res) => {
+  const CustomerOrders = await Order.find({});
+  res.send(CustomerOrders);
+})
+);
+
+
+
+
+router.get('/:id',authorize,expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      res.send(order);
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
+
+
+
+router.post(`/order/update`, authorize, updateOrder);
+
 
 module.exports = router;

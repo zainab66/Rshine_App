@@ -9,11 +9,37 @@ import { generatePublicUrl } from '../urlConfig';
 import { Navbar, Container } from 'react-bootstrap';
 import Logo from '../rshineLogo.png'
 import FooterShippingScreen from './FooterShippingScreen'
+import { getAddress } from '../actions/addressActions';
+import { getCartItems } from '../actions/cartActions';
 
 
 export default function PlaceOrderScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { loading, success, error, order } = orderCreate;
+
+
+
+  //  const {
+  //   loading: loadingCreate,
+  //   error: errorCreate,
+  //   success: successCreate,
+  //   orders:orderCreateed,
+  // } = orderCreate;
+
+
+
+
+
+
+
+  const addressw = useSelector(state => state.addressw);
+  const {  address } = addressw;
+  const [address11, setAddress] = useState([]);
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const [cartItems, setCartItems] = useState(cart.cartItems);
   const [formData, setFromData] = useState({ flexRadioDefault: "no" });
   const handleChanage = event => {
     const target = event.target
@@ -25,24 +51,50 @@ export default function PlaceOrderScreen(props) {
     })
   }
 
-  const cart = useSelector((state) => state.cart);
-  if (!cart.paymentMethod) {
-    props.history.push('/payment');
-  }
-  const { cartItems } = cart;
-  const orderCreate = useSelector((state) => state.orderCreate);
-  const { loading, success, error, order } = orderCreate;
+
+  useEffect(() => {
+    if (address) {
+      const address1 = address.map((adr) => ({
+        ...adr,
+        selected: false,
+        edit: false,
+      }));
+      setAddress(address1)
+    };
+    //user.address.length === 0 && setNewAddress(true);
+  }, [dispatch, address]);
+
+
+
+  useEffect(() => {
+    if (cart.cartItems) {
+      setCartItems(cart.cartItems)
+
+      // dispatch(addToCart2());
+    }
+  }, [dispatch, cart.cartItems]);
+
+
+  useEffect(() => {
+    dispatch(getAddress());
+    dispatch(getCartItems());
+  }, [dispatch]);
+  // if (!cart.paymentMethod) {
+  //   props.history.push('/payment');
+  // }
+
   const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
-  cart.itemsPrice = toPrice(
-    cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
+   cart.itemsPrice = toPrice(
+    Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty * cartItems[c].price, 0)
+    
   );
 
-  if (formData.flexRadioDefault !== 'yes') {
-    cart.shippingPrice = cart.shippingAddress.country === "CA" ? toPrice(3.50) : cart.shippingAddress.country === "US" ? toPrice(8.5) : toPrice(16.5).toFixed(2);
+  if (formData.flexRadioDefault !== 'yes') {address11.map((adr) => (
+    cart.shippingPrice = adr.country === "CA" ? toPrice(3.50) :adr.country === "US" ? toPrice(8.5) : toPrice(16.5).toFixed(2)));
   }
 
-  if (formData.flexRadioDefault === 'yes') {
-    cart.shippingPrice = cart.shippingAddress.country === "CA" && cart.shippingAddress.province === "Ontario" | cart.shippingAddress.province === "Quebec" ? toPrice(10.5) : toPrice(15.5).toFixed(2);
+  if (formData.flexRadioDefault === 'yes') {address11.map((adr) => (
+    cart.shippingPrice = adr.country === "CA" && adr.province === "Ontario" | adr.province === "Quebec" ? toPrice(10.5) : toPrice(15.5).toFixed(2)));
   }
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
@@ -50,15 +102,44 @@ export default function PlaceOrderScreen(props) {
     cart.totalPrice = cart.itemsPrice + 3.5 + cart.taxPrice;
   }
 
-  if (formData.flexRadioDefault === 'yes') {
-    cart.totalPrice = cart.shippingAddress.country === "CA" && cart.shippingAddress.province === "Ontario" | cart.shippingAddress.province === "Quebec" ? (cart.itemsPrice + 10.5 + cart.taxPrice) : (cart.itemsPrice + 15.5 + cart.taxPrice);
+  if (formData.flexRadioDefault === 'yes') {address11.map((adr) => (
+    cart.totalPrice = adr.country === "CA" && adr.province === "Ontario" |adr.province === "Quebec" ? (cart.itemsPrice + 10.5 + cart.taxPrice) : (cart.itemsPrice + 15.5 + cart.taxPrice)));
   }
-
   cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
-  const dispatch = useDispatch();
+  console.log('zain',cart.shippingPrice)
+
+
+  
   const placeOrderHandler = () => {
-    dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
+    const totalPrice = cart.totalPrice.toFixed(2)
+  const itemsPrice=cart.itemsPrice.toFixed(2)
+   const shippingPrice=cart.shippingPrice.toFixed(2)
+  const  taxPrice=cart.taxPrice.toFixed(2)
+    const items = Object.keys(cart.cartItems).map((key) => ({
+      productId: key,
+      name: cart.cartItems[key].name,
+      price: cart.cartItems[key].price,
+      qty: cart.cartItems[key].qty,
+      img:cart.cartItems[key].img
+    }));
+    const addressId1=address11.map((adr) => (adr._id
+    ))
+    const payload = {
+      addressId: addressId1,
+      totalPrice,
+      itemsPrice,
+      shippingPrice,
+      taxPrice,
+      items,
+      paymentStatus: "pending",
+    };
+
+    console.log(payload);
+
+
+    dispatch(createOrder(payload));
   };
+
   useEffect(() => {
     if (success) {
       props.history.push(`/order/${order._id}`);
@@ -100,7 +181,8 @@ export default function PlaceOrderScreen(props) {
                         <div class="media-body pb-1 mb-0 small lh-125 ">
                           <div class="d-flex justify-content-between align-items-center w-100">
                             <strong class="text-gray-dark">Ship to</strong>
-                            <strong class="text-dark">{cart.shippingAddress.address}</strong>
+                            {address11.map((adr) => (
+                            <strong class="text-dark">{adr.address}</strong>))}
                             <a class="text-info" href="/shipping">Change</a>
                           </div>
                         </div>
@@ -138,12 +220,13 @@ export default function PlaceOrderScreen(props) {
                   <div class="card-body">
                     <h2 class="orderItemDetails mb-4">
                       Order Items</h2>
-                    {cart.cartItems.map((item) => (
+                      {Object.keys(cartItems).map((key, index) => (
+
                       <>
                         <div class="row mb-4">
                           <div class="col-md-7 col-lg-12">
                             <div class="d-flex justify-content-between">
-                              {item.qty && (
+                              {cartItems[key].qty && (
                                 <span style={{
                                   position: "absolute",
                                   background: "#00bbcc",
@@ -157,14 +240,14 @@ export default function PlaceOrderScreen(props) {
                                   alignSelf: "center",
                                   marginLeft: 50,
                                   marginTop: -50
-                                }}>{item.qty}</span>)}
+                                }}>{cartItems[key].qty}</span>)}
                               <img class="small"
-                                src={item.image} alt={item.name} />
+                                src={cartItems[key].img} alt={cartItems[key].name} />
                               <div className="orderItemName">
-                                {item.name}
+                                {cartItems[key].name}
                               </div>
                               <div class="orderItem ">
-                                CA${item.qty * item.price}
+                                CA${cartItems[key].qty * cartItems[key].price}
                               </div>
                             </div>
                           </div>
@@ -197,7 +280,7 @@ export default function PlaceOrderScreen(props) {
                           <div class="d-flex justify-content-between">
                             Subtotal
                           <div class="orderItem ">
-                              CA${cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
+                              CA${Object.keys(cartItems).reduce((a, c) => a +  cartItems[c].price *  cartItems[c].qty, 0).toFixed(2)}
                             </div>
                           </div>
                         </div>
@@ -206,7 +289,7 @@ export default function PlaceOrderScreen(props) {
                         <div class="col-md-7 col-lg-12">
                           <div class="d-flex justify-content-between">
                             Shipping
-                              <div class="orderItem ">CA${cart.shippingPrice.toFixed(2)}
+                              <div class="orderItem ">CA${cart.shippingPrice}
                             </div>
                           </div>
                         </div>
@@ -232,9 +315,9 @@ export default function PlaceOrderScreen(props) {
                       </div>
                     </ul>
                     <button type="button" class="btnForAll  btn-block waves-effect waves-light" onClick={placeOrderHandler}
-                      disabled={cart.cartItems.length === 0}> Continue to Payment</button>
+                      > Continue to Payment</button>
                     {loading && <LoadingBox></LoadingBox>}
-                    {error && <MessageBox variant="danger">{error}</MessageBox>}
+                    {error&& <MessageBox variant="danger">{error}</MessageBox>}
                   </div>
                 </div>
               </div>

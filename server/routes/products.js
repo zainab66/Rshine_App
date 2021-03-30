@@ -39,7 +39,7 @@ const upload = multer({ storage });
 const uploadS3 = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'rshine-app',
+    bucket: 'rshine-test',
     acl: 'public-read',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
@@ -191,4 +191,29 @@ router.post('/:id/reviews', authorize, expressAsyncHandler(async (req, res) => {
     }
   })
 );
+
+
+
+
+router.delete(
+  '/:id',
+  authorize,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      const deleteProduct = await product.remove();
+      res.send({ message: 'Product Deleted', product: deleteProduct });
+    } else {
+      res.status(404).send({ message: 'Product Not Found' });
+    }
+  })
+);
+
+
+
+
+
+
+
 module.exports = router;

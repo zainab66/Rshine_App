@@ -4,7 +4,7 @@ import {
   ADD_TO_CART_FAILURE,
   RESET_CART,
   CART_SAVE_PAYMENT_METHOD,
-  CART_SAVE_SHIPPING_ADDRESS,CART_ADD_ITEM_FAIL
+  CART_SAVE_SHIPPING_ADDRESS, CART_ADD_ITEM_FAIL, CART_REMOVE_ITEM
 } from '../constants/cartConstants';
 
 // export const cartReducer = (state = { cartItems: [] }, action) => {
@@ -43,34 +43,52 @@ import {
 // };
 
 const initState = {
-    cartItems: {
-        // 123: {
-        //     _id: 123,
-        //     name: 'Samsung mobile',
-        //     img: 'some.jpg',
-        //     price: 200,
-        //     qty: 1,
-        // }
-    },
-    updatingCart: false,
-    error: null
+  cartItems: {
+    // 123: {
+    //     _id: 123,
+    //     name: 'Samsung mobile',
+    //     img: 'some.jpg',
+    //     price: 200,
+    //     qty: 1,
+    // }
+  },
+  updatingCart: false,
+  error: null
 };
 
 
-  export const cartReducer = (state = initState, action) => {      
+export const cartReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_TO_CART_REQUEST:
-      return { updatingCart: true};
+      return { updatingCart: true };
     case ADD_TO_CART_SUCCESS:
-      return {  updatingCart: false, cartItems: action.payload.cartItems};
+      return { updatingCart: false, cartItems: action.payload.cartItems };
     case ADD_TO_CART_FAILURE:
-      return {  updatingCart: false, error: action.payload };
+      return { updatingCart: false, error: action.payload };
+    case CART_ADD_ITEM_FAIL:
+      return { ...state, error: action.payload };
+    case CART_REMOVE_ITEM:
+      if (state.cart) {
+      return {updatingCart: false,
+        ...state,
+        cart:Object.keys(state.cart).filter((x) => state.cart[x]._id !== action.payload),
+      };}
     
-      case CART_ADD_ITEM_FAIL:
-        return { ...state, error: action.payload };
+  
     case RESET_CART:
-      return {};  
+      return {};
     default:
       return state;
   }
-};     
+};
+// export const cartDeleteReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case CART_REMOVE_ITEM:
+//       return { loading: true };
+
+//     // case PRODUCT_DELETE_RESET:
+//     //   return {};
+//     default:
+//       return state;
+//   }
+// };

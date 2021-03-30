@@ -9,17 +9,31 @@ import {
     ORDER_PAY_RESET,
     ORDER_PAY_SUCCESS,ORDER_MINE_LIST_FAIL,
     ORDER_MINE_LIST_REQUEST,
-    ORDER_MINE_LIST_SUCCESS} from '../constants/orderConstants';
+    ORDER_MINE_LIST_SUCCESS,GET_USER_ORDER_REQUEST,
+    GET_USER_ORDER_SUCCESS,GET_USER_ORDER_FAILURE,GET_CUSTOMER_ORDER_REQUEST,GET_CUSTOMER_ORDER_SUCCESS,GET_CUSTOMER_ORDER_FAILURE} from '../constants/orderConstants';
 
-    
+   
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
-      return { loading: true };
+      return { loading: true, };
     case ORDER_CREATE_SUCCESS:
-      return { loading: false, success: true, order: action.payload };
+      return { success: true, order: action.payload,loading: false,
+      };
     case ORDER_CREATE_FAIL:
-      return { loading: false, error: action.payload };
+      return { error: action.payload.error,loading: false,
+      };
+
+      case GET_USER_ORDER_REQUEST:
+        return { loading: true, };
+      case GET_USER_ORDER_SUCCESS:
+        return { order: action.payload,loading: false,
+        };
+      case GET_USER_ORDER_FAILURE:
+        return { error: action.payload.error,loading: false,
+        };
+
+
     case ORDER_CREATE_RESET:
       return {};
     default:
@@ -65,6 +79,19 @@ export const orderMineListReducer = (state = { orders: [] }, action) => {
     case ORDER_MINE_LIST_SUCCESS:
       return { loading: false, orders: action.payload };
     case ORDER_MINE_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const CustmerlistOrder = (state = { CustomerOrders: [] }, action) => {
+  switch (action.type) {
+    case GET_CUSTOMER_ORDER_REQUEST:
+      return { loading: true };
+    case GET_CUSTOMER_ORDER_SUCCESS:
+      return { loading: false, CustomerOrders: action.payload };
+    case GET_CUSTOMER_ORDER_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;

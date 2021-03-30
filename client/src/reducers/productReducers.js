@@ -8,7 +8,11 @@ const {  PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS,PRODUCT_DETAILS_FAIL, P
   PRODUCT_UPDATE_RESET,GET_PRODUCTS_BY_SLUG,PRODUCT_REVIEW_CREATE_REQUEST,
   PRODUCT_REVIEW_CREATE_SUCCESS,
   PRODUCT_REVIEW_CREATE_FAIL,
-  PRODUCT_REVIEW_CREATE_RESET } = require('../constants/productConstants');
+  PRODUCT_REVIEW_CREATE_RESET,
+  DELETE_PRODUCT_BY_ID_REQUEST,DELETE_PRODUCT_BY_ID_SUCCESS,DELETE_PRODUCT_BY_ID_FAILURE
+
+
+} = require('../constants/productConstants');
 
 
 export const productListReducer = (  state = { loading: true, products: [] },
@@ -97,3 +101,19 @@ export const productReviewCreateReducer = (state = {}, action) => {
       return state;
   }
 };    
+
+
+export const productDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_PRODUCT_BY_ID_REQUEST:
+      return { loading: true };
+    case DELETE_PRODUCT_BY_ID_SUCCESS:
+      return { loading: false, success: true };
+    case DELETE_PRODUCT_BY_ID_FAILURE:
+      return { loading: false, error: action.payload };
+    // case PRODUCT_DELETE_RESET:
+    //   return {};
+    default:
+      return state;
+  }
+};
