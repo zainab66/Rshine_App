@@ -85,7 +85,7 @@ export default function PlaceOrderScreen(props) {
 
   const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
    cart.itemsPrice = toPrice(
-    Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty * cartItems[c].price, 0)
+    cartItems.reduce((a, c) => a + c.qty * c.price, 0)
     
   );
 
@@ -115,13 +115,14 @@ export default function PlaceOrderScreen(props) {
   const itemsPrice=cart.itemsPrice.toFixed(2)
    const shippingPrice=cart.shippingPrice.toFixed(2)
   const  taxPrice=cart.taxPrice.toFixed(2)
-    const items = Object.keys(cart.cartItems).map((key) => ({
-      productId: key,
-      name: cart.cartItems[key].name,
-      price: cart.cartItems[key].price,
-      qty: cart.cartItems[key].qty,
-      img:cart.cartItems[key].img
+    const items = cartItems.map((key) => ({
+       productId: key,
+       name: key.name,
+       price: key.price,
+       qty: key.qty,
+       img:key.img
     }));
+    //console.log('key',items,cartItems)
     const addressId1=address11.map((adr) => (adr._id
     ))
     const payload = {
@@ -220,13 +221,13 @@ export default function PlaceOrderScreen(props) {
                   <div class="card-body">
                     <h2 class="orderItemDetails mb-4">
                       Order Items</h2>
-                      {Object.keys(cartItems).map((key, index) => (
+                      {cartItems.map((key, index) => (
 
                       <>
                         <div class="row mb-4">
                           <div class="col-md-7 col-lg-12">
                             <div class="d-flex justify-content-between">
-                              {cartItems[key].qty && (
+                              {key.qty && (
                                 <span style={{
                                   position: "absolute",
                                   background: "#00bbcc",
@@ -240,14 +241,14 @@ export default function PlaceOrderScreen(props) {
                                   alignSelf: "center",
                                   marginLeft: 50,
                                   marginTop: -50
-                                }}>{cartItems[key].qty}</span>)}
+                                }}>{key.qty}</span>)}
                               <img class="small"
-                                src={cartItems[key].img} alt={cartItems[key].name} />
+                                src={key.img} alt={key.name} />
                               <div className="orderItemName">
-                                {cartItems[key].name}
+                                {key.name}
                               </div>
                               <div class="orderItem ">
-                                CA${cartItems[key].qty * cartItems[key].price}
+                                CA${key.qty * key.price}
                               </div>
                             </div>
                           </div>
@@ -280,7 +281,7 @@ export default function PlaceOrderScreen(props) {
                           <div class="d-flex justify-content-between">
                             Subtotal
                           <div class="orderItem ">
-                              CA${Object.keys(cartItems).reduce((a, c) => a +  cartItems[c].price *  cartItems[c].qty, 0).toFixed(2)}
+                              CA${cartItems.reduce((a, c) => a +c.price *  c.qty, 0).toFixed(2)}
                             </div>
                           </div>
                         </div>

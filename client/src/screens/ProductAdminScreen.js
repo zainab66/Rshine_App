@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Table } from 'react-bootstrap';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { addProduct, listProducts,deleteProduct } from '../actions/productActions';
+import { addProduct, listProducts,deleteProduct ,deleteReview} from '../actions/productActions';
 export default function ProductAdminScreen(props) {
   const productList = useSelector((state) => state.productList);
   const {
@@ -23,21 +23,26 @@ export default function ProductAdminScreen(props) {
   const [expressDelivery, setExpressDelivery] = useState("");
   const [readyToDispatchRange, setReadyToDispatchRange] = useState("");
   const [readyToDispatchDaysOrWeeks, setReadyToDispatchDaysOrWeeks] = useState("");
-  const [sizeOption1, setSizeOption1] = useState("");
-  const [priceSizeOption1, setPriceSizeOption1] = useState("");
-  const [sizeOption2, setSizeOption2] = useState("");
-  const [priceSizeOption2, setPriceSizeOption2] = useState("");
-  const [colorOption1, setColorOption1] = useState("");
-  const [colorOption2, setColorOption2] = useState("");
-  const [colorOption3, setColorOption3] = useState("");
-  const [colorOption4, setColorOption4] = useState("");
-  const [firstOption, setFirstOption] = useState("");
-  const [priceFirstOption, setPriceFirstOption] = useState("");
-  const [sizefirstOption1, setSizefirstOption1] = useState("");
-  const [priceSizefirstOption1, setPriceSizefirstOption1] = useState("");
-  const [sizefirstOption2, setSizefirstOption2] = useState("");
-  const [priceSizefirstOption2, setPriceSizefirstOption2] = useState("");
+  const [size1, setSize1] = useState("");
+  const [priceSize1, setPriceSize1] = useState("");
+  const [size2, setSize2] = useState("");
+  const [priceSize2, setPriceSize2] = useState("");
+  const [color1, setColor1] = useState("");
+  const [color2, setColor2] = useState("");
+  const [color3, setColor3] = useState("");
+  const [color4, setColor4] = useState("");
+  const [option1, setoption1] = useState("");
+  const [priceOption1, setpriceOption1] = useState("");
+  const [size1_Option1, setsize1_Option1] = useState("");
+  const [priceSize1_Option1, setpriceSize1_Option1] = useState("");
+  const [size2_Option1, setsize2_Option1] = useState("");
+  const [priceSize2_Option1, setpriceSize2_Option1] = useState("");
   const [option2, setOption2] = useState("");
+  const [priceOption2, setpriceOption2] = useState("");
+  const [size1_Option2, setsize1_Option2] = useState("");
+  const [priceSize1_Option2, setpriceSize1_Option2] = useState("");
+  const [size2_Option2, setsize2_Option2] = useState("");
+  const [priceSize2_Option2, setpriceSize2_Option2] = useState("");
   const [option3, setOption3] = useState("");
   const [option4, setOption4] = useState("");
   const [option5, setOption5] = useState("");
@@ -49,9 +54,10 @@ export default function ProductAdminScreen(props) {
   const [categoryId, setCategoryId] = useState("");
   const [productPictures, setProductPictures] = useState([]);
   const [show, setShow] = useState(false);
-
   const categoryList = useSelector((state) => state.categoryList);
   const { loading, error, categories } = categoryList;
+  const reload=()=>window.location.reload();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -71,21 +77,26 @@ export default function ProductAdminScreen(props) {
     form.append("expressDelivery", expressDelivery);
     form.append("readyToDispatchRange", readyToDispatchRange);
     form.append("readyToDispatchDaysOrWeeks", readyToDispatchDaysOrWeeks);
-    form.append("sizeOption1", sizeOption1);
-    form.append("priceSizeOption1", priceSizeOption1);
-    form.append("sizeOption2", sizeOption2);
-    form.append("priceSizeOption2", priceSizeOption2);
-    form.append("colorOption1", colorOption1);
-    form.append("colorOption2", colorOption2);
-    form.append("colorOption3", colorOption3);
-    form.append("colorOption4", colorOption4);
-    form.append("firstOption", firstOption);
-    form.append("priceFirstOption", priceFirstOption);
-    form.append("sizefirstOption1", sizefirstOption1);
-    form.append("priceSizefirstOption1", priceSizefirstOption1);
-    form.append("sizefirstOption2", sizefirstOption2);
-    form.append("priceSizefirstOption2", priceSizefirstOption2);
+    form.append("size1", size1);
+    form.append("priceSize1", priceSize1);
+    form.append("size2", size2);
+    form.append("priceSize2", priceSize2);
+    form.append("color1", color1);
+    form.append("color2", color2);
+    form.append("color3", color3);
+    form.append("color4", color4);
+    form.append("option1", option1);
+    form.append("priceOption1", priceOption1);
+    form.append("size1_Option1", size1_Option1);
+    form.append("priceSize1_Option1", priceSize1_Option1);
+    form.append("size2_Option1", size2_Option1);
+    form.append("priceSize2_Option1", priceSize2_Option1);
     form.append("option2", option2);
+    form.append("priceOption2", priceOption2);
+    form.append("size1_Option2", size1_Option2);
+    form.append("priceSize1_Option2", priceSize1_Option2);
+    form.append("size2_Option2", size2_Option2);
+    form.append("priceSize2_Option2", priceSize2_Option2);
     form.append("option3", option3);
     form.append("option4", option4);
     form.append("option5", option5);
@@ -104,6 +115,8 @@ export default function ProductAdminScreen(props) {
 
     dispatch(addProduct(form));
     setShow(false);
+    reload();
+
   }
 
   const handleShow = () => setShow(true);
@@ -115,8 +128,16 @@ export default function ProductAdminScreen(props) {
     if (window.confirm('Are you sure to delete?')) {
       dispatch(deleteProduct(product._id));
     }
+    reload();
   };
  
+  const deletereview = (product,review) => {
+    console.log(product._id,review._id)
+    if (window.confirm('Are you sure to delete?')) {
+      dispatch(deleteReview(review._id,product._id));
+    }
+    reload();
+  };
   return (
     <div className="productAdminScreen">
        <div class="pricing  text-center">
@@ -130,7 +151,7 @@ export default function ProductAdminScreen(props) {
             <Table striped bordered hover style={{ fontSize: 12, border: 15, margin: 15 }} responsive>
               <thead>
                 <tr>
-                  <th>ID</th>
+               <th>ID</th>
                   <th>Name</th>
                   <th>Price</th>
                   <th>DiscountPrice(%)</th>
@@ -140,21 +161,26 @@ export default function ProductAdminScreen(props) {
                   <th>AddYourPersonalisation</th>
                   <th>MadeBy</th>
                   <th>Material</th>
-                  <th>SizeOption1</th>
-                  <th>PriceSizeOption1</th>
-                  <th>SizeOption2</th>
-                  <th>PriceSizeOption2</th>
-                  <th>ColorOption1</th>
-                  <th>ColorOption2</th>
-                  <th>ColorOption3</th>
-                  <th>ColorOption4</th>
-                  <th>FirstOption</th>
-                  <th>PriceFirstOption</th>
-                  <th>SizefirstOption1</th>
-                  <th>PriceSizefirstOption1</th>
-                  <th>SizefirstOption2</th>
-                  <th>PriceSizefirstOption2</th>
+                  <th>Size1</th>
+                  <th>PriceSize1</th>
+                  <th>Size2</th>
+                  <th>PriceSize2</th>
+                  <th>Color1</th>
+                  <th>Color2</th>
+                  <th>Color3</th>
+                  <th>Color4</th>
+                  <th>option1</th>
+                  <th>priceOption1</th>
+                  <th>size1_Option1</th>
+                  <th>priceSize1_Option1</th>
+                  <th>size2_Option1</th>
+                  <th>priceSize2_Option1</th>
                   <th>Option2</th>
+                  <th>priceOption2</th>
+                  <th>size1_Option2</th>
+                  <th>priceSize1_Option2</th>
+                  <th>size2_Option2</th>
+                  <th>priceSize2_Option2</th>
                   <th>Option3</th>
                   <th>Option4</th>
                   <th>Option5</th>
@@ -174,7 +200,7 @@ export default function ProductAdminScreen(props) {
               <tbody>
                 {listProduct.map((product) => (
                   <tr key={product._id}>
-                    <td>{product._id}</td>
+                   <td>{product._id}</td>
                     <td>{product.name}</td>
                     <td>{product.price}</td>
                     <td>{product.discountPrice}</td>
@@ -184,21 +210,26 @@ export default function ProductAdminScreen(props) {
                     <td>{product.addYourPersonalisation}</td>
                     <td>{product.madeBy}</td>
                     <td>{product.material}</td>
-                    <td>{product.sizeOption1}</td>
-                    <td>{product.priceSizeOption1}</td>
-                    <td>{product.sizeOption2}</td>
-                    <td>{product.priceSizeOption2}</td>
-                    <td>{product.colorOption1}</td>
-                    <td>{product.colorOption2}</td>
-                    <td>{product.colorOption3}</td>
-                    <td>{product.colorOption4}</td>
-                    <td>{product.firstOption}</td>
-                    <td>{product.priceFirstOption}</td>
-                    <td>{product.sizefirstOption1}</td>
-                    <td>{product.priceSizefirstOption1}</td>
-                    <td>{product.sizefirstOption2}</td>
-                    <td>{product.priceSizefirstOption2}</td>
+                    <td>{product.size1}</td>
+                    <td>{product.priceSize1}</td>
+                    <td>{product.size2}</td>
+                    <td>{product.priceSize2}</td>
+                    <td>{product.color1}</td>
+                    <td>{product.color2}</td>
+                    <td>{product.color3}</td>
+                    <td>{product.color4}</td>
+                    <td>{product.option1}</td>
+                    <td>{product.priceOption1}</td>
+                    <td>{product.size1_Option1}</td>
+                    <td>{product.priceSize1_Option1}</td>
+                    <td>{product.size2_Option1}</td>
+                    <td>{product.priceSize2_Option1}</td>
                     <td>{product.option2}</td>
+                    <td>{product.priceOption2}</td>
+                    <td>{product.size1_Option2}</td>
+                    <td>{product.priceSize1_Option2}</td>
+                    <td>{product.size2_Option2}</td>
+                    <td>{product.priceSize2_Option2}</td>
                     <td>{product.option3}</td>
                     <td>{product.option4}</td>
                     <td>{product.option5}</td>
@@ -226,11 +257,21 @@ export default function ProductAdminScreen(props) {
                   </button> */}
                       <button
                         type="button"
-                        className="small"
+                        className="btnEditUser"
                         onClick={() => deleteHandler(product)}>
                         Delete
                   </button>
                     </td>
+                    <td>{product.reviews.map(review => <div className="productImgContainer">
+                  {review.comment}
+                    
+
+                    <button
+                        type="button"
+                        className="btnEditUser"
+                        onClick={() => deletereview(product,review)}>
+                        Delete review
+                  </button></div>)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -267,50 +308,65 @@ export default function ProductAdminScreen(props) {
           <label for="inputMaterial" class="productFormLabel">Material</label>
           <input type="text" className="form-control" value={material} onChange={(e) => setMaterial(e.target.value)}/>
         
-          <label for="inputSizeOption1" class="productFormLabel">SizeOption1</label>
-          <input type="text" className="form-control" value={sizeOption1} onChange={(e) => setSizeOption1(e.target.value)}/>
+          <label for="inputSize1" class="productFormLabel">Size1</label>
+          <input type="text" className="form-control" value={size1} onChange={(e) => setSize1(e.target.value)}/>
           
-          <label for="inputPriceSizeOption1" class="productFormLabel">PriceSizeOption1</label>
-          <input type="text" className="form-control" value={priceSizeOption1} onChange={(e) => setPriceSizeOption1(e.target.value)}/>
+          <label for="inputPriceSize1" class="productFormLabel">PriceSize1</label>
+          <input type="text" className="form-control" value={priceSize1} onChange={(e) => setPriceSize1(e.target.value)}/>
          
-          <label for="inputSizeOption2" class="productFormLabel">SizeOption2</label>
-          <input type="text" className="form-control" value={sizeOption2} onChange={(e) => setSizeOption2(e.target.value)}/>
+          <label for="inputSize2" class="productFormLabel">Size2</label>
+          <input type="text" className="form-control" value={size2} onChange={(e) => setSize2(e.target.value)}/>
         
-          <label for="inputPriceSizeOption2" class="productFormLabel">PriceSizeOption2</label>
-          <input type="text" className="form-control" value={priceSizeOption2} onChange={(e) => setPriceSizeOption2(e.target.value)}/>
+          <label for="inputPriceSizeOption2" class="productFormLabel">PriceSize2</label>
+          <input type="text" className="form-control" value={priceSize2} onChange={(e) => setPriceSize2(e.target.value)}/>
          
-          <label for="inputColorOption1" class="productFormLabel">ColorOption1</label>
-          <input type="text" className="form-control" value={colorOption1} onChange={(e) => setColorOption1(e.target.value)}/>
+          <label for="inputColor1" class="productFormLabel">Color1</label>
+          <input type="text" className="form-control" value={color1} onChange={(e) => setColor1(e.target.value)}/>
           
-          <label for="inputColorOption2" class="productFormLabel">ColorOption2</label>
-          <input type="text" className="form-control" value={colorOption2} onChange={(e) => setColorOption2(e.target.value)}/>
+          <label for="inputColor2" class="productFormLabel">Color2</label>
+          <input type="text" className="form-control" value={color2} onChange={(e) => setColor2(e.target.value)}/>
          
-          <label for="inputColorOption3" class="productFormLabel">ColorOption3</label>
-          <input type="text" className="form-control" value={colorOption3} onChange={(e) => setColorOption3(e.target.value)}/>
+          <label for="inputColor3" class="productFormLabel">Color3</label>
+          <input type="text" className="form-control" value={color3} onChange={(e) => setColor3(e.target.value)}/>
         
-          <label for="inputColorOption4" class="productFormLabel">ColorOption4</label>
-          <input type="text" className="form-control" value={colorOption4} onChange={(e) => setColorOption4(e.target.value)}/>
+          <label for="inputColor4" class="productFormLabel">Color4</label>
+          <input type="text" className="form-control" value={color4} onChange={(e) => setColor4(e.target.value)}/>
 
-          <label for="inputFirstOption" class="productFormLabel">FirstOption</label>
-          <input type="text" className="form-control" value={firstOption} onChange={(e) => setFirstOption(e.target.value)}/>
+          <label for="inputoption1" class="productFormLabel">option1</label>
+          <input type="text" className="form-control" value={option1} onChange={(e) => setoption1(e.target.value)}/>
          
-          <label for="inputPriceFirstOption" class="productFormLabel">PriceFirstOption</label>
-          <input type="text" className="form-control" value={priceFirstOption} onChange={(e) => setPriceFirstOption(e.target.value)}/>
+          <label for="inputpriceOption1" class="productFormLabel">priceOption1</label>
+          <input type="text" className="form-control" value={priceOption1} onChange={(e) => setpriceOption1(e.target.value)}/>
           
-          <label for="inputSizefirstOption1" class="productFormLabel">SizefirstOption1</label>
-          <input type="text" className="form-control" value={sizefirstOption1} onChange={(e) => setSizefirstOption1(e.target.value)}/>
+          <label for="inputsize1_Option1" class="productFormLabel">size1_Option1</label>
+          <input type="text" className="form-control" value={size1_Option1} onChange={(e) => setsize1_Option1(e.target.value)}/>
           
-          <label for="inputPriceSizefirstOption1" class="productFormLabel">PriceSizefirstOption1</label>
-          <input type="text" className="form-control" value={priceSizefirstOption1} onChange={(e) => setPriceSizefirstOption1(e.target.value)}/>
+          <label for="inputpriceSize1_Option1" class="productFormLabel">priceSize1_Option1</label>
+          <input type="text" className="form-control" value={priceSize1_Option1} onChange={(e) => setpriceSize1_Option1(e.target.value)}/>
          
-          <label for="inputSizefirstOption2" class="productFormLabel">SizefirstOption2</label>
-          <input type="text" className="form-control" value={sizefirstOption2} onChange={(e) => setSizefirstOption2(e.target.value)}/>
+          <label for="inputsize2_Option1" class="productFormLabel">size2_Option1</label>
+          <input type="text" className="form-control" value={size2_Option1} onChange={(e) => setsize2_Option1(e.target.value)}/>
         
-          <label for="inputPriceSizefirstOption2" class="productFormLabel">PriceSizefirstOption2</label>
-          <input type="text" className="form-control" value={priceSizefirstOption2} onChange={(e) => setPriceSizefirstOption2(e.target.value)}/>
+          <label for="inputpriceSize2_Option1" class="productFormLabel"> priceSize2_Option1</label>
+          <input type="text" className="form-control" value={priceSize2_Option1} onChange={(e) => setpriceSize2_Option1(e.target.value)}/>
           
           <label for="inputOption2" class="productFormLabel">Option2</label>
           <input type="text" className="form-control" value={option2} onChange={(e) => setOption2(e.target.value)}/>
+          
+          <label for="inputpriceOption2" class="productFormLabel">priceOption2</label>
+          <input type="text" className="form-control" value={priceOption2} onChange={(e) => setpriceOption2(e.target.value)}/>
+
+          <label for="inputsize1_Option2" class="productFormLabel">size1_Option2</label>
+          <input type="text" className="form-control" value={size1_Option2} onChange={(e) => setsize1_Option2(e.target.value)}/>
+          
+          <label for="inputpriceSize1_Option2" class="productFormLabel">priceSize1_Option2</label>
+          <input type="text" className="form-control" value={priceSize1_Option2} onChange={(e) => setpriceSize1_Option2(e.target.value)}/>
+         
+          <label for="inputsize2_Option2" class="productFormLabel">size2_Option2</label>
+          <input type="text" className="form-control" value={size2_Option2} onChange={(e) => setsize2_Option2(e.target.value)}/>
+        
+          <label for="inputpriceSize2_Option2" class="productFormLabel"> priceSize2_Option2</label>
+          <input type="text" className="form-control" value={priceSize2_Option2} onChange={(e) => setpriceSize2_Option2(e.target.value)}/>
           
           <label for="inputOption3" class="productFormLabel">Option3</label>
           <input type="text" className="form-control" value={option3} onChange={(e) => setOption3(e.target.value)}/>

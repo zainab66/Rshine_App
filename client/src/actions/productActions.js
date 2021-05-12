@@ -3,7 +3,7 @@ import {  PRODUCT_LIST_REQUEST,PRODUCT_LIST_SUCCESS,PRODUCT_LIST_FAIL,PRODUCT_RE
   PRODUCT_REVIEW_CREATE_FAIL,} from '../constants/productConstants';
 import Axios from 'axios';
 import {  PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS,PRODUCT_DETAILS_FAIL,PRODUCT_CREATE_FAIL,
-  PRODUCT_CREATE_REQUEST,PRODUCT_CREATE_SUCCESS,PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL,GET_PRODUCTS_BY_SLUG,DELETE_PRODUCT_BY_ID_REQUEST,DELETE_PRODUCT_BY_ID_SUCCESS,DELETE_PRODUCT_BY_ID_FAILURE} from '../constants/productConstants';
+  PRODUCT_CREATE_REQUEST,PRODUCT_CREATE_SUCCESS,PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_FAIL,GET_PRODUCTS_BY_SLUG,DELETE_PRODUCT_BY_ID_REQUEST,DELETE_PRODUCT_BY_ID_SUCCESS,DELETE_PRODUCT_BY_ID_FAILURE,DELETE_review_REQUEST,DELETE_review_SUCCESS,DELETE_review_FAILURE} from '../constants/productConstants';
   import store from "../store";
 
 export const listProducts = () => async (dispatch) =>{
@@ -169,3 +169,22 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
   }
 };
 
+export const deleteReview = (rId,pId) => async (dispatch, getState) => {
+  dispatch({ type: DELETE_review_REQUEST, payload:{rId,pId} });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = Axios.post(`http://localhost:3001/api/products/deleteReview`,{rId,pId} , {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    console.log('rev',data)
+    dispatch({ type: DELETE_review_SUCCESS });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type:DELETE_review_FAILURE, payload: message });
+  }
+};

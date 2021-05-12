@@ -7,7 +7,7 @@ export const CART_SAVE_PAYMENT_METHOD = 'CART_SAVE_PAYMENT_METHOD';
 export const CART_EMPTY = 'CART_EMPTY';
 
 
-
+export const ADD_TO_Storage_SUCCESS= 'ADD_TO_Storage_SUCCESS';
 
 export const ADD_TO_CART_REQUEST = 'ADD_TO_CART_REQUEST';
 export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';

@@ -12,6 +12,7 @@ import ProductImage from './ProductImage';
 import FootrScreen from './FootrScreen'
 import { addToCart } from '../actions/cartActions';
 import CartItem from "./CartItem";
+const shortid = require('shortid');
 
 
 export default function ProductDetailsPage(props) {
@@ -20,6 +21,8 @@ export default function ProductDetailsPage(props) {
   const [qty, setQty] = useState(1);
   const [sizeOption, setSizeOption] = useState("");
   const [sizeFirstOption, setSizeFirstOption] = useState("");
+  const [sizeSecondOption, setSizeSecondOption] = useState("");
+
 
   const [colorOption, setColorOption] = useState("");
   const [option, setOption] = useState("");
@@ -27,6 +30,54 @@ export default function ProductDetailsPage(props) {
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
+  let price;
+  if (product && !option && !sizeOption) {
+    price = product.discountPrice ? (product.price - product.price * product.discountPrice).toFixed(2) : product.price
+  }
+
+  if (product && !option && sizeOption === product.size1) {
+    price = product.discountPrice ? (product.priceSize1 - product.priceSize1 * product.discountPrice).toFixed(2) : product.priceSize1
+  }
+
+
+  if (product && !option && sizeOption === product.size2) {
+    price = product.discountPrice ? (product.priceSize2 - product.priceSize2 * product.discountPrice).toFixed(2) : product.priceSize2
+  }
+
+
+
+  if (product && option && option === product.option1 && sizeFirstOption === product.size1_Option1 ) {
+    price = product.discountPrice ? (product.priceSize1_Option1 - product.priceSize1_Option1 * product.discountPrice).toFixed(2) : product.priceSize1_Option1
+  }
+
+  if (product && option && option === product.option1 && sizeFirstOption === product.size2_Option1 ) {
+    price = product.discountPrice ? (product.priceSize2_Option1 - product.priceSize2_Option1 * product.discountPrice).toFixed(2) : product.priceSize2_Option1
+  }
+
+  if (product && option && option === product.option2 && sizeSecondOption === product.size1_Option2  ) {
+    price = product.discountPrice ? (product.priceSize1_Option2 - product.priceSize1_Option2 * product.discountPrice).toFixed(2) : product.priceSize1_Option2
+  }
+
+  if (product && option && option === product.option2 && sizeSecondOption === product.size2_Option2  ) {
+    price = product.discountPrice ? (product.priceSize2_Option2 - product.priceSize2_Option2 * product.discountPrice).toFixed(2) : product.priceSize2_Option2
+  }
+
+  // if (product && option && option === product.option1) {
+  //   price = product.discountPrice ? (product.priceOption1 - product.priceOption1 * product.discountPrice).toFixed(2) : product.priceOption1
+  // }
+  // if (product && option && option === product.option2) {
+  //   price = product.discountPrice ? (product.priceOption2 - product.priceOption2 * product.discountPrice).toFixed(2) : product.priceOption2
+  // }
+  console.log('price', price)
+
+
+
+
+
+
+
+
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
@@ -102,6 +153,7 @@ export default function ProductDetailsPage(props) {
                       </div>
                     </div>
                     <div class="col-md-5">
+
                       <h5 className="productName">{product.name}</h5>
                       <p class="mb-2 text-muted small">{product.category}</p>
                       <Rating
@@ -117,14 +169,14 @@ export default function ProductDetailsPage(props) {
 
 
                       {!option && sizeOption &&
-                        (sizeOption === product.sizeOption1 && product.discountPrice ? (<>
-                          <p><span class="mr-1"><strong className="discount"> CA${(product.priceSizeOption1 - product.priceSizeOption1 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSizeOption1}</strong></span></p>
-                          <p className="priceSaved">You save CA${(product.priceSizeOption1 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>) : (
-                            sizeOption === product.sizeOption2 && product.discountPrice ? (<>
-                              <p><span class="mr-1"><strong className="discount"> CA${(product.priceSizeOption2 - product.priceSizeOption2 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSizeOption2}</strong></span></p>
-                              <p className="priceSaved">You save CA${(product.priceSizeOption2 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>
-                            ) : (sizeOption === product.sizeOption1 ? (<p><span class="mr-1"><strong> CA${product.priceSizeOption1}</strong></span></p>)
-                              : (sizeOption === product.sizeOption2 ? (<p><span class="mr-1"><strong> CA${product.priceSizeOption2}</strong></span></p>)
+                        (sizeOption === product.size1 && product.discountPrice ? (<>
+                          <p><span class="mr-1"><strong className="discount"> CA${(product.priceSize1 - product.priceSize1 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSize1}</strong></span></p>
+                          <p className="priceSaved">You save CA${(product.priceSize1 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>) : (
+                            sizeOption === product.size2 && product.discountPrice ? (<>
+                              <p><span class="mr-1"><strong className="discount"> CA${(product.priceSize2 - product.priceSize2 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSize2}</strong></span></p>
+                              <p className="priceSaved">You save CA${(product.priceSize2 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>
+                            ) : (sizeOption === product.size1 ? (<p><span class="mr-1"><strong> CA${product.priceSize1}</strong></span></p>)
+                              : (sizeOption === product.size2 ? (<p><span class="mr-1"><strong> CA${product.priceSize2}</strong></span></p>)
                                 :
                                 (product.discountPrice ? (<>
                                   <p><span class="mr-1"><strong className="discount"> CA${(product.price - product.price * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.price}</strong></span></p>
@@ -135,20 +187,43 @@ export default function ProductDetailsPage(props) {
 
 
 
-                      {option &&
-                        (sizeFirstOption === product.sizefirstOption1 && product.discountPrice ? (<>
-                          <p><span class="mr-1"><strong className="discount"> CA${(product.priceSizefirstOption1 - product.priceSizefirstOption1 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSizefirstOption1}</strong></span></p>
-                          <p className="priceSaved">You save CA${(product.priceSizefirstOption1 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>) : (
+                      {option && (
 
-                            sizeFirstOption === product.sizefirstOption2 && product.discountPrice ? (<>
-                              <p><span class="mr-1"><strong className="discount"> CA${(product.priceSizefirstOption2 - product.priceSizefirstOption2 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSizefirstOption2}</strong></span></p>
-                              <p className="priceSaved">You save CA${(product.priceSizeOption2 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>
-                            ) : (sizeFirstOption === product.sizefirstOption1 ? (<p><span class="mr-1"><strong> CA${product.priceSizefirstOption1}</strong></span></p>)
-                              : (sizeFirstOption === product.sizefirstOption2 ? (<p><span class="mr-1"><strong> CA${product.priceSizefirstOption2}</strong></span></p>)
-                                : (product.discountPrice ? (<>
-                                  <p><span class="mr-1"><strong className="discount"> CA${(product.priceFirstOption - product.priceFirstOption * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceFirstOption}</strong></span></p>
-                                  <p className="priceSaved">You save CA${(product.priceFirstOption * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>)
-                                  : (<p><span class="mr-1"><strong> CA${product.priceFirstOption}</strong></span></p>))))))}
+                        option === product.option1 ?
+                          (sizeFirstOption === product.size1_Option1 && product.discountPrice ? (<>
+                            <p><span class="mr-1"><strong className="discount"> CA${(product.priceSize1_Option1 - product.priceSize1_Option1 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSize1_Option1}</strong></span></p>
+                            <p className="priceSaved">You save CA${(product.priceSize1_Option1 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>) : (
+
+                              sizeFirstOption === product.size2_Option1 && product.discountPrice ? (<>
+                                <p><span class="mr-1"><strong className="discount"> CA${(product.priceSize2_Option1 - product.priceSize2_Option1 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSize2_Option1}</strong></span></p>
+                                <p className="priceSaved">You save CA${(product.priceSize2 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>
+                              ) : (sizeFirstOption === product.size1_Option1 ? (<p><span class="mr-1"><strong> CA${product.priceSize1_Option1}</strong></span></p>)
+                                : (sizeFirstOption === product.size2_Option1 ? (<p><span class="mr-1"><strong> CA${product.priceSize2_Option1}</strong></span></p>)
+                                  : (product.discountPrice ? (<>
+                                    <p><span class="mr-1"><strong className="discount"> CA${(product.priceOption1 - product.priceOption1 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceOption1}</strong></span></p>
+                                    <p className="priceSaved">You save CA${(product.priceOption1 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>)
+                                    : (<p><span class="mr-1"><strong> CA${product.priceOption1}</strong></span></p>)))))
+
+                          ) : (
+
+
+                            sizeSecondOption === product.size1_Option2 && product.discountPrice ? (<>
+                              <p><span class="mr-1"><strong className="discount"> CA${(product.priceSize1_Option2 - product.priceSize1_Option2 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSize1_Option2}</strong></span></p>
+                              <p className="priceSaved">You save CA${(product.priceSize1_Option2 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>) : (
+
+                                sizeSecondOption === product.size2_Option2 && product.discountPrice ? (<>
+                                  <p><span class="mr-1"><strong className="discount"> CA${(product.priceSize2_Option2 - product.priceSize2_Option2 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceSize2_Option2}</strong></span></p>
+                                  <p className="priceSaved">You save CA${(product.priceSize2 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>
+                                ) : (sizeSecondOption === product.size1_Option2 ? (<p><span class="mr-1"><strong> CA${product.priceSize1_Option2}</strong></span></p>)
+                                  : (sizeSecondOption === product.size2_Option2 ? (<p><span class="mr-1"><strong> CA${product.priceSize2_Option2}</strong></span></p>)
+                                    : (product.discountPrice ? (<>
+                                      <p><span class="mr-1"><strong className="discount"> CA${(product.priceOption2 - product.priceOption2 * product.discountPrice).toFixed(2)}</strong><strong className="price"> CA${product.priceOption2}</strong></span></p>
+                                      <p className="priceSaved">You save CA${(product.priceOption2 * product.discountPrice).toFixed(2)}({(product.discountPrice * 100)}%)</p></>)
+                                      : (<p><span class="mr-1"><strong> CA${product.priceOption2}</strong></span></p>)))))
+
+
+
+                          ))}
 
                       <p className="instock">
                         {product.countInStock > 0 ? (
@@ -165,52 +240,80 @@ export default function ProductDetailsPage(props) {
                   props.history.push(`/cart/${productId}?qty=${qty}`);
                 }} */}
 
-                
+
                       <form onSubmit={() => {
-                   
-                    const { _id, name, price} = product;
-                    const img = product.productPictures[0].img;
-                    dispatch(addToCart({ _id, name, price, img },Number(qty)));
-                    props.history.push(`/signin?redirect=cart`);
-                  }}>
+
+                        const dentify = shortid.generate();
+
+                        // const new_price = product.newPrice;
+                        const { _id, name, countInStock } = product;
+                        const img = product.productPictures[0].img;
+                        dispatch(addToCart(_id, Number(qty), price, message, option, colorOption, sizeOption, sizeFirstOption, sizeSecondOption, dentify, name, img, countInStock));
+                        props.history.push(`/cart`);
+
+                        // props.history.push(`/signin?redirect=cart`);
+                      }}>
                         <div class="table-responsive">
-                          {product.colorOption1 && (<>
+                          {product.color1 && (<>
                             <label for="color">Color</label>
                             <select class="custom-select d-block w-100 mb-1" id="color" value={colorOption}
                               onChange={(e) => setColorOption(e.target.value)} required>
                               <option value="">Select an option</option>
-                              <option>{product.colorOption1}</option>
-                              <option> {product.colorOption2}</option>
-                              <option> {product.colorOption3}</option>
-                              <option> {product.colorOption4}</option>
+                              <option>{product.color1}</option>
+                              <option> {product.color2}</option>
+                              <option> {product.color3}</option>
+                              <option> {product.color4}</option>
                             </select>
                           </>)}
-                          {product.sizefirstOption1 && (<>
+                          {product.size1_Option1 && (<>
                             <label for="option">Options</label>
                             <select class="custom-select d-block w-100 mb-1" id="option" value={option}
                               onChange={(e) => setOption(e.target.value)} required>
                               <option value="">Select an option</option>
-                              <option>{product.firstOption}</option>
-                              {/* <option> {product.option2}</option> */}
+                              <option>{product.option1}</option>
+                              <option> {product.option2}</option>
                             </select>
                           </>
                           )}
-                          {option ? (<>
-                            <label for="size">Size</label>
-                            <select class="custom-select d-block w-100 mb-1" id="size" value={sizeFirstOption}
-                              onChange={(e) => setSizeFirstOption(e.target.value)} required>
-                              <option value="">Select an option</option>
-                              <option>{product.sizefirstOption1}</option>
-                              <option>{product.sizefirstOption2}</option>
-                            </select></>) : (product.sizeOption1 && (<>
+                          {option ?
+                            (option === product.option1 ? (<>
+                              <label for="size">Size</label>
+                              <select class="custom-select d-block w-100 mb-1" id="size" value={sizeFirstOption}
+                                onChange={(e) => setSizeFirstOption(e.target.value)} required>
+                                <option value="">Select an option</option>
+                                <option>{product.size1_Option1}</option>
+                                <option>{product.size2_Option1}</option>
+                              </select></>) :
+
+                              (option === product.option2 && (<>
+                                <label for="size">Size</label>
+                                <select class="custom-select d-block w-100 mb-1" id="size" value={sizeSecondOption}
+                                  onChange={(e) => setSizeSecondOption(e.target.value)} required>
+                                  <option value="">Select an option</option>
+                                  <option>{product.size1_Option2}</option>
+                                  <option>{product.size2_Option2}</option>
+                                </select></>))
+
+
+                            ) :
+
+
+                            (!option && product.size1 && (<>
                               <label for="size">Size</label>
                               <select class="custom-select d-block w-100 mb-1" id="size" value={sizeOption}
                                 onChange={(e) => setSizeOption(e.target.value)} required>
                                 <option value="">Select an option</option>
-                                <option>{product.sizeOption1}</option>
-                                <option> {product.sizeOption2}</option>
-                              </select>
-                            </>))}
+                                <option>{product.size1}</option>
+                                <option>{product.size2}</option>
+                              </select></>))
+
+                          }
+
+
+
+
+
+
                           <h5 className="addYourPersonalisation1 mt-4">Add your personalisation </h5>
                           <p className="addYourPersonalisation">{product.addYourPersonalisation}</p>
                           <textarea class="form-control" rows="3" id="comment1" value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>

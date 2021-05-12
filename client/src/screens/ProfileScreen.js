@@ -10,6 +10,7 @@ export default function ProfileScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [fileName, setFileName] = useState('');
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -29,6 +30,7 @@ export default function ProfileScreen() {
     } else {
       setName(user.name);
       setEmail(user.email);
+      setFileName(user.profilePicture);
     }
   }, [dispatch, userInfo._id, user]);
   const submitHandler = (e) => {
@@ -36,9 +38,25 @@ export default function ProfileScreen() {
     // dispatch update profile
     if (password !== confirmPassword) {
       alert('Password and Confirm Password Are Not Matched');
-    } else {
-      dispatch(updateUserProfile({ userId: user._id, name, email, password }));
-    }
+    } 
+    // else {
+    //   dispatch(updateUserProfile({ userId: user._id, name, email, password }));
+    // }
+
+
+    const form = new FormData();
+    form.append("userId", user._id);
+
+    form.append("name", name);
+    //form.append("name222", name222);
+    form.append("email", email);
+    form.append("password", password);
+    form.append("profilePicture", fileName);
+
+    dispatch(updateUserProfile(
+      form
+    ));
+
   };
   return (
     <div className="formProfileUser">
@@ -80,6 +98,11 @@ export default function ProfileScreen() {
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
             </div>
+            <div>
+                  <label htmlFor="profilePicture" class="formLabel">Add / Change Image:</label>
+                  <input class="form-control" filename="profilePicture" type="file"
+                    onChange={(e) => setFileName(e.target.files[0])}></input>
+                </div>
             <div>
               <label htmlFor="password" class="formLabel">Password</label>
               <input  class="form-control"

@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
-const crouselSchema = new mongoose.Schema({
 
+const crouselSchema = new mongoose.Schema({
+    name: { 
+        type: String, 
+        required: true, 
+        trim: true 
+    },
     crouselPictures: [
         { img: { type: String } }
     ],

@@ -25,12 +25,18 @@ import ProductDetailsPage from './screens/ProductDetailsPage';
 import Logo from './rshineLogo.png'
 import CrouselAdminScreen from './screens/CrouselAdminScreen';
 import AboutUsScreen from './screens/AboutUsScreen';
-import { updateCart } from './actions/cartActions';
+import { updateCart,getCartItems} from './actions/cartActions';
 import CheckoutPage from './screens/CheckoutPageScreen';
 import OrdersAdminScreen from './screens/OrdersAdminScreen';
+import { generatePublicUrl } from './urlConfig';
+import UserListScreen from './screens/UserListScreen';
+import UserEditScreen from './screens/UserEditScreen';
 
 function App() {
    const cart = useSelector((state) => state.cart);
+   const cart2 = useSelector((state) => state.cart2);
+   const { cartItems2 } = cart2;
+
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -40,7 +46,9 @@ function App() {
     dispatch(signout());
   };
    useEffect(() => {
-    dispatch(updateCart());
+   dispatch(updateCart());
+    dispatch(getCartItems());
+
   }, [dispatch,userInfo]);
 
   useEffect(() => {
@@ -66,11 +74,12 @@ function App() {
                 <Nav.Link active className="adminLink" href="/Productlist">Products</Nav.Link>
                 <Nav.Link active className="adminLink" href="/CrouselImages">Crousel-Images</Nav.Link>
                 <Nav.Link active className="adminLink" href="/Orders">Orders</Nav.Link>
+                <Nav.Link active className="adminLink" href="/userlist">Users</Nav.Link>
 
               </Nav>
               <Nav className="ml-auto">
                 <Nav.Link href="/cart" className="cartBtn">
-                {cartItems.length > 0 && (
+                {cartItems && (
 
                     <span style={{
                       position: "absolute",
@@ -85,7 +94,7 @@ function App() {
                       alignSelf: "center",
                       marginLeft: 18,
                             marginTop: -4   
-                    }}>{Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black" }} />  </Nav.Link>
+                    }}>{cartItems.reduce((a, c) => a + c.qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black" }} />  </Nav.Link>
                 <Nav.Link active href="#" >Hello,{userInfo.name}</Nav.Link>
                 <Nav.Link className="adminLin" href="#signout" onClick={signoutHandler}>Sign Out</Nav.Link>
               </Nav>
@@ -176,7 +185,7 @@ function App() {
                             alignSelf: "center",
                             marginLeft: 28,
                             marginTop: 5
-                          }}>{Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black", marginBottom:8,marginTop:8, marginRight: 7, marginLeft: 7}} />  </Nav.Link>
+                          }}>{cartItems.reduce((a, c) => a + c.qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black", marginBottom:8,marginTop:8, marginRight: 7, marginLeft: 7}} />  </Nav.Link>
                       {/* <NavDropdown title={userInfo.name} id="collasible-nav-dropdown" >
                         <NavDropdown.Item href="/Profile">User Profile</NavDropdown.Item>
                         <NavDropdown.Item href="/orderhistory">Order History</NavDropdown.Item>
@@ -187,8 +196,13 @@ function App() {
                       <li class="nav-item avatar dropdown">
                         <button class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-saju" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false">
-                          <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="imgAvater rounded-circle z-depth-0"
-                            alt="avatar" />
+                           {userInfo.profilePicture ? (
+                                                    <img src={generatePublicUrl(userInfo.profilePicture)} class="imgAvater rounded-circle z-depth-0"
+                                                        alt="avatar" />
+                                                ) : (
+                                                        <img class="avatar avatar-35  rounded-circle text-white p-1"
+                                                            src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" alt=""></img>
+                                                    )} 
                         </button>
                         <div class="dropdown-menu dropdown-menu-lg-right dropdown"
                           aria-labelledby="navbarDropdownMenuLink-saju">
@@ -224,7 +238,7 @@ function App() {
                     </div>
                     <Nav className="ml-auto pl-2">
                       <Nav.Link href="/cart" className="cartBtn">
-                      {cartItems && (
+                      {cart2.cartItems && (
                           <span style={{
                             position: "absolute",
                             background: "#00bbcc",
@@ -237,7 +251,7 @@ function App() {
                             textAlign: "center",
                             alignSelf: "center",
                             marginLeft: 28,
-                            marginTop: 5 }}>{Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black",marginBottom:8, marginTop:8, marginRight: 7, marginLeft: 7  }} />  </Nav.Link>
+                            marginTop: 5 }}>{cart2.cartItems.reduce((a, c) => a + c.qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black",marginBottom:8, marginTop:8, marginRight: 7, marginLeft: 7  }} />  </Nav.Link>
                   
                       <Nav.Link href="/signin" className=" signinBtn " style={{ color: "black", margin: 10 }}>Sign<span className="pl-1">In</span>  </Nav.Link>
                       <Nav.Link href="/register" className="registerBtn " style={{ color: "black",marginLeft: 0,margin: 10}}>Register</Nav.Link>
@@ -253,7 +267,8 @@ function App() {
       <AdminRoute path="/Productlist" component={ProductAdminScreen} />
       <AdminRoute path="/CrouselImages" component={CrouselAdminScreen} />
       <AdminRoute path="/Orders" component={OrdersAdminScreen} />
-
+      <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
+      <AdminRoute path="/user/:id/edit" component={UserEditScreen}></AdminRoute>
       <PrivateRoute path="/Profile" component={ProfileScreen}></PrivateRoute>
       <Route path="/" component={HomeScreen} exact></Route>
       <Route path="/cart" component={CartScreen} ></Route>

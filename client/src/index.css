@@ -1103,3 +1103,34 @@ font: 1em sans-serif;
 .formProfileUser{
   margin-top: 100px;
 }
+.userList{
+  margin-top: 100px;
+
+}
+
+.btnEditUser{
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  padding: 8px 20px;
+  border: 2px solid #ffd480;
+  background: #00bbcc;
+  border-radius: 25px;
+}
+.btnEditUser:hover{
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,.12);
+  outline:none !important;
+  text-decoration: none;
+  color: #000;
+}
+.btnEditUser:focus{
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,.12);
+  outline:none !important;
+  text-decoration: none;
+  color: #000;
+}
+
+/* crouselAdminScreen */
+.crouselAdminScreen{
+  margin-top:120px ;
+}

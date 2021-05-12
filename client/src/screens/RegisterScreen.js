@@ -12,6 +12,7 @@ export default function RegisterScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [fileName, setFileName] = useState('');
 
   const redirect = props.location.search
     ? props.location.search.split('=')[1]
@@ -25,9 +26,21 @@ export default function RegisterScreen(props) {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert('Password and confirm password are not match');
-    } else {
-      dispatch(register(name, email, password));
-    }
+    } 
+    // else {
+    //   dispatch(register(name, email, password));
+    // }
+
+    const form = new FormData();
+    form.append("name", name);
+    form.append("email", email);
+    form.append("password", password);
+    form.append("profilePicture", fileName);
+
+    dispatch(register(
+      form
+    ));
+
   };
   useEffect(() => {
     if (userInfo) {
@@ -55,6 +68,13 @@ export default function RegisterScreen(props) {
 
           <label for="confirmPassword" class="formLabel">Password again</label>
           <input type="password" id="confirmPassword" class="form-control" onChange={(e) => setConfirmPassword(e.target.value)} required />
+
+          <label for="profilePicture" class="formLabel">Add / Change Image:</label>
+        <input class="form-control" filename="profilePicture" type="file"
+          onChange={(e) => setFileName(e.target.files[0])}></input>
+
+
+
 
           <div class="mt-4 mb-4">
             <label className="newCustmer">

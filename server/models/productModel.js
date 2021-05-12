@@ -50,50 +50,65 @@ const productSchema = new mongoose.Schema({
     readyToDispatchDaysOrWeeks:{ 
         type: String,
     },
-    sizeOption1: { 
+    size1: { 
         type: String,
     },
-    priceSizeOption1: { 
+    priceSize1: { 
         type: Number,
     },
-    sizeOption2: { 
+    size2: { 
         type: String,
     },
-    priceSizeOption2: { 
+    priceSize2: { 
         type: Number,
     },
-    colorOption1: { 
+    color1: { 
         type: String,
     },
-    colorOption2: { 
+    color2: { 
         type: String,
     },
-    colorOption3: { 
+    color3: { 
         type: String,
     },
-    colorOption4: { 
+    color4: { 
         type: String,
     },
-    firstOption: { 
+    option1: { 
         type: String,
     },
-    priceFirstOption: { 
+    priceOption1: { 
         type: Number,
     },
-    sizefirstOption1: { 
+    size1_Option1: { 
         type: String,
     },
-    priceSizefirstOption1: { 
+    priceSize1_Option1: { 
         type: Number,
     },
-    sizefirstOption2: { 
+    size2_Option1: { 
         type: String,
     },
-    priceSizefirstOption2: { 
+    priceSize2_Option1: { 
         type: Number,
     },
     option2: { 
         type: String,
+    },
+    priceOption2: { 
+        type: Number,
+    },
+    size1_Option2: { 
+        type: String,
+    },
+    priceSize1_Option2: { 
+        type: Number,
+    },
+    size2_Option2: { 
+        type: String,
+    },
+    priceSize2_Option2: { 
+        type: Number,
     },
     option3: { 
         type: String,
@@ -136,8 +151,8 @@ const productSchema = new mongoose.Schema({
     productPictures: [
         { img: { type: String } }
     ],
-    rating: { type: Number },
-    numReviews: { type: Number },
+   // rating: { type: Number },
+  //  numReviews: { type: Number },
     reviews: [reviewSchema],
 
     category: { type:String, ref: 'Category', required: true },

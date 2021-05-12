@@ -2,13 +2,13 @@ import React from 'react'
 import MenueHeader from './MenueHeader'
 import ProductHomeScreen from './ProductHomeScreen'
 import FootrScreen from './FootrScreen'
-import CrouselScreen from './CrouselScreen'
+import CrouselHomeScreen from './CrouselHomeScreen'
 
 export default function HomeScreen() {
     return (
         <div>
             <MenueHeader />
-            <CrouselScreen />
+            <CrouselHomeScreen />
             <ProductHomeScreen />
             <FootrScreen />
         </div>

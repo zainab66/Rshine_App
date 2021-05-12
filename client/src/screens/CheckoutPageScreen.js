@@ -124,7 +124,7 @@ export default function CheckoutPage(props) {
 
   const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
   cart.itemsPrice = toPrice(
-    Object.keys(cartItems).reduce((a, c) => a + cartItems[c].qty * cartItems[c].price, 0)
+    cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
 
   cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
@@ -313,12 +313,12 @@ export default function CheckoutPage(props) {
                 <div class="card-body">
                   <h2 class="orderItemDetails mb-4">
                     Order Items</h2>
-                  {Object.keys(cartItems).map((key, index) => (
+                  {cartItems.map((key, index) => (
                     <>
                       <div class="row mb-4">
                         <div class="col-md-7 col-lg-12">
                           <div class="d-flex justify-content-between">
-                            {cartItems[key].qty && (
+                            {key.qty && (
                               <span style={{
                                 position: "absolute",
                                 background: "#00bbcc",
@@ -332,14 +332,14 @@ export default function CheckoutPage(props) {
                                 alignSelf: "center",
                                 marginLeft: 50,
                                 marginTop: -50
-                              }}>{cartItems[key].qty}</span>)}
+                              }}>{key.qty}</span>)}
                             <img class="small"
-                              src={cartItems[key].img} alt={cartItems[key].name} />
+                              src={key.img} alt={key.name} />
                             <div className="orderItemName">
-                              {cartItems[key].name}
+                              {key.name}
                             </div>
                             <div class="orderItem ">
-                              CA${cartItems[key].price.toFixed(2)}
+                              CA${key.price.toFixed(2)}
                             </div>
                           </div>
                         </div>
@@ -372,7 +372,7 @@ export default function CheckoutPage(props) {
                         <div class="d-flex justify-content-between">
                           Subtotal
                                   <div class="orderItem ">
-                            CA${Object.keys(cartItems).reduce((a, c) => a + cartItems[c].price * cartItems[c].qty, 0).toFixed(2)}
+                            CA${cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
                           </div>
                         </div>
                       </div>

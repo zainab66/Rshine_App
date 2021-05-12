@@ -25,6 +25,7 @@ export default function CategoryAdminScreen(props) {
   const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
 
   const dispatch = useDispatch();
+  const reload=()=>window.location.reload();
 
   const handleClose = () => {
     const form = new FormData();
@@ -35,6 +36,8 @@ export default function CategoryAdminScreen(props) {
 
     dispatch(addCategory(form));
     setShow(false);
+    reload();
+
   }
 
   const handleShow = () => setShow(true);
@@ -134,6 +137,7 @@ export default function CategoryAdminScreen(props) {
     });
     dispatch(updateCategories(form));
     setUpdateCategoryModal(false);
+    reload();
   }
 
   const updateCheckedAndExpandedCategories = () => {
@@ -177,6 +181,7 @@ export default function CategoryAdminScreen(props) {
         });
     }
     setDeleteCategoryModal(false);
+    reload();
   }
 
   return (
@@ -226,7 +231,7 @@ export default function CategoryAdminScreen(props) {
         </div>
 
         {/*addCategoryModal */}
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={() => setShow(false)}>
           <Modal.Header closeButton>
             <Modal.Title><h2 className="AddNewCategory">Add New Category</h2></Modal.Title>
           </Modal.Header>
@@ -258,8 +263,8 @@ export default function CategoryAdminScreen(props) {
                       </select>
                     </>
                   )}
-              <label for="inputcategoryImage" class="categoryFormLabel">Select Image</label>
-              <input type="file" class="form-control" name="categoryImage" onChange={handleCategoryImage} />
+              {/* <label for="inputcategoryImage" class="categoryFormLabel">Select Image</label>
+              <input type="file" class="form-control" name="categoryImage" onChange={handleCategoryImage} /> */}
             </div>
           </Modal.Body>
           <Modal.Footer>

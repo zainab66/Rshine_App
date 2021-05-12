@@ -82,7 +82,7 @@ router.get('/prod/:id', expressAsyncHandler(async (req, res) => {
 
 
 router.post('/create', authorize, isAdmin, uploadS3.array('productPictures'), expressAsyncHandler(async (req, res) => {
-  const {name,price,discountPrice,sizeOption1,priceSizeOption1,sizeOption2,priceSizeOption2, colorOption1, colorOption2, colorOption3, colorOption4,firstOption,priceFirstOption,sizefirstOption1, priceSizefirstOption1,sizefirstOption2, priceSizefirstOption2,option2,option3,option4,option5,option6,option7,option8,option9,option10,
+  const {name,price,discountPrice,size1,priceSize1,size2,priceSize2, color1, color2, color3, color4,option1,priceOption1,size1_Option1, priceSize1_Option1,size2_Option1,priceSize2_Option1,option2, priceOption2, size1_Option2,priceSize1_Option2, size2_Option2, priceSize2_Option2,option3,option4,option5,option6,option7,option8,option9,option10,
     description,addYourPersonalisation,category,countInStock,madeBy,material, standardDelivery,expressDelivery, readyToDispatchRange,readyToDispatchDaysOrWeeks ,rating,numReviews,createdBy} = req.body;
   let productPictures = [];
   if(req.files.length > 0){
@@ -95,21 +95,26 @@ router.post('/create', authorize, isAdmin, uploadS3.array('productPictures'), ex
     slug : slugify(name),
     price,
     discountPrice,
-    sizeOption1,
-    priceSizeOption1,
-    sizeOption2,
-    priceSizeOption2,
-    colorOption1,
-    colorOption2,
-    colorOption3,
-    colorOption4,
-    firstOption,
-    priceFirstOption,
-    sizefirstOption1,
-    priceSizefirstOption1,
-    sizefirstOption2,
-    priceSizefirstOption2,
+    size1,
+    priceSize1,
+    size2,
+    priceSize2,
+    color1,
+    color2,
+    color3,
+    color4,
+    option1,
+    priceOption1,
+    size1_Option1,
+    priceSize1_Option1,
+    size2_Option1,
+    priceSize2_Option1,
     option2,
+    priceOption2,
+    size1_Option2,
+    priceSize1_Option2,
+    size2_Option2,
+    priceSize2_Option2,
     option3,
     option4,
     option5,
@@ -140,26 +145,6 @@ router.post('/create', authorize, isAdmin, uploadS3.array('productPictures'), ex
 );
 
 
-
-// router.put('/:id', authorize, isAdmin, expressAsyncHandler(async (req, res) => {
-//   const productId = req.params.id;
-//   const product = await Product.findById(productId);
-//   if (product) {
-//     product.name = req.body.name;
-//     product.price = req.body.price;
-//     product.image = req.body.image;
-//     product.category = req.body.category;
-//     product.brand = req.body.brand;
-//     product.countInStock = req.body.countInStock;
-//     product.description = req.body.description;
-//     const updatedProduct = await product.save();
-//     res.send({ message: 'Product Updated', product: updatedProduct });
-//   } else {
-//     res.status(404).send({ message: 'Product Not Found' });
-//   }
-// })
-// );
-
 router.get("/productes/:slug", getProductsBySlug);
 
 router.post('/:id/reviews', authorize, expressAsyncHandler(async (req, res) => {
@@ -177,10 +162,10 @@ router.post('/:id/reviews', authorize, expressAsyncHandler(async (req, res) => {
         comment: req.body.comment,
       };
       product.reviews.push(review);
-      product.numReviews = product.reviews.length;
-      product.rating =
-        product.reviews.reduce((a, c) => c.rating + a, 0) /
-        product.reviews.length;
+      // product.numReviews = product.reviews.length;
+      // product.rating =
+      //   product.reviews.reduce((a, c) => c.rating + a, 0) /
+      //   product.reviews.length;
       const updatedProduct = await product.save();
       res.status(201).send({
         message: 'Review Created',
@@ -213,6 +198,34 @@ router.delete(
 
 
 
+
+router.post(
+  '/deleteReview',
+  authorize,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    let { rId, pId } = req.body;
+    if (!rId) {
+      return res.json({ message: "All filled must be required" });
+    } 
+    else {
+      try {
+        let reviewDelete = Product.findByIdAndUpdate(pId, {
+          $pull: { reviews: { _id: rId } },
+        });
+        reviewDelete.exec((err, result) => {
+          if (err) {
+            console.log(err);
+          }
+          return res.json({ result,success: "Your review is deleted" });
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  
+  })
+);
 
 
 

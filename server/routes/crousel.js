@@ -22,13 +22,17 @@ const storage = multer.diskStorage({
   
 
 router.post('/create', authorize, isAdmin, upload.array('crouselPictures'), expressAsyncHandler(async (req, res) => {
-    if(req.files.length > 0){
+  
+  const {name,createdBy} = req.body;
+  let crouselPictures = [];
+  if(req.files.length > 0){
         crouselPictures = req.files.map(file => {
-        return {img: file.filename}
-      });
+          return {img: file.filename}
+        });
     }
     const newCrousel = new Crousel({
-      productPictures,
+      name: name,
+      crouselPictures,
       createdBy: req.user._id,
     });
     const createdCrousel= await newCrousel.save();
@@ -36,4 +40,23 @@ router.post('/create', authorize, isAdmin, upload.array('crouselPictures'), expr
     //res.status(200).json({ file: req.files, body:req.body});
   })
   );
+
+
+
+/* GET crousels listing. */
+router.get('/',
+expressAsyncHandler(async (req, res) => {
+  const crousels = await Crousel.find({});
+  res.send(crousels);
+})
+);
+
+
+
+
+
+
+
+
+
   module.exports = router;
