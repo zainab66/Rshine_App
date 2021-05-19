@@ -51,9 +51,9 @@ export const addAddress = (payload) => {
                   address: {
                       address
                   }
-              } = res.data;         
+              } = res.data.address;         
               
-              console.log("zz",res.data);
+              console.log("zz",res.data.address);
 
               dispatch({
                   type: ADD_USER_ADDRESS_SUCCESS,

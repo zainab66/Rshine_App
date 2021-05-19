@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 
 export default function FootrScreen() {
   return (
@@ -115,7 +116,7 @@ export default function FootrScreen() {
             <ul class="fa-ul foot-desc ml-4">
               <li class="mb-2"><span class="fa-li"><i class="far fa-map"></i></span>Montreal Qc, Canada</li>
               <li class="mb-2"><span class="fa-li"><i class="fas fa-phone-alt"></i></span>514-430-7957</li>
-              <li class="mb-2"><span class="fa-li"><i class="far fa-envelope"></i></span>r.shinegraphics@gmail.com</li>
+              <li class="mb-2"><span class="fa-li"><i class="far fa-envelope"></i></span><a href="/Contact">r.shinegraphics@gmail.com</a></li>
             </ul>
 
           </div>

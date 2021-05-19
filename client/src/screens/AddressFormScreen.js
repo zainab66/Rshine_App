@@ -34,6 +34,7 @@ import Logo from '../rshineLogo.png'
 
     const [submitFlag, setSubmitFlag] = useState(false);
     const [id, setId] = useState(initialData ? initialData._id : "");
+    const reload=()=>window.location.reload();
 
     // const [country, setCountry] = useState('');
     // const [province, setProvince] = useState('');
@@ -69,6 +70,7 @@ import Logo from '../rshineLogo.png'
     }
     dispatch(addAddress(payload));
     setSubmitFlag(true);
+    reload();
 
     }
   
@@ -89,13 +91,13 @@ import Logo from '../rshineLogo.png'
             postalCode
           };
         }
-        // } else {
-        //   _address = addressw.address.slice(addressw.address.length - 1)[0];
-        // }
+      //     else {
+      //     _address = addressw.address.slice(addressw.address.length - 1)[0];
+      // }
   
         props.onSubmitForm(_address)
       }
-    }, [ addressw.address]);
+    }, [addressw.address]);
   
 
 

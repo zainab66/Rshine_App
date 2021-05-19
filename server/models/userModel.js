@@ -6,7 +6,10 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, trim: true, lowercase: true },
     password: { type: String, required: true },
     isAdmin: { type: Boolean, default: false, required: true },
-    profilePicture: { type: String }
+    profilePicture: { type: String },
+    resetLink:{String,
+      default:''
+    }
   },
   {
     timestamps: true,

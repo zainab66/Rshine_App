@@ -37,51 +37,72 @@ import { ORDER_CREATE_FAIL,
 //     }
 //   };
 
-  export const createOrder = (payload) => {
-    return async (dispatch) => {
-      const { userSignin } = store.getState();
+  // export const createOrder = (payload) => {
+  //   return async (dispatch) => {
+  //     const { userSignin } = store.getState();
 
-      try {
-        const res = await Axios.post(`http://localhost:3001/api/orders/addOrder`, payload, {
-          headers: {
-            Authorization: `Bearer ${userSignin.userInfo.token}`,
-          },
-        });
-        dispatch({ type:ORDER_CREATE_REQUEST });
-        if (res.status === 201) {
-          console.log(res);
+  //     try {
+  //       const {data} = await Axios.post(`http://localhost:3001/api/orders/addOrder`, payload, {
+  //         headers: {
+  //           Authorization: `Bearer ${userSignin.userInfo.token}`,
+  //         },
+  //       });
+  //       dispatch({ type:ORDER_CREATE_REQUEST });
+  //       if (data) {
        
-          // const {
-          //   order
-          // } = res.data
+  //         // const {
+  //         //   order
+  //         // } = res.data
 
           
-          dispatch({ type: ORDER_CREATE_SUCCESS, payload: res.data.order });
+  //         dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
 
-          //console.log('ppo', order);
-          // dispatch({
-          //   type: ORDER_CREATE_SUCCESS,
-          //   payload: { order },
-          // });   
+  //         //console.log('ppo', order);
+  //         // dispatch({
+  //         //   type: ORDER_CREATE_SUCCESS,
+  //         //   payload: { order },
+  //         // });   
           
-          // dispatch({
-          //   type: RESET_CART,
-          // });
-        } else {
-          const { error } = res.data;
-          dispatch({
-            type: ORDER_CREATE_FAIL,
-            payload: { error },
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  //         // dispatch({
+  //         //   type: RESET_CART,
+  //         // });
+  //       } else {
+  //         const { error } = res.data;
+  //         dispatch({
+  //           type: ORDER_CREATE_FAIL,
+  //           payload: { error },
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  // };
+
+  export const createOrder = (order) => async (dispatch, getState) => {
+    dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+    try {
+      const {
+        userSignin: { userInfo },
+      } = getState();
+      const { data } = await Axios.post('http://localhost:3001/api/orders/addOrder', order, {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
+     // dispatch({ type: CART_EMPTY });
+     // localStorage.removeItem('cartItems');
+    } catch (error) {
+      dispatch({
+        type: ORDER_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
   };
-
-  
-  
 
   export const getOrders = () => {
     return async (dispatch) => {

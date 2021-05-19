@@ -198,6 +198,14 @@ text-decoration-color: #ffd480;
   text-decoration: underline;
   text-decoration-color: #ffd480;
 }
+.foot-desc a{
+  color: black;
+}
+
+.foot-desc a:hover{
+  color: #000;
+  text-decoration-color: #ffd480;
+}
 .footer-copyright a{
   color: black;
 }
@@ -429,6 +437,7 @@ font: 0.8em sans-serif;
   padding-top: 2px;
 }
 .starter-template {
+  margin: 80px;
   padding: 3rem 1.5rem;
   text-align: center;
   font-size: 16px;
@@ -1133,4 +1142,30 @@ font: 1em sans-serif;
 /* crouselAdminScreen */
 .crouselAdminScreen{
   margin-top:120px ;
+}
+
+/* ContactUsScreen */
+.contact{
+  margin-top:190px ;
+}
+
+/* activateUser */
+.activateUser{
+  margin-top:190px ;
+}
+
+/* ForgetPasswordScreen */
+.ForgetPasswordScreen{
+  margin-top:190px ;
+}
+
+.social{
+  width: 40%;
+  margin: 5px 0;
+  height: 50px;
+  font-size: 14px;
+  font-weight: 200;
+  text-transform: capitalize;
+  letter-spacing: 1.3px;
+  box-shadow: 0 2px 4px #777;
 }

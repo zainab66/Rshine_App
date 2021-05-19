@@ -31,11 +31,15 @@ import OrdersAdminScreen from './screens/OrdersAdminScreen';
 import { generatePublicUrl } from './urlConfig';
 import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
+import ContactUsScreen from './screens/ContactUsScreen';
+import ActivateUser from './screens/ActivateUser';
+import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
+import ResetPasswordScreen from './screens/ResetPasswordScreen';
 
 function App() {
    const cart = useSelector((state) => state.cart);
    const cart2 = useSelector((state) => state.cart2);
-   const { cartItems2 } = cart2;
+   //const { cartItems2 } = cart2;
 
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
@@ -48,6 +52,8 @@ function App() {
    useEffect(() => {
    dispatch(updateCart());
     dispatch(getCartItems());
+    dispatch(getCartItems());
+
 
   }, [dispatch,userInfo]);
 
@@ -59,7 +65,6 @@ function App() {
     <BrowserRouter>
       {userInfo && userInfo.isAdmin ? (
         <Navbar collapseOnSelect fixed="top" expand="lg" bg="light" variant="light">
-          <Container >
             <Navbar.Brand href="/"><img
               src={Logo}
               width="180"
@@ -99,7 +104,6 @@ function App() {
                 <Nav.Link className="adminLin" href="#signout" onClick={signoutHandler}>Sign Out</Nav.Link>
               </Nav>
             </Navbar.Collapse>
-          </Container>
         </Navbar>
         // <Navbar collapseOnSelect fixed="top" expand="lg" bg="light" variant="light">
         //   <Container >
@@ -149,7 +153,6 @@ function App() {
           userInfo ? (
             <>
               <Navbar collapseOnSelect fixed="top" bg="light" expand="lg" variant="light" >
-                <Container >
                   <Navbar.Brand href="/"><img
                     src={Logo}
                     width="180"
@@ -213,12 +216,10 @@ function App() {
                       </li>
                     </Nav>
                   </Navbar.Collapse>
-                </Container>
               </Navbar>
             </>
           ) : (
               <Navbar collapseOnSelect fixed="top" expand="lg" bg="light" variant="light">
-                <Container >
                   <Navbar.Brand href="/"><img
                     src={Logo}
                     width="180"
@@ -228,14 +229,15 @@ function App() {
                   /></Navbar.Brand>
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                   <Navbar.Collapse id="responsive-navbar-nav">
-                    <div class="input-group">
+                    <Container> <div class="input-group">
                       <input type="text" class="form-control" placeholder="What are you looking for? " />
                       <div class="input-group-append">
                         <button class="btnSearch" type="button">
                           <i class="fa fa-search"></i>
                         </button>
                       </div>
-                    </div>
+                    </div></Container>
+                   
                     <Nav className="ml-auto pl-2">
                       <Nav.Link href="/cart" className="cartBtn">
                       {cart2.cartItems && (
@@ -252,12 +254,11 @@ function App() {
                             alignSelf: "center",
                             marginLeft: 28,
                             marginTop: 5 }}>{cart2.cartItems.reduce((a, c) => a + c.qty, 0)}</span>)}<IoIosCart size="22" style={{ color: "black",marginBottom:8, marginTop:8, marginRight: 7, marginLeft: 7  }} />  </Nav.Link>
-                  
-                      <Nav.Link href="/signin" className=" signinBtn " style={{ color: "black", margin: 10 }}>Sign<span className="pl-1">In</span>  </Nav.Link>
+
+                      <Nav.Link href="/signin" className=" signinBtn " style={{  margin: 10 }}>Sign<span className="pl-1">In</span>  </Nav.Link>
                       <Nav.Link href="/register" className="registerBtn " style={{ color: "black",marginLeft: 0,margin: 10}}>Register</Nav.Link>
                     </Nav>
                   </Navbar.Collapse>
-                </Container>
               </Navbar>
             )
         )}
@@ -273,6 +274,11 @@ function App() {
       <Route path="/" component={HomeScreen} exact></Route>
       <Route path="/cart" component={CartScreen} ></Route>
       <Route path="/CheckoutPage" component={CheckoutPage} ></Route>
+      <Route path="/Contact" component={ContactUsScreen} exact></Route>
+      <Route path="/ForgetPasswordScreen" component={ForgetPasswordScreen} exact></Route>
+
+      <Route path="/authentication/activate/:token" component={ActivateUser} exact></Route>
+      <Route path="/resetpassword/:token" component={ResetPasswordScreen} exact></Route>
 
       <Route path="/AboutUs" component={AboutUsScreen} exact></Route>
       <Route path="/signin" component={SigninScreen}></Route>

@@ -5,14 +5,15 @@ import {
   productListReducer, productDetailsReducer, productCreateReducer, productUpdateReducer, productSlugReducer, productReviewCreateReducer,
 
 } from './reducers/productReducers';
-import { userSigninReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer,userListReducer,userDeleteReducer,  userUpdateReducer,
+import { userSigninReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer,userListReducer,userDeleteReducer,
+    userUpdateReducer,activateUserReducer
 
 } from './reducers/userReducers';
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderMineListReducer,CustmerlistOrder } from './reducers/orderReducers';
 import { categoryListReducer, categoryCreateReducer, categoryUpdateReducer, categoryDeleteReducer } from './reducers/categoryReducers';
 import { crouselCreateReducer,crouselListReducer} from './reducers/crouselReducers';
 import { addressReducer } from './reducers/addressReducers';
-
+import { userContactReducer} from './reducers/contactReducers';
 
 const initialState = {
   userSignin: {
@@ -62,6 +63,8 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
+  userContact:userContactReducer,
+  activateUser:activateUserReducer
 
 })
 

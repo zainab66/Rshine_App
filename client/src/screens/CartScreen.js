@@ -136,9 +136,12 @@ console.log('p',price)
       <div className="cartDetails">
         
         {cartItems.length === 0 ? (
-          <MessageBox>
-            Cart is empty. <Link to="/">Go Shopping</Link>
-          </MessageBox>
+         <>
+         <main role="main" class="container">
+           <div class="starter-template">
+             Your cart is empty<a href="/" class="btnForAll ml-1" ><IoMdCart size={25} style={{ paddingBottom: 4, paddingLeft: 4 }} /><span className="continueShopping ">Continue shopping</span></a>
+           </div>
+         </main></>
         ) : (
             <div class="container">
               <section class="mt-5 mb-4">
@@ -306,9 +309,12 @@ console.log('p',price)
       <div className="cartDetails">
         
         {cartItems2.length === 0 ? (
-          <MessageBox>
-            Cart is empty. <Link to="/">Go Shopping</Link>
-          </MessageBox>
+         <>
+         <main role="main" class="container">
+           <div class="starter-template">
+             Your cart is empty<a href="/" class="btnForAll ml-1" ><IoMdCart size={25} style={{ paddingBottom: 4, paddingLeft: 4 }} /><span className="continueShopping ">Continue shopping</span></a>
+           </div>
+         </main></>
         ) : (
             <div class="container">
               <section class="mt-5 mb-4">

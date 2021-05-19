@@ -32,3 +32,18 @@ export const USER_UPDATE_REQUEST = 'USER_UPDATE_REQUEST';
 export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
 export const USER_UPDATE_FAIL = 'USER_UPDATE_FAIL';
 export const USER_UPDATE_RESET = 'USER_UPDATE_RESET';
+
+
+export const USER_ACTIVATE_REQUEST = 'USER_ACTIVATE_REQUEST';
+export const USER_ACTIVATE_SUCCESS = 'USER_ACTIVATE_SUCCESS';
+export const USER_ACTIVATE_FAIL = 'USER_ACTIVATE_FAIL';
+
+
+
+export const USER_forgotPassword_REQUEST = 'USER_forgotPassword_REQUEST';
+export const USER_forgotPassword_SUCCESS = 'USER_forgotPassword_SUCCESS';
+export const USER_forgotPassword_FAIL = 'USER_forgotPassword_FAIL';
+
+export const USER_resetPassword_REQUEST = 'USER_forgotPassword_REQUEST';
+export const USER_resetPassword_SUCCESS = 'USER_forgotPassword_SUCCESS';
+export const USER_resetPassword_FAIL = 'USER_forgotPassword_FAIL';

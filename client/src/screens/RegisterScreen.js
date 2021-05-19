@@ -14,9 +14,9 @@ export default function RegisterScreen(props) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [fileName, setFileName] = useState('');
 
-  const redirect = props.location.search
-    ? props.location.search.split('=')[1]
-    : '/';
+  // const redirect = props.location.search
+  //   ? props.location.search.split('=')[1]
+  //   : '/';
 
   const userRegister = useSelector((state) => state.userRegister);
   const { userInfo, loading, error } = userRegister;
@@ -40,13 +40,15 @@ export default function RegisterScreen(props) {
     dispatch(register(
       form
     ));
-
+    if (form) {
+      alert('Please visit your email address and activate your account');
+    } 
   };
-  useEffect(() => {
-    if (userInfo) {
-      props.history.push(redirect);
-    }
-  }, [props.history, redirect, userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     props.history.push(redirect);
+  //   }
+  // }, [props.history, redirect, userInfo]);
   return (
 
     <>
@@ -77,12 +79,12 @@ export default function RegisterScreen(props) {
 
 
           <div class="mt-4 mb-4">
-            <label className="newCustmer">
+            {/* <label className="newCustmer">
               Returning customer?{' '}
               <Link className="linkCreateAccount" to={`/signin?redirect=${redirect}`}>
                 Sign in
             </Link>
-            </label>
+            </label> */}
           </div>
           <button class="btnForAll  btn-block waves-effect waves-light" type="submit">Create your Rshine account</button>
         </form>

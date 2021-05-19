@@ -30,7 +30,7 @@ export default function ProfileScreen() {
     } else {
       setName(user.name);
       setEmail(user.email);
-      setFileName(user.profilePicture);
+     // setFileName(user.profilePicture);
     }
   }, [dispatch, userInfo._id, user]);
   const submitHandler = (e) => {

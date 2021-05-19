@@ -34,9 +34,9 @@ export default function PlaceOrderScreen(props) {
 
 
 
-  const addressw = useSelector(state => state.addressw);
-  const {  address } = addressw;
-  const [address11, setAddress] = useState([]);
+  // const addressw = useSelector(state => state.addressw);
+  // const {  address } = addressw;
+   //const [address11, setAddress] = useState([]);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const [cartItems, setCartItems] = useState(cart.cartItems);
@@ -51,18 +51,27 @@ export default function PlaceOrderScreen(props) {
     })
   }
 
+const addressfromcart =cart.address;
+const addressId = addressfromcart._id;
+const city = addressfromcart.city;
+const country = addressfromcart.country;
+const fullName = addressfromcart.fullName;
+const address = addressfromcart.address;
+const province = addressfromcart.province;
+const postalCode = addressfromcart.postalCode;
 
-  useEffect(() => {
-    if (address) {
-      const address1 = address.map((adr) => ({
-        ...adr,
-        selected: false,
-        edit: false,
-      }));
-      setAddress(address1)
-    };
-    //user.address.length === 0 && setNewAddress(true);
-  }, [dispatch, address]);
+//console.log(address._id)
+  // useEffect(() => {
+  //   if (address) {
+  //     const address1 = address.map((adr) => ({
+  //       ...adr,
+  //       selected: false,
+  //       edit: false,
+  //     }));
+  //     setAddress(address1)
+  //   };
+  //   //user.address.length === 0 && setNewAddress(true);
+  // }, [dispatch, address]);
 
 
 
@@ -89,12 +98,12 @@ export default function PlaceOrderScreen(props) {
     
   );
 
-  if (formData.flexRadioDefault !== 'yes') {address11.map((adr) => (
-    cart.shippingPrice = adr.country === "CA" ? toPrice(3.50) :adr.country === "US" ? toPrice(8.5) : toPrice(16.5).toFixed(2)));
+  if (formData.flexRadioDefault !== 'yes') {
+    cart.shippingPrice = cart.address.country === "CA" ? toPrice(3.50) :cart.address.country === "US" ? toPrice(8.5) : toPrice(16.5).toFixed(2);
   }
 
-  if (formData.flexRadioDefault === 'yes') {address11.map((adr) => (
-    cart.shippingPrice = adr.country === "CA" && adr.province === "Ontario" | adr.province === "Quebec" ? toPrice(10.5) : toPrice(15.5).toFixed(2)));
+  if (formData.flexRadioDefault === 'yes') {
+    cart.shippingPrice = cart.address.country === "CA" && cart.address.province === "Ontario" | cart.address.province === "Quebec" ? toPrice(10.5) : toPrice(15.5).toFixed(2);
   }
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
@@ -102,8 +111,8 @@ export default function PlaceOrderScreen(props) {
     cart.totalPrice = cart.itemsPrice + 3.5 + cart.taxPrice;
   }
 
-  if (formData.flexRadioDefault === 'yes') {address11.map((adr) => (
-    cart.totalPrice = adr.country === "CA" && adr.province === "Ontario" |adr.province === "Quebec" ? (cart.itemsPrice + 10.5 + cart.taxPrice) : (cart.itemsPrice + 15.5 + cart.taxPrice)));
+  if (formData.flexRadioDefault === 'yes') {
+    cart.totalPrice = cart.address.country === "CA" && cart.address.province === "Ontario" |cart.address.province === "Quebec" ? (cart.itemsPrice + 10.5 + cart.taxPrice) : (cart.itemsPrice + 15.5 + cart.taxPrice);
   }
   cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
   console.log('zain',cart.shippingPrice)
@@ -111,6 +120,8 @@ export default function PlaceOrderScreen(props) {
 
   
   const placeOrderHandler = () => {
+    console.log('order','ok')
+
     const totalPrice = cart.totalPrice.toFixed(2)
   const itemsPrice=cart.itemsPrice.toFixed(2)
    const shippingPrice=cart.shippingPrice.toFixed(2)
@@ -122,11 +133,14 @@ export default function PlaceOrderScreen(props) {
        qty: key.qty,
        img:key.img
     }));
-    //console.log('key',items,cartItems)
-    const addressId1=address11.map((adr) => (adr._id
-    ))
     const payload = {
-      addressId: addressId1,
+      addressId,
+      city,
+      country,
+      fullName,
+      province,
+      address,
+      postalCode,
       totalPrice,
       itemsPrice,
       shippingPrice,
@@ -182,8 +196,8 @@ export default function PlaceOrderScreen(props) {
                         <div class="media-body pb-1 mb-0 small lh-125 ">
                           <div class="d-flex justify-content-between align-items-center w-100">
                             <strong class="text-gray-dark">Ship to</strong>
-                            {address11.map((adr) => (
-                            <strong class="text-dark">{adr.address}</strong>))}
+                       
+                            <strong class="text-dark">{cart.address.address}{cart.address.city}{cart.address.postalCode}</strong>
                             <a class="text-info" href="/shipping">Change</a>
                           </div>
                         </div>
@@ -315,7 +329,7 @@ export default function PlaceOrderScreen(props) {
                         </div>
                       </div>
                     </ul>
-                    <button type="button" class="btnForAll  btn-block waves-effect waves-light" onClick={placeOrderHandler}
+                    <button type="button" class="" onClick={placeOrderHandler}
                       > Continue to Payment</button>
                     {loading && <LoadingBox></LoadingBox>}
                     {error&& <MessageBox variant="danger">{error}</MessageBox>}
